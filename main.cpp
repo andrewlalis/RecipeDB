@@ -1,12 +1,12 @@
-#include "headers/mainwindow.h"
+#include "userInterface/mainwindow.h"
 #include <QApplication>
 #include <iostream>
 #include "SQLite/sqlite3.h"
 
-static int callback(void* data, int argc, char** argv, char** azColName){
+static int callback(void* data, int rows, char** argv, char** azColName){
     int i;
     fprintf(stderr, "%s: ", (const char*)data);
-    for(i=0; i<argc; i++){
+    for(i=0; i<rows; i++){
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }
     printf("\n");

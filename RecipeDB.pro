@@ -12,16 +12,28 @@ TARGET = RecipeDB
 TEMPLATE = app
 
 
-SOURCES += sources/main.cpp \
-    sources/mainwindow.cpp \
-    SQLite/sqlite3.c
+SOURCES += SQLite/sqlite3.c \
+    model/recipe/ingredient.cpp \
+    model/recipe/instruction.cpp \
+    model/recipe/recipe.cpp \
+    model/recipe/recipeingredient.cpp \
+    userInterface/mainwindow.cpp \
+    main.cpp \
+    model/database/database.cpp
 
-HEADERS  += \
-    headers/mainwindow.h \
-    SQLite/sqlite3.h \
-    SQLite/sqlite3ext.h
+HEADERS  += SQLite/sqlite3.h \
+    SQLite/sqlite3ext.h \
+    model/recipe/ingredient.h \
+    model/recipe/instruction.h \
+    model/recipe/recipe.h \
+    model/recipe/recipeingredient.h \
+    userInterface/mainwindow.h \
+    model/database/database.h
 
 FORMS    += gui/mainwindow.ui
 
 DISTFILES += \
     .gitignore
+
+RESOURCES += \
+    gui/menubuttonstylesheet.qrc
