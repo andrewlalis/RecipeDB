@@ -13,8 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    sources/main.cpp \
+    sources/mainwindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += \
+    headers/mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    gui/mainwindow.ui
+
+DISTFILES += \
+    .gitignore
