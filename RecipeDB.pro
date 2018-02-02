@@ -12,16 +12,16 @@ TARGET = RecipeDB
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    sources/main.cpp \
-    sources/mainwindow.cpp
+SOURCES += sources/main.cpp \
+    sources/mainwindow.cpp \
+    SQLite/sqlite3.c
 
 HEADERS  += \
-    headers/mainwindow.h
+    headers/mainwindow.h \
+    SQLite/sqlite3.h \
+    SQLite/sqlite3ext.h
 
-FORMS    += mainwindow.ui \
-    gui/mainwindow.ui
+FORMS    += gui/mainwindow.ui
 
 DISTFILES += \
     .gitignore
