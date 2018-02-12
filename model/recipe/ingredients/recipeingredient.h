@@ -4,6 +4,7 @@
 #include <string>
 
 #include "model/recipe/ingredients/ingredient.h"
+#include "model/recipe/ingredients/unitofmeasure.h"
 
 using namespace std;
 
@@ -14,19 +15,19 @@ using namespace std;
 class RecipeIngredient : public Ingredient
 {
 public:
-    RecipeIngredient(int id, string name, string foodGroup, int quantity, string unit);
-    RecipeIngredient(Ingredient i, int quantity, string unit);
+    RecipeIngredient(int id, string name, string foodGroup, int quantity, UnitOfMeasure unit);
+    RecipeIngredient(Ingredient i, int quantity, UnitOfMeasure unit);
 
     int getQuantity();
-    string getUnit();
+    UnitOfMeasure getUnit();
     string getComment();
 
     void setQuantity(int newQuantity);
-    void setUnit(string newUnit);
+    void setUnit(UnitOfMeasure newUnit);
     void setComment(string newComment);
 private:
     int quantity;
-    string unit;
+    UnitOfMeasure unit;
     string comment;
 };
 

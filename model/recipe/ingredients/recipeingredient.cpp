@@ -1,11 +1,11 @@
 #include "model/recipe/ingredients/recipeingredient.h"
 
-RecipeIngredient::RecipeIngredient(int id, string name, string foodGroup, int quantity, string unit) : Ingredient(id, name, foodGroup){
+RecipeIngredient::RecipeIngredient(int id, string name, string foodGroup, int quantity, UnitOfMeasure unit) : Ingredient(id, name, foodGroup){
     setQuantity(quantity);
     setUnit(unit);
 }
 
-RecipeIngredient::RecipeIngredient(Ingredient i, int quantity, string unit){
+RecipeIngredient::RecipeIngredient(Ingredient i, int quantity, UnitOfMeasure unit){
     setId(i.getId());
     setName(i.getName());
     setFoodGroup(i.getFoodGroup());
@@ -21,7 +21,7 @@ void RecipeIngredient::setQuantity(int newQuantity){
     this->quantity = newQuantity;
 }
 
-void RecipeIngredient::setUnit(string newUnit){
+void RecipeIngredient::setUnit(UnitOfMeasure newUnit){
     this->unit = newUnit;
 }
 
