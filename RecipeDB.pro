@@ -19,7 +19,8 @@ SOURCES += SQLite/sqlite3.c \
     model/recipe/recipeingredient.cpp \
     userInterface/mainwindow.cpp \
     main.cpp \
-    model/database/database.cpp
+    model/database/database.cpp \
+    model/recipe/ingredientlistmodel.cpp
 
 HEADERS  += SQLite/sqlite3.h \
     SQLite/sqlite3ext.h \
@@ -28,12 +29,12 @@ HEADERS  += SQLite/sqlite3.h \
     model/recipe/recipe.h \
     model/recipe/recipeingredient.h \
     userInterface/mainwindow.h \
-    model/database/database.h
+    model/database/database.h \
+    model/recipe/ingredientlistmodel.h
 
 FORMS    += gui/mainwindow.ui
 
 DISTFILES += \
     .gitignore
 
-RESOURCES += \
-    gui/menubuttonstylesheet.qrc
+RESOURCES +=

@@ -13,17 +13,26 @@ class Database
 {
 public:
     Database(string filename);
+    ~Database();
 
     void insertIngredient(Ingredient);
-    vector<Ingredient> getIngredients();
+
 private:
+    //SQL Instance variables.
     string filename;
     sqlite3* db;
+    bool dbIsOpen;
     int returnCode;
     string sql;
     char* errorMsg;
 
     void openConnection();
+    void closeConnection();
+    //Guarantees that all tables from the schema exist.
+    void ensureTablesExist();
+
+    //Utility methods.
+    bool tableExists(string tableName);
 };
 
 #endif // DATABASE_H
