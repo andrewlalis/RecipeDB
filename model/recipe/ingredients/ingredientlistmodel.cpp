@@ -1,4 +1,4 @@
-#include "model/recipe/ingredientlistmodel.h"
+#include "model/recipe/ingredients/ingredientlistmodel.h"
 
 IngredientListModel::IngredientListModel(){
     this->ingredients = vector<Ingredient>();

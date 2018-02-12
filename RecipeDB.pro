@@ -13,24 +13,29 @@ TEMPLATE = app
 
 
 SOURCES += SQLite/sqlite3.c \
-    model/recipe/ingredient.cpp \
     model/recipe/instruction.cpp \
     model/recipe/recipe.cpp \
-    model/recipe/recipeingredient.cpp \
     userInterface/mainwindow.cpp \
     main.cpp \
     model/database/database.cpp \
-    model/recipe/ingredientlistmodel.cpp
+    model/recipe/ingredients/unitofmeasure.cpp \
+    model/recipe/ingredients/ingredient.cpp \
+    model/recipe/ingredients/ingredientlistmodel.cpp \
+    model/recipe/ingredients/recipeingredient.cpp \
+    model/recipe/tags/recipetag.cpp
 
 HEADERS  += SQLite/sqlite3.h \
     SQLite/sqlite3ext.h \
-    model/recipe/ingredient.h \
     model/recipe/instruction.h \
     model/recipe/recipe.h \
-    model/recipe/recipeingredient.h \
     userInterface/mainwindow.h \
     model/database/database.h \
-    model/recipe/ingredientlistmodel.h
+    model/recipe/ingredientlistmodel.h \
+    model/recipe/ingredients/unitofmeasure.h \
+    model/recipe/ingredients/ingredient.h \
+    model/recipe/ingredients/ingredientlistmodel.h \
+    model/recipe/ingredients/recipeingredient.h \
+    model/recipe/tags/recipetag.h
 
 FORMS    += gui/mainwindow.ui
 

@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 
-#include "model/recipe/ingredient.h"
+#include "model/recipe/ingredients/ingredient.h"
 
 class IngredientListModel : public QAbstractListModel
 {

@@ -5,21 +5,25 @@
 
 using namespace std;
 
+/**
+ * @brief The Ingredient class represents an ingredient, which is classified by a food group, and has a name and an ID.
+ * An ingredient cannot be included on its own in a recipe, and must be paired with a Unit in a RecipeIngredient Object.
+ */
+
 class Ingredient
 {
 public:
     Ingredient();
-    Ingredient(int id, string name, string foodGroup);
+    Ingredient(string name, string foodGroup);
 
-    int getId();
+    //Getters
     string getName();
     string getFoodGroup();
 
-    void setId(int newId);
+    //Setters
     void setName(string newName);
     void setFoodGroup(string newFoodGroup);
 protected:
-    int id;
     string name;
     string foodGroup;
 };
