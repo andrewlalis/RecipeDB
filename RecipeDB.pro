@@ -21,7 +21,8 @@ SOURCES += SQLite/sqlite3.c \
     model/recipe/ingredients/unitofmeasure.cpp \
     model/recipe/ingredients/ingredient.cpp \
     model/recipe/ingredients/ingredientlistmodel.cpp \
-    model/recipe/ingredients/recipeingredient.cpp
+    model/recipe/ingredients/recipeingredient.cpp \
+    model/recipe/tags/recipetag.cpp
 
 HEADERS  += SQLite/sqlite3.h \
     SQLite/sqlite3ext.h \
@@ -33,7 +34,8 @@ HEADERS  += SQLite/sqlite3.h \
     model/recipe/ingredients/unitofmeasure.h \
     model/recipe/ingredients/ingredient.h \
     model/recipe/ingredients/ingredientlistmodel.h \
-    model/recipe/ingredients/recipeingredient.h
+    model/recipe/ingredients/recipeingredient.h \
+    model/recipe/tags/recipetag.h
 
 FORMS    += gui/mainwindow.ui
 

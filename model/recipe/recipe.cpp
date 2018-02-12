@@ -2,6 +2,11 @@
 
 Recipe::Recipe(){
     //Set default values when none are specified.
+    this->Recipe("Unnamed Recipe",
+                 vector<RecipeIngredient>(),
+                 Instruction(),
+                 QImage(),
+                 vector<string>())
     this->name = "Unnamed Recipe";
     this->ingredients = vector<RecipeIngredient>();
     this->instruction = Instruction();
