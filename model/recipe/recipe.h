@@ -9,6 +9,7 @@
 
 #include "model/recipe/ingredients/recipeingredient.h"
 #include "model/recipe/instruction.h"
+#include "model/recipe/tags/recipetag.h"
 
 using namespace std;
 
@@ -31,23 +32,29 @@ class Recipe
 public:
     Recipe();
     //Full constructor
-    Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<string> tags);
+    Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings);
 
     //Getters
     string getName();
     vector<RecipeIngredient> getIngredients();
     Instruction getInstruction();
     QImage getImage();
-    vector<string> getTags();
+    vector<RecipeTag> getTags();
     QDate getCreatedDate();
     QTime getPrepTime();
     QTime getCookTime();
-    QTime getTotalTime();
+    QTime getTotalTime();                       //Derived method to add prep and cook times.
     float getServings();
+
     //Setters
     void setName(string newName);
     void addIngredient(RecipeIngredient newIngredient);
     void setInstruction(Instruction newInstruction);
+    void setImage(QImage newImage);
+    void setCreatedDate(QDate newDate);
+    void setPrepTime(QTime newTime);
+    void setCookTime(QTime newTime);
+    void setServings(float newServingsCount);
 private:
     //Main information.
     string name;                                //The name of the recipe.
@@ -55,7 +62,7 @@ private:
     Instruction instruction;                    //The instruction HTML document.
     QImage image;                               //An image displayed alongside the recipe.
     //Auxiliary Information.
-    vector<string> tags;                        //The list of tags which can be used to categorize the recipe.
+    vector<RecipeTag> tags;                     //The list of tags which can be used to categorize the recipe.
     QDate createdDate;                          //The date the recipe was created.
     QTime prepTime;                             //The time taken for preparation.
     QTime cookTime;                             //The time taken to cook.
