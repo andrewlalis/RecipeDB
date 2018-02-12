@@ -14,15 +14,15 @@ Recipe::Recipe(){
 }
 
 Recipe::Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings){
-    this->name = name;
-    this->ingredients = ingredients;
-    this->instruction = instruction;
-    this->image = image;
-    this->tags = tags;
-    this->createdDate = createdDate;
-    this->prepTime = prepTime;
-    this->cookTime = cookTime;
-    this->servings = servings;
+    setName(name);
+    setIngredients(ingredients);
+    setInstruction(instruction);
+    setImage(image);
+    setTags(tags);
+    setCreatedDate(createdDate);
+    setPrepTime(prepTime);
+    setCookTime(cookTime);
+    setServings(servings);
 }
 
 string Recipe::getName(){
@@ -59,4 +59,44 @@ QTime Recipe::getTotalTime(){
 
 float Recipe::getServings(){
     return this->servings;
+}
+
+void Recipe::setName(string newName){
+    this->name = newName;
+}
+
+void Recipe::setIngredients(vector<RecipeIngredient> ingredients){
+    this->ingredients = ingredients;
+}
+
+void Recipe::setTags(vector<RecipeTag> tags){
+    this->tags = tags
+}
+
+void Recipe::addIngredient(RecipeIngredient newIngredient){
+    this->ingredients.push_back(newIngredient);
+}
+
+void Recipe::setInstruction(Instruction newInstruction){
+    this->instruction = newInstruction;
+}
+
+void Recipe::setImage(QImage newImage){
+    this->image = newImage;
+}
+
+void Recipe::setCreatedDate(QDate newDate){
+    this->createdDate = newDate;
+}
+
+void Recipe::setPrepTime(QTime newTime){
+    this->prepTime = newTime;
+}
+
+void Recipe::setCookTime(QTime newTime){
+    this->cookTime = newTime;
+}
+
+void Recipe::setServings(float newServingsCount){
+    this->servings = newServingsCount;
 }

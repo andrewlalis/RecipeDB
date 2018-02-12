@@ -48,6 +48,8 @@ public:
 
     //Setters
     void setName(string newName);
+    void setIngredients(vector<RecipeIngredient> ingredients);
+    void setTags(vector<RecipeTag> tags);
     void addIngredient(RecipeIngredient newIngredient);
     void setInstruction(Instruction newInstruction);
     void setImage(QImage newImage);
