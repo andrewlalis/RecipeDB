@@ -14,17 +14,16 @@ class Ingredient
 {
 public:
     Ingredient();
-    Ingredient(int id, string name, string foodGroup);
+    Ingredient(string name, string foodGroup);
 
-    int getId();
+    //Getters
     string getName();
     string getFoodGroup();
 
-    void setId(int newId);
+    //Setters
     void setName(string newName);
     void setFoodGroup(string newFoodGroup);
 protected:
-    int id;
     string name;
     string foodGroup;
 };
