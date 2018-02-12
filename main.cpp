@@ -11,12 +11,5 @@ int main(int argc, char *argv[])
 
     Database db("test.db");
 
-    vector<RecipeIngredient> ri;
-    ri.push_back(RecipeIngredient("flour", "grains", 3.0f, UnitOfMeasure("cup", "cups", "c")));
-
-
-
-    Recipe rec("Example", ri, Instruction("Hello world"), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(0, 30), QTime(0, 25), 10.0f);
-
     return a.exec();
 }
