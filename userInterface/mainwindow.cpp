@@ -26,5 +26,5 @@ void MainWindow::setInstructions(vector<Instruction> instructions){
 }
 
 void MainWindow::setIngredients(vector<Ingredient> ingredients){
-    ui->listView
+
 }
