@@ -1,18 +1,5 @@
 #include "model/recipe/recipe.h"
 
-Recipe::Recipe(){
-    //Set default values when none are specified.
-    this->Recipe("Unnamed Recipe",
-                 vector<RecipeIngredient>(),
-                 Instruction(),
-                 QImage(),
-                 vector<RecipeTag>(),
-                 QDate.currentDate(),
-                 QTime(1, 0),
-                 QTime(0, 30),
-                 10.0f);
-}
-
 Recipe::Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings){
     setName(name);
     setIngredients(ingredients);
@@ -23,6 +10,10 @@ Recipe::Recipe(string name, vector<RecipeIngredient> ingredients, Instruction in
     setPrepTime(prepTime);
     setCookTime(cookTime);
     setServings(servings);
+}
+
+Recipe::Recipe() : Recipe::Recipe("Unnamed Recipe", vector<RecipeIngredient>(), Instruction(), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(1, 0), QTime(0, 30), 10.0f){
+    //Set default values when none are specified.
 }
 
 string Recipe::getName(){
@@ -70,7 +61,7 @@ void Recipe::setIngredients(vector<RecipeIngredient> ingredients){
 }
 
 void Recipe::setTags(vector<RecipeTag> tags){
-    this->tags = tags
+    this->tags = tags;
 }
 
 void Recipe::addIngredient(RecipeIngredient newIngredient){

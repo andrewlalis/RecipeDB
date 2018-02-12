@@ -1,17 +1,17 @@
 #include "recipetag.h"
 
-RecipeTag::RecipeTag(){
-    this->RecipeTag("");
+RecipeTag::RecipeTag() : RecipeTag(""){
+    //Default constructor sets value to empty string.
 }
 
 RecipeTag::RecipeTag(string val){
     this->value = val;
 }
 
-RecipeTag::getValue(){
+string RecipeTag::getValue(){
     return this->value;
 }
 
-RecipeTag::setValue(string newValue){
+void RecipeTag::setValue(string newValue){
     this->value = newValue;
 }

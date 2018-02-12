@@ -30,9 +30,10 @@ using namespace std;
 class Recipe
 {
 public:
-    Recipe();
     //Full constructor
     Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings);
+    //Constructor with default values.
+    Recipe();
 
     //Getters
     string getName();

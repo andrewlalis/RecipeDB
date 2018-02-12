@@ -6,6 +6,10 @@ UnitOfMeasure::UnitOfMeasure(string name, string plural, string abbreviation){
     this->abbreviation = abbreviation;
 }
 
+UnitOfMeasure::UnitOfMeasure() : UnitOfMeasure::UnitOfMeasure("", "", ""){
+    //Default constructor initializes all fields to empty strings.
+}
+
 string UnitOfMeasure::getName(){
     return this->name;
 }

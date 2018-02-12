@@ -12,7 +12,10 @@ using namespace std;
 class UnitOfMeasure
 {
 public:
+    //Full constructor.
     UnitOfMeasure(string name, string plural, string abbreviation);
+    //Constructor with default values.
+    UnitOfMeasure();
 
     //Getters
     string getName();
