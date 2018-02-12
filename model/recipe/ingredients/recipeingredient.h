@@ -15,18 +15,22 @@ using namespace std;
 class RecipeIngredient : public Ingredient
 {
 public:
-    RecipeIngredient(int id, string name, string foodGroup, int quantity, UnitOfMeasure unit);
-    RecipeIngredient(Ingredient i, int quantity, UnitOfMeasure unit);
+    //Constructor for new RecipeIngredient without starting child ingredient.
+    RecipeIngredient(int id, string name, string foodGroup, float quantity, UnitOfMeasure unit);
+    //Constructor using data from a child ingredient.
+    RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure unit);
 
-    int getQuantity();
+    //Getters
+    float getQuantity();
     UnitOfMeasure getUnit();
     string getComment();
 
-    void setQuantity(int newQuantity);
+    //Setters
+    void setQuantity(float newQuantity);
     void setUnit(UnitOfMeasure newUnit);
     void setComment(string newComment);
 private:
-    int quantity;
+    float quantity;
     UnitOfMeasure unit;
     string comment;
 };
