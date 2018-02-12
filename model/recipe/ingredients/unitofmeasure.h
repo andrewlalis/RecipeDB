@@ -14,9 +14,10 @@ class UnitOfMeasure
 public:
     UnitOfMeasure();
 private:
-    string name;
-    string plural;
-    string abbreviation;
+    string name;                //The name of the unit of measure.
+    string plural;              //The plural name.
+    string abbreviation;        //A short version of the unit.
+    float siBaseUnitEquivalent; //The ratio when compared to the base SI unit for this unit. For example: 1 cup = 237mL.
 };
 
 #endif // UNITOFMEASURE_H

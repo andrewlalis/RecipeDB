@@ -7,6 +7,10 @@
 
 using namespace std;
 
+/**
+ * @brief The RecipeIngredient class represents both an ingredient and a unit of measure, to be used in a recipe object.
+ */
+
 class RecipeIngredient : public Ingredient
 {
 public:
