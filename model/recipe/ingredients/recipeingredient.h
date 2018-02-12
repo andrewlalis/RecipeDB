@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "headers/ingredient.h"
+#include "model/recipe/ingredients/ingredient.h"
 
 using namespace std;
 

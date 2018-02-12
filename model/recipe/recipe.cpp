@@ -2,24 +2,25 @@
 
 Recipe::Recipe(){
     this->name = "NULL";
-    this->ingredients = vector<Ingredient>();
-    this->instructions = vector<Instruction>();
+    this->ingredients = vector<RecipeIngredient>();
+    this->instruction = Instruction();
 }
 
-Recipe::Recipe(string name, vector<Ingredient> ingredients, vector<Instruction> instructions){
+Recipe::Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction)
+{
     this->name = name;
     this->ingredients = ingredients;
-    this->instructions = instructions;
+    this->instruction = instruction;
 }
 
 string Recipe::getName(){
     return this->name;
 }
 
-vector<Ingredient> Recipe::getIngredients(){
+vector<RecipeIngredient> Recipe::getIngredients(){
     return this->ingredients;
 }
 
-vector<Instruction> Recipe::getInstructions(){
-    return this->instructions;
+Instruction Recipe::getInstruction(){
+    return this->instruction;
 }

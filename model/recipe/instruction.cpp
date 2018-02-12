@@ -1,4 +1,4 @@
-#include "headers/instruction.h"
+#include "model/recipe/instruction.h"
 
 Instruction::Instruction()
 {

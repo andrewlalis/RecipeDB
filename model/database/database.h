@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "SQLite/sqlite3.h"
-#include "model/recipe/ingredient.h"
+#include "model/recipe/ingredients/ingredient.h"
 
 using namespace std;
 

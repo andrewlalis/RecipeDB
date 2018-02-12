@@ -1,4 +1,4 @@
-#include "headers/recipeingredient.h"
+#include "model/recipe/ingredients/recipeingredient.h"
 
 RecipeIngredient::RecipeIngredient(int id, string name, string foodGroup, int quantity, string unit) : Ingredient(id, name, foodGroup){
     setQuantity(quantity);

@@ -432,6 +432,9 @@
                <property name="sizeAdjustPolicy">
                 <enum>QAbstractScrollArea::AdjustToContents</enum>
                </property>
+               <property name="autoFormatting">
+                <set>QTextEdit::AutoNone</set>
+               </property>
                <property name="lineWrapMode">
                 <enum>QTextEdit::WidgetWidth</enum>
                </property>

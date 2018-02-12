@@ -1,4 +1,4 @@
-#include "headers/ingredient.h"
+#include "model/recipe/ingredients/ingredient.h"
 
 Ingredient::Ingredient(){
     setId(-1);

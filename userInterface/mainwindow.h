@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <string>
+#include <QAbstractListModel>
 
 #include "model/recipe/recipe.h"
 
@@ -24,11 +25,12 @@ public:
     void loadFromRecipe(Recipe recipe);
 private:
     Ui::MainWindow *ui;
+    QAbstractListModel *ingredientsListModel;
 
     //Hidden manipulation methods.
     void setRecipeName(string name);
-    void setInstructions(vector<Instruction> instructions);
-    void setIngredients(vector<Ingredient> ingredients);
+    void setInstruction(Instruction instruction);
+    void setIngredients(vector<RecipeIngredient> ingredients);
 };
 
 #endif // MAINWINDOW_H

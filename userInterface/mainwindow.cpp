@@ -13,7 +13,7 @@ MainWindow::~MainWindow(){
 
 void MainWindow::loadFromRecipe(Recipe recipe){
     setRecipeName(recipe.getName());
-    setInstructions(recipe.getInstructions());
+    setInstruction(recipe.getInstruction());
     setIngredients(recipe.getIngredients());
 }
 
@@ -21,10 +21,10 @@ void MainWindow::setRecipeName(string name){
     ui->recipeNameLabel->setText(QString::fromStdString(name));
 }
 
-void MainWindow::setInstructions(vector<Instruction> instructions){
+void MainWindow::setInstruction(Instruction instruction){
 
 }
 
-void MainWindow::setIngredients(vector<Ingredient> ingredients){
+void MainWindow::setIngredients(vector<RecipeIngredient> ingredients){
 
 }
