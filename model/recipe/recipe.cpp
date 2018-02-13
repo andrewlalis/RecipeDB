@@ -16,39 +16,39 @@ Recipe::Recipe() : Recipe::Recipe("Unnamed Recipe", vector<RecipeIngredient>(), 
     //Set default values when none are specified.
 }
 
-string Recipe::getName(){
+string Recipe::getName() const{
     return this->name;
 }
 
-vector<RecipeIngredient> Recipe::getIngredients(){
+vector<RecipeIngredient> Recipe::getIngredients() const{
     return this->ingredients;
 }
 
-Instruction Recipe::getInstruction(){
+Instruction Recipe::getInstruction() const{
     return this->instruction;
 }
 
-QImage Recipe::getImage(){
+QImage Recipe::getImage() const{
     return this->image;
 }
 
-QDate Recipe::getCreatedDate(){
+QDate Recipe::getCreatedDate() const{
     return this->createdDate;
 }
 
-QTime Recipe::getPrepTime(){
+QTime Recipe::getPrepTime() const{
     return this->prepTime;
 }
 
-QTime Recipe::getCookTime(){
+QTime Recipe::getCookTime() const{
     return this->cookTime;
 }
 
-QTime Recipe::getTotalTime(){
+QTime Recipe::getTotalTime() const{
     return QTime(this->cookTime.hour() + this->prepTime.hour(), this->cookTime.minute() + this->prepTime.minute(), this->cookTime.second() + this->prepTime.second());
 }
 
-float Recipe::getServings(){
+float Recipe::getServings() const{
     return this->servings;
 }
 

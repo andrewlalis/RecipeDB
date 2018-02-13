@@ -2,6 +2,7 @@
 #define INGREDIENTLISTMODEL_H
 
 #include <QAbstractListModel>
+#include <QModelIndex>
 
 #include "model/recipe/ingredients/recipeingredient.h"
 

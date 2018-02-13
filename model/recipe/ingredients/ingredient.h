@@ -17,8 +17,8 @@ public:
     Ingredient(string name, string foodGroup);
 
     //Getters
-    string getName();
-    string getFoodGroup();
+    string getName() const;
+    string getFoodGroup() const;
 
     //Setters
     void setName(string newName);

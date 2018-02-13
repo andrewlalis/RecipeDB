@@ -16,7 +16,7 @@ public:
     Instruction(string text);
 
     //Getters
-    string getHTML();
+    string getHTML() const;
 
     //Setters
     void setHTML(string newText);

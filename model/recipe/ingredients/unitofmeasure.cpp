@@ -10,14 +10,14 @@ UnitOfMeasure::UnitOfMeasure() : UnitOfMeasure::UnitOfMeasure("", "", ""){
     //Default constructor initializes all fields to empty strings.
 }
 
-string UnitOfMeasure::getName(){
+string UnitOfMeasure::getName() const{
     return this->name;
 }
 
-string UnitOfMeasure::getNamePlural(){
+string UnitOfMeasure::getNamePlural() const{
     return this->plural;
 }
 
-string UnitOfMeasure::getAbbreviation(){
+string UnitOfMeasure::getAbbreviation() const{
     return this->abbreviation;
 }

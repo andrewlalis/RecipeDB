@@ -315,7 +315,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QListView" name="listView">
+              <widget class="QListView" name="ingredientsListView">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                  <horstretch>0</horstretch>

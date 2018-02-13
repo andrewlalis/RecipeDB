@@ -26,6 +26,7 @@ public:
     void loadFromRecipe(Recipe recipe);
 private:
     Ui::MainWindow *ui;
+    IngredientListModel ingredientModel;
 
     //Hidden manipulation methods.
     void setRecipeName(string name);

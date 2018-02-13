@@ -3,6 +3,7 @@
 Database::Database(string filename){
     this->filename = filename;
     openConnection();
+    //TESTING CODE
     if (tableExists("ingredients")){
         printf("Ingredients table already exists.\n");
     } else {

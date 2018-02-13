@@ -10,11 +10,11 @@ Ingredient::Ingredient(string name, string foodGroup){
     setFoodGroup(foodGroup);
 }
 
-string Ingredient::getName(){
+string Ingredient::getName() const{
     return this->name;
 }
 
-string Ingredient::getFoodGroup(){
+string Ingredient::getFoodGroup() const{
     return this->foodGroup;
 }
 
