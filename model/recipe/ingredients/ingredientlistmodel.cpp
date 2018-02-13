@@ -1,17 +1,17 @@
 #include "model/recipe/ingredients/ingredientlistmodel.h"
 
 IngredientListModel::IngredientListModel(){
-    this->ingredients = vector<Ingredient>();
+    this->ingredients = vector<RecipeIngredient>();
 }
 
-int IngredientListModel::rowCount(const QModelIndex &parent){
-    return this->ingredients.size();
-}
-
-QVariant IngredientListModel::data(const QModelIndex &index, int role){
+int IngredientListModel::rowCount(const QModelIndex &parent) const{
 
 }
 
-void IngredientListModel::setIngredients(vector<Ingredient> ingredients){
+QVariant IngredientListModel::data(const QModelIndex &index, int role) const{
+
+}
+
+void IngredientListModel::setIngredients(vector<RecipeIngredient> ingredients){
     this->ingredients = ingredients;
 }
