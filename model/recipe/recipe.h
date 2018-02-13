@@ -36,16 +36,16 @@ public:
     Recipe();
 
     //Getters
-    string getName();
-    vector<RecipeIngredient> getIngredients();
-    Instruction getInstruction();
-    QImage getImage();
-    vector<RecipeTag> getTags();
-    QDate getCreatedDate();
-    QTime getPrepTime();
-    QTime getCookTime();
-    QTime getTotalTime();                       //Derived method to add prep and cook times.
-    float getServings();
+    string getName() const;
+    vector<RecipeIngredient> getIngredients() const;
+    Instruction getInstruction() const;
+    QImage getImage() const;
+    vector<RecipeTag> getTags() const;
+    QDate getCreatedDate() const;
+    QTime getPrepTime() const;
+    QTime getCookTime() const;
+    QTime getTotalTime() const;                 //Derived method to add prep and cook times.
+    float getServings() const;
 
     //Setters
     void setName(string newName);

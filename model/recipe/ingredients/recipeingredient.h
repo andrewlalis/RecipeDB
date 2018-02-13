@@ -21,9 +21,9 @@ public:
     RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure unit);
 
     //Getters
-    float getQuantity();
-    UnitOfMeasure getUnit();
-    string getComment();
+    float getQuantity() const;
+    UnitOfMeasure getUnit() const;
+    string getComment() const;
 
     //Setters
     void setQuantity(float newQuantity);

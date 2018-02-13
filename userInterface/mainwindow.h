@@ -6,6 +6,7 @@
 #include <QAbstractListModel>
 
 #include "model/recipe/recipe.h"
+#include "model/recipe/ingredients/ingredientlistmodel.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ public:
     void loadFromRecipe(Recipe recipe);
 private:
     Ui::MainWindow *ui;
-    QAbstractListModel *ingredientsListModel;
+    IngredientListModel ingredientModel;
 
     //Hidden manipulation methods.
     void setRecipeName(string name);

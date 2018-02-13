@@ -12,15 +12,15 @@ RecipeIngredient::RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure u
     setUnit(unit);
 }
 
-float RecipeIngredient::getQuantity(){
+float RecipeIngredient::getQuantity() const{
     return this->quantity;
 }
 
-UnitOfMeasure RecipeIngredient::getUnit(){
+UnitOfMeasure RecipeIngredient::getUnit() const{
     return this->unit;
 }
 
-string RecipeIngredient::getComment(){
+string RecipeIngredient::getComment() const{
     return this->comment;
 }
 

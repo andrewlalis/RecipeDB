@@ -30,7 +30,6 @@ HEADERS  += SQLite/sqlite3.h \
     model/recipe/recipe.h \
     userInterface/mainwindow.h \
     model/database/database.h \
-    model/recipe/ingredientlistmodel.h \
     model/recipe/ingredients/unitofmeasure.h \
     model/recipe/ingredients/ingredient.h \
     model/recipe/ingredients/ingredientlistmodel.h \

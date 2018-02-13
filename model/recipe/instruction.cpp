@@ -8,7 +8,7 @@ Instruction::Instruction(string text){
     setHTML(text);
 }
 
-string Instruction::getHTML(){
+string Instruction::getHTML() const{
     return this->htmlText;
 }
 

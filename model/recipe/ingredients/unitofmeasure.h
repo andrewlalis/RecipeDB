@@ -18,9 +18,9 @@ public:
     UnitOfMeasure();
 
     //Getters
-    string getName();
-    string getNamePlural();
-    string getAbbreviation();
+    string getName() const;
+    string getNamePlural() const;
+    string getAbbreviation() const;
 private:
     string name;                //The name of the unit of measure.
     string plural;              //The plural name.

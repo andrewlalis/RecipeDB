@@ -6,9 +6,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow){
     ui->setupUi(this);
 
+    ui->ingredientsListView->setModel(&this->ingredientModel);
+
     //TESTING CODE
     vector<RecipeIngredient> ri;
     ri.push_back(RecipeIngredient("flour", "grains", 3.0f, UnitOfMeasure("cup", "cups", "c")));
+    ri.push_back(RecipeIngredient("Baking Powder", "Additives", 1.0f, UnitOfMeasure("Teaspoon", "Teaspoons", "Tsp")));
 
     Recipe rec("Example", ri, Instruction("<b>BOLD</b><i>iTaLiCs</i>"), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(0, 30), QTime(0, 25), 10.0f);
 
@@ -34,5 +37,5 @@ void MainWindow::setInstruction(Instruction instruction){
 }
 
 void MainWindow::setIngredients(vector<RecipeIngredient> ingredients){
-    ///TODO: Implement this.
+    this->ingredientModel.setIngredients(ingredients);
 }
