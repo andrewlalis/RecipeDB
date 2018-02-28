@@ -12,8 +12,7 @@ TARGET = RecipeDB
 TEMPLATE = app
 
 
-SOURCES += SQLite/sqlite3.c \
-    model/recipe/instruction.cpp \
+SOURCES += model/recipe/instruction.cpp \
     model/recipe/recipe.cpp \
     userInterface/mainwindow.cpp \
     main.cpp \
@@ -22,11 +21,10 @@ SOURCES += SQLite/sqlite3.c \
     model/recipe/ingredients/ingredient.cpp \
     model/recipe/ingredients/ingredientlistmodel.cpp \
     model/recipe/ingredients/recipeingredient.cpp \
-    model/recipe/tags/recipetag.cpp
+    model/recipe/tags/recipetag.cpp \
+    SQLite/sqlite3.c
 
-HEADERS  += SQLite/sqlite3.h \
-    SQLite/sqlite3ext.h \
-    model/recipe/instruction.h \
+HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
     userInterface/mainwindow.h \
     model/database/database.h \
@@ -34,7 +32,11 @@ HEADERS  += SQLite/sqlite3.h \
     model/recipe/ingredients/ingredient.h \
     model/recipe/ingredients/ingredientlistmodel.h \
     model/recipe/ingredients/recipeingredient.h \
-    model/recipe/tags/recipetag.h
+    model/recipe/tags/recipetag.h \
+    SQLite/sqlite3.h \
+    SQLite/sqlite3ext.h
+
+LIBS += -ldl \
 
 FORMS    += gui/mainwindow.ui
 
