@@ -4,6 +4,10 @@ RecipeDatabase::RecipeDatabase(string filename) : Database(filename){
 	this->ensureTablesExist();
 }
 
+void RecipeDatabase::storeRecipe(Recipe recipe){
+	///TODO: Implement this in a smart way using transaction.
+}
+
 void RecipeDatabase::ensureTablesExist(){
 	//Make sure that foreign keys are enabled.
 	this->executeSQL("PRAGMA foreign_keys = ON;");
@@ -47,7 +51,7 @@ void RecipeDatabase::ensureTablesExist(){
 					 "quantity real,"
 					 "unitName varchar,"
 					 "comment varchar,"
-					 "PRIMARY KEY (ingredientId, recipeId),"
+					 "PRIMARY KEY (recipeId),"
 					 "FOREIGN KEY (ingredientId) REFERENCES ingredient(ingredientId),"
 					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId));");
 	//Recipe Instruction mapping table.

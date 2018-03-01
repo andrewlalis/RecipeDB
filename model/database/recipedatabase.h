@@ -4,6 +4,7 @@
 
 
 #include "database.h"
+#include "model/recipe/recipe.h"
 
 using namespace std;
 
@@ -15,6 +16,9 @@ class RecipeDatabase : public Database
 {
 	public:
 		RecipeDatabase(string filename);
+
+		//Stores a full recipe in the database.
+		void storeRecipe(Recipe recipe);
 	private:
 
 		//Utility methods.
