@@ -3,16 +3,27 @@
 Database::Database(string filename){
     this->filename = filename;
     openConnection();
-    //TESTING CODE
-    if (tableExists("ingredients")){
-        printf("Ingredients table already exists.\n");
-    } else {
-        printf("Couldn't find the ingredients table.\n");
-    }
 }
 
 Database::~Database(){
-    closeConnection();
+	closeConnection();
+}
+
+ResultTable Database::executeSQL(string statement){
+	sqlite3_stmt* stmt;
+	this->sql = statement;
+	this->returnCode = sqlite3_prepare_v2(this->db, statement.c_str(), -1, &stmt, NULL);
+	ResultTable t;
+	if (this->returnCode != SQLITE_OK){
+		fprintf(stderr, "Unable to successfully prepare SQL statement. Error code: %d\nError Message: %s\n", this->returnCode, sqlite3_errmsg(this->db));
+		return t;
+	}
+
+	t.extractData(stmt);
+
+	this->returnCode = sqlite3_finalize(stmt);
+
+	return t;
 }
 
 void Database::openConnection(){
@@ -32,16 +43,9 @@ void Database::closeConnection(){
 }
 
 bool Database::tableExists(string tableName){
-    if (this->dbIsOpen){
-        this->sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';";
-        const char* str = this->sql.c_str();
-        this->returnCode = sqlite3_exec(this->db, str, NULL, 0, &this->errorMsg);
-        if (this->returnCode == SQLITE_ERROR){
-            fprintf(stderr, "Unable to select name from master table list: %s\n", this->errorMsg);
-            return false;
-        } else {
-            return true;
-        }
-    }
-    return false;
+	if (tableName.empty() || this->db == NULL || !this->dbIsOpen){
+		return false;
+	}
+	ResultTable t = executeSQL("SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';");
+	return !t.isEmpty();
 }
