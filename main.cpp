@@ -12,18 +12,23 @@ int main(int argc, char *argv[])
     w.show();
 
 	//TESTING CODE
-//	Database db("test.db");
-//	printf("Table exists: %d\n", db.tableExists("ingredients"));
-//	db.executeSQL("SELECT * FROM ingredients;").printData();
-//	db.executeSQL("PRAGMA table_info('ingredients');").printData();
-//	db.executeSQL("SELECT name FROM ingredients WHERE foodGroup == 'fruit';").printData();
 
 	RecipeDatabase recipeDB("recipes");
 	recipeDB.storeIngredient(Ingredient("Apple", "Fruit"));
 	recipeDB.storeIngredient(Ingredient("Corn", "Vegetable"));
+	recipeDB.storeIngredient(Ingredient("Lettuce", "Vegetable"));
+	recipeDB.storeIngredient(Ingredient("Carrot", "Vegetable"));
+
 	recipeDB.executeSQL("SELECT * FROM ingredient;").printData();
 
-	FileUtils::saveInstruction(1, Instruction("This is some plain text with no HTML markup."));
+	//TESTING CODE
+	vector<RecipeIngredient> ri;
+	ri.push_back(RecipeIngredient("flour", "grains", 3.0f, UnitOfMeasure("cup", "cups", "c")));
+	ri.push_back(RecipeIngredient("Baking Powder", "Additives", 1.0f, UnitOfMeasure("Teaspoon", "Teaspoons", "Tsp")));
+
+	Recipe rec("Example", ri, Instruction("<b>BOLD</b><i>iTaLiCs</i>"), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(0, 30), QTime(0, 25), 10.0f);
+
+	w.loadFromRecipe(rec);
 
 	return a.exec();
 }

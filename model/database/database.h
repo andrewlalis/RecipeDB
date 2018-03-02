@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <numeric>
 
 #include "SQLite/sqlite3.h"
 #include "model/recipe/ingredients/ingredient.h"
@@ -23,8 +24,10 @@ public:
 
 	//Executes an SQL string statement in a safe way and returns the result.
 	ResultTable executeSQL(string statement);
+	bool insertInto(string tableName, vector<string> columnNames, vector<string> values);
 
 	bool tableExists(string tableName);
+	int getLastInsertedRowId();
 private:
     //SQL Instance variables.
     string filename;
@@ -36,6 +39,7 @@ private:
 
     void openConnection();
 	void closeConnection();
+	std::string combineVector(std::vector<std::string> strings, std::string mid);
 };
 
 #endif // DATABASE_H

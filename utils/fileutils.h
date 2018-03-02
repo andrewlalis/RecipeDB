@@ -19,7 +19,7 @@ namespace FileUtils {
 		}
 	}
 
-	void saveInstruction(int nr, Instruction instruction){
+	string saveInstruction(int nr, Instruction instruction){
 		ensureAppDataFolderExists();
 		QString filename = appDataPath + QString::fromStdString(std::to_string(nr)) +".html";
 		QFile file(filename);
@@ -27,8 +27,10 @@ namespace FileUtils {
 			QTextStream stream(&file);
 			stream<<instruction.getHTML().c_str()<<endl;
 			file.close();
+			return filename.toStdString();
 		} else {
 			fprintf(stderr, "Error opening file: %s to write instruction.\n", filename.toStdString().c_str());
+			return "";
 		}
 	}
 

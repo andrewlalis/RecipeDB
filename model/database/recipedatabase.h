@@ -21,8 +21,7 @@ class RecipeDatabase : public Database
 		void storeRecipe(Recipe recipe);
 
 		//SQL Helper methods.
-		void storeInstruction(Instruction instruction);
-		void storeImage(QImage image);
+		void storeRecipeIngredient(RecipeIngredient ri);
 		void storeIngredient(Ingredient ingredient);
 	private:
 

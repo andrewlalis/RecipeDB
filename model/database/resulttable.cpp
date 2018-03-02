@@ -25,10 +25,14 @@ void ResultTable::processRow(sqlite3_stmt *stmt){
 }
 
 void ResultTable::printData(){
+	if (this->isEmpty()){
+		printf("Result table is empty.\n");
+		return;
+	}
 	printf("Printing table: %d by %d\n", this->rowCount(), this->columnCount());
 	for (unsigned int row = 0; row < this->rowCount(); row++){
 		for (unsigned int col = 0; col < this->columnCount(); col++){
-			printf("| %s \t", this->values[row][col].c_str());
+			printf("| %s ", this->values[row][col].c_str());
 		}
 		printf("\n");
 	}

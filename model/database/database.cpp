@@ -15,7 +15,7 @@ ResultTable Database::executeSQL(string statement){
 	this->returnCode = sqlite3_prepare_v2(this->db, statement.c_str(), -1, &stmt, NULL);
 	ResultTable t;
 	if (this->returnCode != SQLITE_OK){
-		fprintf(stderr, "Unable to successfully prepare SQL statement. Error code: %d\nError Message: %s\n", this->returnCode, sqlite3_errmsg(this->db));
+		fprintf(stderr, "Unable to successfully prepare SQL statement. Error code: %d\n\tError Message: %s\n", this->returnCode, sqlite3_errmsg(this->db));
 		return t;
 	}
 
@@ -24,6 +24,19 @@ ResultTable Database::executeSQL(string statement){
 	this->returnCode = sqlite3_finalize(stmt);
 
 	return t;
+}
+
+bool Database::insertInto(string tableName, vector<string> columnNames, vector<string> values){
+	if (columnNames.size() != values.size() || columnNames.empty()){
+		return false;
+	}
+	string query = "INSERT INTO "+tableName+" (";
+	string cols = combineVector(columnNames, ", ");
+	string vals = combineVector(values, ", ");
+	query += cols + ") VALUES (" + vals + ");";
+	printf("Executing query: %s\n", query.c_str());
+	this->executeSQL(query);
+	return true;
 }
 
 void Database::openConnection(){
@@ -39,7 +52,18 @@ void Database::openConnection(){
 
 void Database::closeConnection(){
     this->returnCode = sqlite3_close(this->db);
-    this->dbIsOpen = false;
+	this->dbIsOpen = false;
+}
+
+string Database::combineVector(std::vector<string> strings, string mid){
+	if (strings.empty()){
+		return "";
+	}
+	std::string result = "'" + strings[0] + "'";
+	for (std::vector<std::string>::iterator it = strings.begin() + 1; it != strings.end(); ++it){
+		result += mid + "'" + (*it) + "'";
+	}
+	return result;
 }
 
 bool Database::tableExists(string tableName){
@@ -48,4 +72,8 @@ bool Database::tableExists(string tableName){
 	}
 	ResultTable t = executeSQL("SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';");
 	return !t.isEmpty();
+}
+
+int Database::getLastInsertedRowId(){
+	return sqlite3_last_insert_rowid(this->db);
 }

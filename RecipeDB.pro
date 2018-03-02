@@ -39,7 +39,8 @@ HEADERS  += model/recipe/instruction.h \
     SQLite/sqlite3ext.h \
     model/database/resulttable.h \
     model/database/recipedatabase.h \
-    utils/fileutils.h
+    utils/fileutils.h \
+    utils/stringutils.h
 
 LIBS += -ldl \
 
