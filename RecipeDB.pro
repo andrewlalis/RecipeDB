@@ -24,8 +24,7 @@ SOURCES += model/recipe/instruction.cpp \
     model/recipe/tags/recipetag.cpp \
     SQLite/sqlite3.c \
     model/database/resulttable.cpp \
-    model/database/recipedatabase.cpp \
-    utils/fileutils.cpp
+    model/database/recipedatabase.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \

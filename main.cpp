@@ -3,6 +3,7 @@
 
 #include "model/database/database.h"
 #include "model/database/recipedatabase.h"
+#include "utils/fileutils.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +21,9 @@ int main(int argc, char *argv[])
 	RecipeDatabase recipeDB("recipes");
 	recipeDB.storeIngredient(Ingredient("Apple", "Fruit"));
 	recipeDB.storeIngredient(Ingredient("Corn", "Vegetable"));
-	recipeDB.executeSQL("SELECT ingredientId FROM ingredient;").printData();
+	recipeDB.executeSQL("SELECT * FROM ingredient;").printData();
+
+	FileUtils::saveInstruction(1, Instruction("This is some plain text with no HTML markup."));
 
 	return a.exec();
 }
