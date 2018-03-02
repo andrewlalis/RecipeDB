@@ -5,53 +5,23 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
+#include <QImage>
 
 #include "model/recipe/instruction.h"
 
-namespace FileUtils {
+namespace FileUtils{
 
-	QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/.recipeDB/";
+	const QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/.recipeDB/";
 
-	void ensureAppDataFolderExists(){
-		QDir folder(appDataPath);
-		if (!folder.exists()){
-			folder.mkpath(".");
-		}
-	}
+	void ensureAppDataFolderExists();
 
-	string saveInstruction(int nr, Instruction instruction){
-		ensureAppDataFolderExists();
-		QString filename = appDataPath + QString::fromStdString(std::to_string(nr)) +".html";
-		QFile file(filename);
-		if (file.open(QIODevice::WriteOnly)){
-			QTextStream stream(&file);
-			stream<<instruction.getHTML().c_str()<<endl;
-			file.close();
-			return filename.toStdString();
-		} else {
-			fprintf(stderr, "Error opening file: %s to write instruction.\n", filename.toStdString().c_str());
-			return "";
-		}
-	}
+	bool saveInstruction(int nr, Instruction instruction);
 
-	Instruction loadInstruction(int nr){
-		QString filename = appDataPath + QString::fromStdString(std::to_string(nr)) + ".html";
-		QFile file(filename);
-		if (!file.exists()){
-			fprintf(stderr, "Instruction Nr: %d does not exist.\n", nr);
-			return Instruction();
-		}
-		if (file.open(QIODevice::ReadOnly)){
-			QTextStream stream(&file);
-			QString s = stream.readAll();
-			file.close();
-			return Instruction(s.toStdString());
-		} else {
-			fprintf(stderr, "Error opening file: %s to read instruction.\n", filename.toStdString().c_str());
-			return Instruction();
-		}
-	}
+	Instruction loadInstruction(int nr);
 
+	bool saveImage(int nr, QImage image);
+
+	QImage loadImage(int nr);
 }
 
 #endif // FILEUTILS_H

@@ -5,6 +5,7 @@
 
 #include "database.h"
 #include "model/recipe/recipe.h"
+#include "utils/fileutils.h"
 
 using namespace std;
 
@@ -18,11 +19,13 @@ class RecipeDatabase : public Database
 		RecipeDatabase(string filename);
 
 		//Stores a full recipe in the database.
-		void storeRecipe(Recipe recipe);
+		bool storeRecipe(Recipe recipe);
 
 		//SQL Helper methods.
-		void storeRecipeIngredient(RecipeIngredient ri);
+		bool storeRecipeIngredient(RecipeIngredient ri, int recipeId);
 		void storeIngredient(Ingredient ingredient);
+		bool storeInstruction(Instruction instruction, int recipeId);
+		bool storeImage(QImage image, int recipeId);
 	private:
 
 		//Utility methods.

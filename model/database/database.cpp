@@ -34,7 +34,6 @@ bool Database::insertInto(string tableName, vector<string> columnNames, vector<s
 	string cols = combineVector(columnNames, ", ");
 	string vals = combineVector(values, ", ");
 	query += cols + ") VALUES (" + vals + ");";
-	printf("Executing query: %s\n", query.c_str());
 	this->executeSQL(query);
 	return true;
 }
