@@ -24,7 +24,8 @@ SOURCES += model/recipe/instruction.cpp \
     model/recipe/tags/recipetag.cpp \
     SQLite/sqlite3.c \
     model/database/resulttable.cpp \
-    model/database/recipedatabase.cpp
+    model/database/recipedatabase.cpp \
+    utils/fileutils.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
@@ -38,7 +39,8 @@ HEADERS  += model/recipe/instruction.h \
     SQLite/sqlite3.h \
     SQLite/sqlite3ext.h \
     model/database/resulttable.h \
-    model/database/recipedatabase.h
+    model/database/recipedatabase.h \
+    utils/fileutils.h
 
 LIBS += -ldl \
 

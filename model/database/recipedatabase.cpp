@@ -6,6 +6,7 @@ RecipeDatabase::RecipeDatabase(string filename) : Database(filename){
 
 void RecipeDatabase::storeRecipe(Recipe recipe){
 	///TODO: Implement this in a smart way using transaction.
+
 }
 
 void RecipeDatabase::ensureTablesExist(){
@@ -13,52 +14,62 @@ void RecipeDatabase::ensureTablesExist(){
 	this->executeSQL("PRAGMA foreign_keys = ON;");
 	//Ingredients table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS ingredient("
-					 "ingredientId int,"
+					 "ingredientId INTEGER PRIMARY KEY,"
 					 "foodGroup varchar,"
-					 "name varchar,"
-					 "PRIMARY KEY (ingredientId));");
+					 "name varchar);");
 	//Images table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS image("
-					 "imageNr int,"
-					 "contentURL varchar,"
-					 "PRIMARY KEY (imageNr));");
+					 "imageNr INTEGER PRIMARY KEY,"
+					 "contentURL varchar);");
 	//Instructions table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS instruction("
-					 "instructionNr int,"
-					 "contentURL varchar,"
-					 "PRIMARY KEY (instructionNr));");
+					 "instructionNr INTEGER PRIMARY KEY,"
+					 "contentURL varchar);");
 	//Recipe table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipe("
-					 "recipeId int,"
+					 "recipeId INTEGER PRIMARY KEY,"
 					 "date date,"
 					 "name varchar,"
 					 "imageNr int,"
 					 "cookTime time,"
 					 "prepTime time,"
 					 "servingCount real,"
-					 "PRIMARY KEY (recipeId),"
 					 "FOREIGN KEY (imageNr) REFERENCES image(imageNr));");
 	//Recipe tags table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipeTag("
-					 "recipeId int,"
+					 "recipeId INTEGER PRIMARY KEY,"
 					 "tagName varchar,"
-					 "PRIMARY KEY (recipeId),"
 					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId));");
 	//RecipeIngredient table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipeIngredient("
 					 "ingredientId int,"
-					 "recipeId int,"
+					 "recipeId INTEGER PRIMARY KEY,"
 					 "quantity real,"
 					 "unitName varchar,"
 					 "comment varchar,"
-					 "PRIMARY KEY (recipeId),"
 					 "FOREIGN KEY (ingredientId) REFERENCES ingredient(ingredientId),"
 					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId));");
 	//Recipe Instruction mapping table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipeInstruction("
 					 "instructionNr int,"
-					 "recipeId int,"
-					 "PRIMARY KEY (recipeId),"
+					 "recipeId INTEGER PRIMARY KEY,"
 					 "FOREIGN KEY (instructionNr) REFERENCES instruction(instructionNr),"
 					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId));");
+}
+
+void RecipeDatabase::storeInstruction(Instruction instruction){
+
+}
+
+void RecipeDatabase::storeImage(QImage image){
+
+}
+
+void RecipeDatabase::storeIngredient(Ingredient ingredient){
+	ResultTable t = this->executeSQL("SELECT * FROM ingredient WHERE name='"+ingredient.getName()+"';");
+	if (!t.isEmpty()){
+		fprintf(stderr, "Error during storeIngredient: ingredient with name %s already exists.\n", ingredient.getName().c_str());
+	} else {
+		this->executeSQL("INSERT INTO ingredient (foodGroup, name) VALUES ('"+ ingredient.getFoodGroup() +"', '"+ ingredient.getName() +"');");
+	}
 }

@@ -19,6 +19,11 @@ class RecipeDatabase : public Database
 
 		//Stores a full recipe in the database.
 		void storeRecipe(Recipe recipe);
+
+		//SQL Helper methods.
+		void storeInstruction(Instruction instruction);
+		void storeImage(QImage image);
+		void storeIngredient(Ingredient ingredient);
 	private:
 
 		//Utility methods.
