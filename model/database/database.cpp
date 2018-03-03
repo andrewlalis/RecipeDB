@@ -34,8 +34,16 @@ bool Database::insertInto(string tableName, vector<string> columnNames, vector<s
 	string cols = combineVector(columnNames, ", ");
 	string vals = combineVector(values, ", ");
 	query += cols + ") VALUES (" + vals + ");";
-	this->executeSQL(query);
-	return true;
+	ResultTable t = this->executeSQL(query);
+	return (t.getReturnCode() == SQLITE_DONE);
+}
+
+ResultTable Database::selectFrom(string tableName, string columnNames, string conditions){
+	if (columnNames.size() == 0 || tableName.empty()){
+		return ResultTable();
+	}
+	string query = "SELECT " + columnNames + " FROM " + tableName + " WHERE " + conditions + ";";
+	return this->executeSQL(query);
 }
 
 void Database::openConnection(){
@@ -58,18 +66,23 @@ string Database::combineVector(std::vector<string> strings, string mid){
 	if (strings.empty()){
 		return "";
 	}
-	std::string result = "'" + strings[0] + "'";
+	std::string result = surroundString(strings[0], "'");
 	for (std::vector<std::string>::iterator it = strings.begin() + 1; it != strings.end(); ++it){
-		result += mid + "'" + (*it) + "'";
+		result += mid + surroundString((*it), "'");
 	}
 	return result;
+}
+
+string Database::surroundString(string s, string surround){
+	return surround+s+surround;
 }
 
 bool Database::tableExists(string tableName){
 	if (tableName.empty() || this->db == NULL || !this->dbIsOpen){
 		return false;
 	}
-	ResultTable t = executeSQL("SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';");
+	ResultTable t = this->selectFrom("sqlite_master", "name", "type='table' AND name='"+tableName+"'");
+	//ResultTable t = executeSQL("SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';");
 	return !t.isEmpty();
 }
 

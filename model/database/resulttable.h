@@ -27,10 +27,12 @@ class ResultTable
 
 		bool isEmpty();
 		string valueAt(unsigned int row, unsigned int col);
+		int getReturnCode();
 		unsigned int columnCount();
 		unsigned int rowCount();
 	private:
 		vector<vector<string>> values;
+		int queryCode;
 
 		//Utility methods.
 		string convertToString(sqlite3_value* val);

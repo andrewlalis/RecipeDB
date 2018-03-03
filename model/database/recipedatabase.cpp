@@ -6,10 +6,11 @@ RecipeDatabase::RecipeDatabase(string filename) : Database(filename){
 
 bool RecipeDatabase::storeRecipe(Recipe recipe){
 	///TODO: Implement this in a smart way using transaction.
-	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE name='"+recipe.getName()+"';");
+	this->executeSQL("BEGIN;");
+	ResultTable t = this->selectFrom("recipe", "*", "name="+surroundString(recipe.getName(), "'"));
+	//ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE name='"+recipe.getName()+"';");
 	if (!t.isEmpty()){
 		fprintf(stderr, "Error storing recipe: Recipe with name %s already exists.\n", recipe.getName().c_str());
-		return false;
 	} else {
 		bool success = this->insertInto("recipe",
 						 vector<string>({
@@ -29,27 +30,27 @@ bool RecipeDatabase::storeRecipe(Recipe recipe){
 		if (success){
 			//If successful, proceed to insert instructions, image, and ingredients.
 			int recipeId = this->getLastInsertedRowId();
+			bool ingredientSuccess = true;
 			for (unsigned int i = 0; i < recipe.getIngredients().size(); i++){
 				if (!this->storeRecipeIngredient(recipe.getIngredients()[i], recipeId)){
-					return false;
+					ingredientSuccess = false;
+					break;
 				}
 			}
-			if (!this->storeInstruction(recipe.getInstruction(), recipeId)){
-				return false;
+			if (ingredientSuccess && this->storeInstruction(recipe.getInstruction(), recipeId) && this->storeImage(recipe.getImage(), recipeId)){
+				this->executeSQL("COMMIT;");
+				return true;
 			}
-			if (!this->storeImage(recipe.getImage(), recipeId)){
-				return false;
-			}
-			return true;
-		} else {
-			return false;
 		}
 	}
+	this->executeSQL("ROLLBACK;");
+	return false;
 }
 
 bool RecipeDatabase::storeRecipeIngredient(RecipeIngredient ri, int recipeId){
 	//First check if the base ingredient has been added to the database. This is done within storeIngredient().
-	ResultTable t = this->executeSQL("SELECT ingredientId FROM ingredient WHERE name='"+ri.getName()+"';");
+	ResultTable t = this->selectFrom("ingredient", "ingredientId", "name="+surroundString(ri.getName(), "'"));
+	//ResultTable t = this->executeSQL("SELECT ingredientId FROM ingredient WHERE name='"+ri.getName()+"';");
 	int ingId = 0;
 	if (t.isEmpty()){
 		if (!this->insertInto("ingredient", vector<string>({"foodGroup", "name"}), vector<string>({ri.getFoodGroup(), ri.getName()}))){
@@ -77,15 +78,15 @@ bool RecipeDatabase::storeRecipeIngredient(RecipeIngredient ri, int recipeId){
 }
 
 void RecipeDatabase::storeIngredient(Ingredient ingredient){
-	ResultTable t = this->executeSQL("SELECT * FROM ingredient WHERE name='"+ingredient.getName()+"';");
+	ResultTable t = this->selectFrom("ingredient", "*", "name="+surroundString(ingredient.getName(), "'"));
+	//ResultTable t = this->executeSQL("SELECT * FROM ingredient WHERE name='"+ingredient.getName()+"';");
 	if (t.isEmpty()){
 		this->insertInto("ingredient", vector<string>({"foodGroup", "name"}), vector<string>({ingredient.getFoodGroup(), ingredient.getName()}));
 	}
 }
 
 bool RecipeDatabase::storeInstruction(Instruction instruction, int recipeId){
-	bool success = FileUtils::saveInstruction(recipeId, instruction);
-	return success;
+	return FileUtils::saveInstruction(recipeId, instruction);
 }
 
 bool RecipeDatabase::storeImage(QImage image, int recipeId){
@@ -99,12 +100,12 @@ void RecipeDatabase::ensureTablesExist(){
 	this->executeSQL("CREATE TABLE IF NOT EXISTS ingredient("
 					 "ingredientId INTEGER PRIMARY KEY,"
 					 "foodGroup varchar,"
-					 "name varchar);");
+					 "name varchar UNIQUE);");
 	//Recipe table. Each recipe can have at most one instruction, and one image.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipe("
 					 "recipeId INTEGER PRIMARY KEY,"
 					 "createdDate date,"
-					 "name varchar,"
+					 "name varchar UNIQUE,"
 					 "cookTime time,"
 					 "prepTime time,"
 					 "servingCount real);");

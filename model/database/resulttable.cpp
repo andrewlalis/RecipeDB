@@ -11,6 +11,7 @@ void ResultTable::extractData(sqlite3_stmt *stmt){
 		processRow(stmt);
 		res = sqlite3_step(stmt);
 	}
+	this->queryCode = res;
 }
 
 void ResultTable::processRow(sqlite3_stmt *stmt){
@@ -49,6 +50,10 @@ string ResultTable::valueAt(unsigned int row, unsigned int col){
 		fprintf(stderr, "Out of bounds error while trying to get value in result table at [%d, %d].\n", row, col);
 		return "";
 	}
+}
+
+int ResultTable::getReturnCode(){
+	return this->queryCode;
 }
 
 unsigned int ResultTable::columnCount(){

@@ -25,9 +25,14 @@ public:
 	//Executes an SQL string statement in a safe way and returns the result.
 	ResultTable executeSQL(string statement);
 	bool insertInto(string tableName, vector<string> columnNames, vector<string> values);
+	ResultTable selectFrom(string tableName, string columnNames, string conditions);
 
 	bool tableExists(string tableName);
 	int getLastInsertedRowId();
+
+protected:
+	string surroundString(string s, string surround);
+
 private:
     //SQL Instance variables.
     string filename;
