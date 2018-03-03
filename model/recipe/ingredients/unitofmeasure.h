@@ -14,6 +14,8 @@ class UnitOfMeasure
 public:
     //Full constructor.
     UnitOfMeasure(string name, string plural, string abbreviation);
+	//Attempt to guess unit from just a string.
+	UnitOfMeasure(string name);
     //Constructor with default values.
     UnitOfMeasure();
 

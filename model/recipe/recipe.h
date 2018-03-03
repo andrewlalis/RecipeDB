@@ -58,6 +58,8 @@ public:
     void setPrepTime(QTime newTime);
     void setCookTime(QTime newTime);
     void setServings(float newServingsCount);
+
+	void print();
 private:
     //Main information.
     string name;                                //The name of the recipe.

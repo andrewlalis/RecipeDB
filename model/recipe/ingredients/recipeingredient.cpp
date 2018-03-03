@@ -9,7 +9,11 @@ RecipeIngredient::RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure u
     setName(i.getName());
     setFoodGroup(i.getFoodGroup());
     setQuantity(quantity);
-    setUnit(unit);
+	setUnit(unit);
+}
+
+RecipeIngredient::RecipeIngredient(){
+
 }
 
 float RecipeIngredient::getQuantity() const{

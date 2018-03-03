@@ -30,11 +30,10 @@ int main(int argc, char *argv[])
 	bool success = recipeDB.storeRecipe(rec);
 	printf("Storage successful: %d\n", success);
 
-	recipeDB.executeSQL("SELECT * FROM recipeIngredient;").printData();
-
 	Recipe reloadRec = recipeDB.retrieveRecipe("Example");
+	reloadRec.print();
 
-	w.loadFromRecipe(rec);
+	w.loadFromRecipe(reloadRec);
 
 	return a.exec();
 }

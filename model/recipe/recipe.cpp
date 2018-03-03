@@ -29,7 +29,11 @@ Instruction Recipe::getInstruction() const{
 }
 
 QImage Recipe::getImage() const{
-    return this->image;
+	return this->image;
+}
+
+vector<RecipeTag> Recipe::getTags() const{
+	return this->tags;
 }
 
 QDate Recipe::getCreatedDate() const{
@@ -89,5 +93,29 @@ void Recipe::setCookTime(QTime newTime){
 }
 
 void Recipe::setServings(float newServingsCount){
-    this->servings = newServingsCount;
+	this->servings = newServingsCount;
+}
+
+void Recipe::print(){
+	printf("Recipe: %s, Created on: %s, Prep time: %s, Cook time: %s, Serves: %f\n",
+		   this->name.c_str(),
+		   this->createdDate.toString().toStdString().c_str(),
+		   this->prepTime.toString().toStdString().c_str(),
+		   this->cookTime.toString().toStdString().c_str(),
+		   this->servings);
+	printf("\tInstruction: %s\n", this->instruction.getHTML().c_str());
+	printf("\tIngredients:\n");
+	for (vector<RecipeIngredient>::iterator it = this->ingredients.begin(); it != this->ingredients.end(); ++it){
+		RecipeIngredient ri = *it;
+		printf("\t\t%s, Food Group: %s, Quantity: %f, Unit: %s\n",
+			   ri.getName().c_str(),
+			   ri.getFoodGroup().c_str(),
+			   ri.getQuantity(),
+			   ri.getUnit().getName().c_str());
+	}
+	printf("\tTags:\n");
+	for (vector<RecipeTag>::iterator it = this->tags.begin(); it != this->tags.end(); ++it){
+		RecipeTag t = *it;
+		printf("\t\t%s\n", t.getValue().c_str());
+	}
 }

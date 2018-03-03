@@ -26,8 +26,10 @@ class RecipeDatabase : public Database
 		void storeIngredient(Ingredient ingredient);
 		bool storeInstruction(Instruction instruction, int recipeId);
 		bool storeImage(QImage image, int recipeId);
+		bool storeTags(vector<RecipeTag> tags, int recipeId);
 
 		Recipe retrieveRecipe(string name);
+		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 	private:
 
 		//Utility methods.
