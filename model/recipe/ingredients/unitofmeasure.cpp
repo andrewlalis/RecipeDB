@@ -3,7 +3,14 @@
 UnitOfMeasure::UnitOfMeasure(string name, string plural, string abbreviation){
     this->name = name;
     this->plural = plural;
-    this->abbreviation = abbreviation;
+	this->abbreviation = abbreviation;
+}
+
+UnitOfMeasure::UnitOfMeasure(string name){
+	this->name = name;
+	this->plural = name + "s";
+	this->abbreviation = "NULL";
+	///TODO: Make actual guessing of this stuff.
 }
 
 UnitOfMeasure::UnitOfMeasure() : UnitOfMeasure::UnitOfMeasure("", "", ""){

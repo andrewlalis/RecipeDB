@@ -3,16 +3,47 @@
 Database::Database(string filename){
     this->filename = filename;
     openConnection();
-    //TESTING CODE
-    if (tableExists("ingredients")){
-        printf("Ingredients table already exists.\n");
-    } else {
-        printf("Couldn't find the ingredients table.\n");
-    }
 }
 
 Database::~Database(){
-    closeConnection();
+	closeConnection();
+}
+
+ResultTable Database::executeSQL(string statement){
+	sqlite3_stmt* stmt;
+	this->sql = statement;
+	this->returnCode = sqlite3_prepare_v2(this->db, statement.c_str(), -1, &stmt, NULL);
+	ResultTable t(statement);
+	if (this->returnCode != SQLITE_OK){
+		fprintf(stderr, "Unable to successfully prepare SQL statement. Error code: %d\n\tError Message: %s\n", this->returnCode, sqlite3_errmsg(this->db));
+		return t;
+	}
+
+	t.extractData(stmt);
+
+	this->returnCode = sqlite3_finalize(stmt);
+
+	return t;
+}
+
+bool Database::insertInto(string tableName, vector<string> columnNames, vector<string> values){
+	if (columnNames.size() != values.size() || columnNames.empty()){
+		return false;
+	}
+	string query = "INSERT INTO "+tableName+" (";
+	string cols = combineVector(columnNames, ", ");
+	string vals = combineVector(values, ", ");
+	query += cols + ") VALUES (" + vals + ");";
+	ResultTable t = this->executeSQL(query);
+	return (t.getReturnCode() == SQLITE_DONE);
+}
+
+ResultTable Database::selectFrom(string tableName, string columnNames, string conditions){
+	if (columnNames.size() == 0 || tableName.empty()){
+		return ResultTable();
+	}
+	string query = "SELECT " + columnNames + " FROM " + tableName + " WHERE " + conditions + ";";
+	return this->executeSQL(query);
 }
 
 void Database::openConnection(){
@@ -28,20 +59,33 @@ void Database::openConnection(){
 
 void Database::closeConnection(){
     this->returnCode = sqlite3_close(this->db);
-    this->dbIsOpen = false;
+	this->dbIsOpen = false;
+}
+
+string Database::combineVector(std::vector<string> strings, string mid){
+	if (strings.empty()){
+		return "";
+	}
+	std::string result = surroundString(strings[0], "'");
+	for (std::vector<std::string>::iterator it = strings.begin() + 1; it != strings.end(); ++it){
+		result += mid + surroundString((*it), "'");
+	}
+	return result;
+}
+
+string Database::surroundString(string s, string surround){
+	return surround+s+surround;
 }
 
 bool Database::tableExists(string tableName){
-    if (this->dbIsOpen){
-        this->sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';";
-        const char* str = this->sql.c_str();
-        this->returnCode = sqlite3_exec(this->db, str, NULL, 0, &this->errorMsg);
-        if (this->returnCode == SQLITE_ERROR){
-            fprintf(stderr, "Unable to select name from master table list: %s\n", this->errorMsg);
-            return false;
-        } else {
-            return true;
-        }
-    }
-    return false;
+	if (tableName.empty() || this->db == NULL || !this->dbIsOpen){
+		return false;
+	}
+	ResultTable t = this->selectFrom("sqlite_master", "name", "type='table' AND name='"+tableName+"'");
+	//ResultTable t = executeSQL("SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';");
+	return !t.isEmpty();
+}
+
+int Database::getLastInsertedRowId(){
+	return sqlite3_last_insert_rowid(this->db);
 }
