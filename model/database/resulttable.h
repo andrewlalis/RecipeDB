@@ -17,6 +17,8 @@ class ResultTable
 	public:
 		//Constructs an empty table.
 		ResultTable();
+		//Constructs a table with the original query saved.
+		ResultTable(string query);
 
 		//Gets all the data from the result set and stores it internally as strings.
 		void extractData(sqlite3_stmt* stmt);
@@ -28,11 +30,13 @@ class ResultTable
 		bool isEmpty();
 		string valueAt(unsigned int row, unsigned int col);
 		int getReturnCode();
+		string getOriginalQuery();
 		unsigned int columnCount();
 		unsigned int rowCount();
 	private:
 		vector<vector<string>> values;
 		int queryCode;
+		string originalQuery;
 
 		//Utility methods.
 		string convertToString(sqlite3_value* val);

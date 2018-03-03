@@ -93,6 +93,16 @@ bool RecipeDatabase::storeImage(QImage image, int recipeId){
 	return FileUtils::saveImage(recipeId, image);
 }
 
+Recipe RecipeDatabase::retrieveRecipe(string name){
+	ResultTable t = this->selectFrom("recipe", "*", "name="+surroundString(name, "'"));
+	if (t.isEmpty()){
+		fprintf(stderr, "Error: No recipe with name %s found!\n", name.c_str());
+		return Recipe();
+	}
+	t.printData();
+	return Recipe();
+}
+
 void RecipeDatabase::ensureTablesExist(){
 	//Make sure that foreign keys are enabled.
 	this->executeSQL("PRAGMA foreign_keys = ON;");

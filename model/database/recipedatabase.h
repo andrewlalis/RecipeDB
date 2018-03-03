@@ -27,7 +27,7 @@ class RecipeDatabase : public Database
 		bool storeInstruction(Instruction instruction, int recipeId);
 		bool storeImage(QImage image, int recipeId);
 
-		vector<Recipe> retrieveRecipe(string name);
+		Recipe retrieveRecipe(string name);
 	private:
 
 		//Utility methods.

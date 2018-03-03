@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
 
 	recipeDB.executeSQL("SELECT * FROM recipeIngredient;").printData();
 
+	Recipe reloadRec = recipeDB.retrieveRecipe("Example");
+
 	w.loadFromRecipe(rec);
 
 	return a.exec();

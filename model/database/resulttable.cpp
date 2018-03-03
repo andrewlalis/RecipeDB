@@ -4,6 +4,10 @@ ResultTable::ResultTable(){
 
 }
 
+ResultTable::ResultTable(string query){
+	this->originalQuery = query;
+}
+
 void ResultTable::extractData(sqlite3_stmt *stmt){
 	this->values.clear();
 	int res = sqlite3_step(stmt);
@@ -30,7 +34,7 @@ void ResultTable::printData(){
 		printf("Result table is empty.\n");
 		return;
 	}
-	printf("Printing table: %d by %d\n", this->rowCount(), this->columnCount());
+	printf("Printing table: [%d x %d]\t%s\n", this->rowCount(), this->columnCount(), this->originalQuery.c_str());
 	for (unsigned int row = 0; row < this->rowCount(); row++){
 		for (unsigned int col = 0; col < this->columnCount(); col++){
 			printf("| %s ", this->values[row][col].c_str());
@@ -54,6 +58,10 @@ string ResultTable::valueAt(unsigned int row, unsigned int col){
 
 int ResultTable::getReturnCode(){
 	return this->queryCode;
+}
+
+string ResultTable::getOriginalQuery(){
+	return this->originalQuery;
 }
 
 unsigned int ResultTable::columnCount(){
