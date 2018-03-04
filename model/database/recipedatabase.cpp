@@ -117,7 +117,6 @@ Recipe RecipeDatabase::retrieveRecipe(string name){
 		fprintf(stderr, "Error: No recipe with name %s found!\n", name.c_str());
 		return Recipe();
 	}
-	t.printData();
 	Recipe r;
 	int id = std::stoi(t.valueAt(0, 0));
 	r.setName(t.valueAt(0, 1));
@@ -137,7 +136,6 @@ vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId)
 									 "INNER JOIN recipeIngredient "
 									 "ON ingredient.ingredientId = recipeIngredient.ingredientId "
 									 "AND recipeIngredient.recipeId = "+std::to_string(recipeId)+";");
-	t.printData();
 	vector<RecipeIngredient> ings;
 	for (unsigned int row = 0; row < t.rowCount(); row++){
 		RecipeIngredient r(t.valueAt(row, 0), t.valueAt(row, 1), std::stof(t.valueAt(row, 2)), UnitOfMeasure(t.valueAt(row, 3)));

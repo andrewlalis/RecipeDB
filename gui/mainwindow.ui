@@ -109,12 +109,25 @@
             </property>
             <property name="font">
              <font>
-              <family>Source Sans Pro Light</family>
+              <family>Noto Sans CJK KR Light</family>
               <pointsize>20</pointsize>
+              <stylestrategy>PreferAntialias</stylestrategy>
              </font>
             </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(83, 75, 255);</string>
+             <string notr="true">QPushButton#newButton {
+	background-color: rgb(235, 235, 255);
+	border: 0px;
+}
+QPushButton#newButton:hover{
+	background-color: rgb(245, 245, 255);
+}
+QPushButton#newButton:pressed{
+	background-color: rgb(255, 255, 255);
+}</string>
             </property>
             <property name="text">
              <string>New</string>
@@ -134,12 +147,22 @@
             </property>
             <property name="font">
              <font>
-              <family>Source Sans Pro Light</family>
+              <family>Noto Sans CJK KR Light</family>
               <pointsize>20</pointsize>
+              <stylestrategy>PreferAntialias</stylestrategy>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(112, 105, 255);</string>
+             <string notr="true">QPushButton#openButton {
+	background-color: rgb(222, 226, 255);
+	border: 0px;
+}
+QPushButton#openButton:hover{
+	background-color: rgb(232, 236, 255);
+}
+QPushButton#openButton:pressed{
+	background-color: rgb(255, 255, 255);
+}</string>
             </property>
             <property name="text">
              <string>Open</string>
@@ -156,15 +179,31 @@
             </property>
             <property name="font">
              <font>
-              <family>Source Sans Pro Light</family>
+              <family>Noto Sans CJK KR Light</family>
               <pointsize>20</pointsize>
+              <stylestrategy>PreferAntialias</stylestrategy>
              </font>
             </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(137, 131, 255);</string>
+             <string notr="true">QPushButton#browseButton {
+	background-color: rgb(215, 215, 255);
+	border: 0px;
+}
+QPushButton#browseButton:hover{
+	background-color: rgb(225, 225, 255);
+}
+QPushButton#browseButton:pressed{
+	background-color: rgb(255, 255, 255);
+}</string>
             </property>
             <property name="text">
              <string>Browse</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -214,8 +253,13 @@
          </property>
          <property name="font">
           <font>
-           <family>Source Sans Pro Light</family>
+           <family>Noto Sans CJK KR Light</family>
            <pointsize>24</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="styleSheet">
@@ -299,7 +343,7 @@
                </property>
                <property name="font">
                 <font>
-                 <family>Source Sans Pro Light</family>
+                 <family>Noto Sans CJK KR Thin</family>
                  <pointsize>18</pointsize>
                 </font>
                </property>
@@ -324,8 +368,9 @@
                </property>
                <property name="font">
                 <font>
-                 <family>Source Sans Pro Light</family>
-                 <pointsize>16</pointsize>
+                 <family>Noto Sans CJK KR Light</family>
+                 <pointsize>12</pointsize>
+                 <stylestrategy>PreferAntialias</stylestrategy>
                 </font>
                </property>
                <property name="styleSheet">
@@ -342,6 +387,9 @@
                </property>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::NoSelection</enum>
                </property>
                <property name="isWrapping" stdset="0">
                 <bool>true</bool>
@@ -397,7 +445,7 @@
                </property>
                <property name="font">
                 <font>
-                 <family>Source Sans Pro Light</family>
+                 <family>Noto Sans CJK KR Thin</family>
                  <pointsize>18</pointsize>
                 </font>
                </property>
@@ -445,11 +493,11 @@
                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#00ff40;&quot;&gt;This is some &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#a33c3e;&quot;&gt;colored text and &lt;/span&gt;&lt;a href=&quot;https://www.google.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;link&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Serif Bold'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; color:#00ff40;&quot;&gt;This is some &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:16pt; color:#a33c3e;&quot;&gt;colored text and &lt;/span&gt;&lt;a href=&quot;https://www.google.com&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;link&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="textInteractionFlags">
-                <set>Qt::LinksAccessibleByMouse</set>
+                <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
                </property>
               </widget>
              </item>
