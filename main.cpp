@@ -1,4 +1,5 @@
 #include "userInterface/mainwindow.h"
+#include "gui/newrecipedialog.h"
 #include <QApplication>
 
 #include "model/database/database.h"
@@ -28,6 +29,10 @@ int main(int argc, char *argv[])
 	reloadRec.print();
 
 	w.loadFromRecipe(reloadRec);
+
+	NewRecipeDialog d;
+	d.show();
+	d.exec();
 
 	return a.exec();
 }
