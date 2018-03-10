@@ -101,3 +101,11 @@ void NewRecipeDialog::on_addTagButton_clicked(){
 	//Add a tag to the list of those prepared to be added.
 	this->tagsListModel.addTag(this->tags[ui->tagsComboBox->currentIndex()]);
 }
+
+void NewRecipeDialog::on_deleteTagButton_clicked(){
+	QModelIndexList indexList = ui->tagsListView->selectedIndexes();
+	for (QModelIndexList::iterator it = indexList.begin(); it != indexList.end(); ++it){
+		QModelIndex i = *it;
+		this->tagsListModel.deleteTag(i.row());
+	}
+}

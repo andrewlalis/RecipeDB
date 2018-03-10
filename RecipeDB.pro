@@ -54,4 +54,5 @@ FORMS    += gui/mainwindow.ui \
 DISTFILES += \
     .gitignore
 
-RESOURCES +=
+RESOURCES += \
+    images.qrc
