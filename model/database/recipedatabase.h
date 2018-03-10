@@ -22,14 +22,19 @@ class RecipeDatabase : public Database
 		bool storeRecipe(Recipe recipe);
 
 		//SQL Helper methods.
+		//Storage.
 		bool storeRecipeIngredient(RecipeIngredient ri, int recipeId);
-		void storeIngredient(Ingredient ingredient);
+		int storeIngredient(Ingredient ingredient);
+		bool storeUnitOfMeasure(UnitOfMeasure u);
 		bool storeInstruction(Instruction instruction, int recipeId);
 		bool storeImage(QImage image, int recipeId);
 		bool storeTags(vector<RecipeTag> tags, int recipeId);
 
+		//Retrieval.
 		Recipe retrieveRecipe(string name);
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
+		vector<Ingredient> retrieveAllIngredients();
+		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();
 	private:
 
 		//Utility methods.

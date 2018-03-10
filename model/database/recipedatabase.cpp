@@ -5,9 +5,9 @@ RecipeDatabase::RecipeDatabase(string filename) : Database(filename){
 }
 
 bool RecipeDatabase::storeRecipe(Recipe recipe){
-	///TODO: Implement this in a smart way using transaction.
+	//Store a recipe, if it doesn't already exist. This first tries to create the recipe entry, then all subsequent supporting table entries.
 	this->executeSQL("BEGIN;");
-	ResultTable t = this->selectFrom("recipe", "*", "name="+surroundString(recipe.getName(), "'"));
+	ResultTable t = this->selectFrom("recipe", "*", "WHERE name="+surroundString(recipe.getName(), "'"));
 	if (!t.isEmpty()){
 		fprintf(stderr, "Error storing recipe: Recipe with name %s already exists.\n", recipe.getName().c_str());
 	} else {
@@ -50,17 +50,11 @@ bool RecipeDatabase::storeRecipe(Recipe recipe){
 }
 
 bool RecipeDatabase::storeRecipeIngredient(RecipeIngredient ri, int recipeId){
-	//First check if the base ingredient has been added to the database. This is done within storeIngredient().
-	ResultTable t = this->selectFrom("ingredient", "ingredientId", "name="+surroundString(ri.getName(), "'"));
-	int ingId = 0;
-	if (t.isEmpty()){
-		if (!this->insertInto("ingredient", vector<string>({"foodGroup", "name"}), vector<string>({ri.getFoodGroup(), ri.getName()}))){
-			return false;
-		}
-		ingId = this->getLastInsertedRowId();
-	} else {
-		ingId = std::stoi(t.valueAt(0, 0));
-	}
+	int ingId = this->storeIngredient(ri);
+	if (ingId < 0) return false;
+
+	if (!this->storeUnitOfMeasure(ri.getUnit())) return false;
+
 	return this->insertInto("recipeIngredient",
 					 vector<string>({
 										"ingredientId",
@@ -78,11 +72,41 @@ bool RecipeDatabase::storeRecipeIngredient(RecipeIngredient ri, int recipeId){
 									}));
 }
 
-void RecipeDatabase::storeIngredient(Ingredient ingredient){
-	ResultTable t = this->selectFrom("ingredient", "*", "name="+surroundString(ingredient.getName(), "'"));
+int RecipeDatabase::storeIngredient(Ingredient ingredient){
+	ResultTable t = this->selectFrom("ingredient", "*", "WHERE name="+surroundString(ingredient.getName(), "'"));
 	if (t.isEmpty()){
-		this->insertInto("ingredient", vector<string>({"foodGroup", "name"}), vector<string>({ingredient.getFoodGroup(), ingredient.getName()}));
+		bool success = this->insertInto("ingredient", vector<string>({"foodGroup", "name"}), vector<string>({ingredient.getFoodGroup(), ingredient.getName()}));
+		if (success){
+			return this->getLastInsertedRowId();
+		} else {
+			return -1;
+		}
+	} else {
+		return std::stoi(t.valueAt(0, 0));
 	}
+}
+
+bool RecipeDatabase::storeUnitOfMeasure(UnitOfMeasure u){
+	ResultTable t = this->selectFrom("unitOfMeasure", "name", "WHERE name="+surroundString(u.getName(), "'"));
+	if (!t.isEmpty()){
+		return true;
+	}
+	bool success = this->insertInto("unitOfMeasure",
+									vector<string>({
+													   "name",
+													   "plural",
+													   "abbreviation",
+													   "type",
+													   "metricCoefficient"
+												   }),
+									vector<string>({
+													   u.getName(),
+													   u.getNamePlural(),
+													   u.getAbbreviation(),
+													   std::to_string(u.getType()),
+													   std::to_string(u.getMetricCoefficient())
+												   }));
+	return success;
 }
 
 bool RecipeDatabase::storeInstruction(Instruction instruction, int recipeId){
@@ -112,7 +136,7 @@ bool RecipeDatabase::storeTags(vector<RecipeTag> tags, int recipeId){
 }
 
 Recipe RecipeDatabase::retrieveRecipe(string name){
-	ResultTable t = this->selectFrom("recipe", "*", "name="+surroundString(name, "'"));
+	ResultTable t = this->selectFrom("recipe", "*", "WHERE name="+surroundString(name, "'"));
 	if (t.isEmpty()){
 		fprintf(stderr, "Error: No recipe with name %s found!\n", name.c_str());
 		return Recipe();
@@ -131,17 +155,47 @@ Recipe RecipeDatabase::retrieveRecipe(string name){
 }
 
 vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId){
-	ResultTable t = this->executeSQL("SELECT ingredient.name, ingredient.foodGroup, recipeIngredient.quantity, recipeIngredient.unitName, recipeIngredient.comment "
+	ResultTable t = this->executeSQL("SELECT ingredient.name, ingredient.foodGroup, "//0, 1
+									 "recipeIngredient.quantity, recipeIngredient.unitName, recipeIngredient.comment,"//2, 3, 4
+									 "unitOfMeasure.name, unitOfMeasure.plural, unitOfMeasure.abbreviation, unitOfMeasure.type, unitOfMeasure.metricCoefficient "//5, 6, 7, 8, 9
 									 "FROM ingredient "
 									 "INNER JOIN recipeIngredient "
 									 "ON ingredient.ingredientId = recipeIngredient.ingredientId "
-									 "AND recipeIngredient.recipeId = "+std::to_string(recipeId)+";");
+									 "INNER JOIN unitOfMeasure "
+									 "ON recipeIngredient.unitName = unitOfMeasure.name "
+									 "WHERE recipeIngredient.recipeId = "+std::to_string(recipeId)+";");
 	vector<RecipeIngredient> ings;
 	for (unsigned int row = 0; row < t.rowCount(); row++){
-		RecipeIngredient r(t.valueAt(row, 0), t.valueAt(row, 1), std::stof(t.valueAt(row, 2)), UnitOfMeasure(t.valueAt(row, 3)));
+		RecipeIngredient r(t.valueAt(row, 0),
+						   t.valueAt(row, 1),
+						   std::stof(t.valueAt(row, 2)),
+						   UnitOfMeasure(t.valueAt(row, 5), t.valueAt(row, 6), t.valueAt(row, 7), std::stoi(t.valueAt(row, 8)), std::stod(t.valueAt(row, 9))),
+						   t.valueAt(row, 4));
 		ings.push_back(r);
 	}
 	return ings;
+}
+
+vector<Ingredient> RecipeDatabase::retrieveAllIngredients(){
+	ResultTable t = this->selectFrom("ingredient", "*", "ORDER BY name");
+	vector<Ingredient> ings;
+	for (unsigned int row = 0; row < t.rowCount(); row++){
+		Ingredient i(t.valueAt(row, 2), t.valueAt(row, 1));
+		ings.push_back(i);
+	}
+	return ings;
+}
+
+vector<UnitOfMeasure> RecipeDatabase::retrieveAllUnitsOfMeasure(){
+	ResultTable t = this->selectFrom("unitOfMeasure", "*", "ORDER BY name");
+	vector<UnitOfMeasure> units;
+	if (!t.isEmpty()){
+		for (unsigned int row = 0; row < t.rowCount(); row++){
+			UnitOfMeasure u(t.valueAt(row, 0), t.valueAt(row, 1), t.valueAt(row, 2), std::stoi(t.valueAt(row, 3)), std::stod(t.valueAt(row, 4)));
+			units.push_back(u);
+		}
+	}
+	return units;
 }
 
 void RecipeDatabase::ensureTablesExist(){
@@ -154,6 +208,13 @@ void RecipeDatabase::ensureTablesExist(){
 					 "ingredientId INTEGER PRIMARY KEY,"
 					 "foodGroup varchar,"
 					 "name varchar UNIQUE);");
+	//Unit of Measure table.
+	this->executeSQL("CREATE TABLE IF NOT EXISTS unitOfMeasure("
+					 "name varchar UNIQUE PRIMARY KEY,"
+					 "plural varchar,"
+					 "abbreviation varchar,"
+					 "type int,"
+					 "metricCoefficient real);");
 	//Recipe table. Each recipe can have at most one instruction, and one image.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipe("
 					 "recipeId INTEGER PRIMARY KEY,"
@@ -175,6 +236,7 @@ void RecipeDatabase::ensureTablesExist(){
 					 "unitName varchar,"
 					 "comment varchar,"
 					 "FOREIGN KEY (ingredientId) REFERENCES ingredient(ingredientId),"
-					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId));");
+					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId),"
+					 "FOREIGN KEY (unitName) REFERENCES unitOfMeasure(name));");
 	this->executeSQL("COMMIT;");
 }

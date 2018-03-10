@@ -1,10 +1,11 @@
 #include "unitofmeasure.h"
 
-UnitOfMeasure::UnitOfMeasure(string name, string plural, string abbreviation, int type){
+UnitOfMeasure::UnitOfMeasure(string name, string plural, string abbreviation, int type, double coef){
     this->name = name;
     this->plural = plural;
 	this->abbreviation = abbreviation;
 	this->type = type;
+	this->metricCoefficient = coef;
 }
 
 UnitOfMeasure::UnitOfMeasure(string name){
@@ -12,10 +13,11 @@ UnitOfMeasure::UnitOfMeasure(string name){
 	this->plural = name + "s";
 	this->abbreviation = "NULL";
 	this->type = MISC;
+	this->metricCoefficient = 1;
 	///TODO: Make actual guessing of this stuff.
 }
 
-UnitOfMeasure::UnitOfMeasure() : UnitOfMeasure::UnitOfMeasure("", "", "", MISC){
+UnitOfMeasure::UnitOfMeasure() : UnitOfMeasure::UnitOfMeasure("", "", "", MISC, 1.0){
     //Default constructor initializes all fields to empty strings.
 }
 
@@ -33,4 +35,8 @@ string UnitOfMeasure::getAbbreviation() const{
 
 int UnitOfMeasure::getType() const{
 	return this->type;
+}
+
+double UnitOfMeasure::getMetricCoefficient() const{
+	return this->metricCoefficient;
 }

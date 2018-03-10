@@ -19,7 +19,7 @@ public:
 	static const int MISC = 4;
 
     //Full constructor.
-	UnitOfMeasure(string name, string plural, string abbreviation, int type);
+	UnitOfMeasure(string name, string plural, string abbreviation, int type, double coef);
 	//Attempt to guess unit from just a string.
 	UnitOfMeasure(string name);
     //Constructor with default values.
@@ -30,6 +30,7 @@ public:
     string getNamePlural() const;
     string getAbbreviation() const;
 	int getType() const;
+	double getMetricCoefficient() const;
 private:
     string name;                //The name of the unit of measure.
     string plural;              //The plural name.

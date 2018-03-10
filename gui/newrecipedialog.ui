@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>640</height>
+    <height>689</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,40 +22,43 @@
   <property name="windowTitle">
    <string>New Recipe</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">font: 25 14pt &quot;Noto Sans CJK KR&quot;;</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item alignment="Qt::AlignTop">
-    <widget class="QWidget" name="recipeNamePanel" native="true">
+    <widget class="QWidget" name="mainContentPanel" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="recipeNameLabel">
-        <property name="font">
-         <font>
-          <family>Noto Sans CJK KR</family>
-          <pointsize>14</pointsize>
-          <weight>3</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>New Recipe Name</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="recipeNameEdit">
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="placeholderText">
-         <string>Recipe Name</string>
-        </property>
+       <widget class="QWidget" name="recipeNamePanel" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <widget class="QLabel" name="recipeNameLabel">
+           <property name="font">
+            <font>
+             <family>Noto Sans CJK KR</family>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Edit Recipe</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="recipeNameEdit">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="placeholderText">
+            <string>Recipe Name</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -83,7 +86,7 @@
                 <second>0</second>
                 <year>1999</year>
                 <month>12</month>
-                <day>29</day>
+                <day>28</day>
                </datetime>
               </property>
               <property name="currentSection">
@@ -185,7 +188,7 @@
           <enum>QLayout::SetMaximumSize</enum>
          </property>
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="ingredientsPanelLabel">
            <property name="text">
             <string>Ingredients</string>
            </property>
@@ -198,7 +201,7 @@
           <widget class="QWidget" name="ingredientsSubPanel" native="true">
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item alignment="Qt::AlignLeft">
-             <widget class="QListView" name="listView">
+             <widget class="QListView" name="ingredientsListView">
               <property name="batchSize">
                <number>100</number>
               </property>
@@ -303,7 +306,7 @@
                      <font>
                       <family>Noto Sans CJK KR</family>
                       <pointsize>14</pointsize>
-                      <weight>3</weight>
+                      <weight>50</weight>
                       <italic>false</italic>
                       <bold>false</bold>
                      </font>
@@ -329,11 +332,11 @@
                     </property>
                    </widget>
                   </item>
+                  <item>
+                   <widget class="QComboBox" name="unitComboBox"/>
+                  </item>
                  </layout>
                 </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="unitComboBox"/>
                </item>
                <item>
                 <widget class="QLineEdit" name="commentsLineEdit">
@@ -368,6 +371,39 @@
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="instructionsPanel" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <item>
+          <widget class="QLabel" name="instructionsLabel">
+           <property name="text">
+            <string>Instructions</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton">
+           <property name="text">
+            <string>italics</string>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonIconOnly</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="instructionsTextEdit">
+           <property name="placeholderText">
+            <string>Enter instructions here.</string>
+           </property>
           </widget>
          </item>
         </layout>
