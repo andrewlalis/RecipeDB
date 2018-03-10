@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->ingredientsListView->setModel(&this->ingredientModel);
 }
 
+MainWindow::MainWindow(RecipeDatabase *db, QWidget *parent) : MainWindow(parent){
+	this->recipeDB = db;
+}
+
 MainWindow::~MainWindow(){
     delete ui;
 }
@@ -17,6 +21,10 @@ void MainWindow::loadFromRecipe(Recipe recipe){
     setRecipeName(recipe.getName());
     setInstruction(recipe.getInstruction());
     setIngredients(recipe.getIngredients());
+	setImage(recipe.getImage());
+	setPrepTime(recipe.getPrepTime());
+	setCookTime(recipe.getCookTime());
+	setServings(recipe.getServings());
 }
 
 void MainWindow::setRecipeName(string name){
@@ -28,5 +36,34 @@ void MainWindow::setInstruction(Instruction instruction){
 }
 
 void MainWindow::setIngredients(vector<RecipeIngredient> ingredients){
-    this->ingredientModel.setIngredients(ingredients);
+	this->ingredientModel.setIngredients(ingredients);
+}
+
+void MainWindow::setImage(QImage img){
+	ui->imageLabel->setPixmap(QPixmap::fromImage(img));
+}
+
+void MainWindow::setPrepTime(QTime prepTime){
+	ui->prepTimeLabel->setText(QString("Prep Time: ")+prepTime.toString("hh:mm:ss"));
+}
+
+void MainWindow::setCookTime(QTime cookTime){
+	ui->cookTimeLabel->setText(QString("Cook Time: ")+cookTime.toString("hh:mm:ss"));
+}
+
+void MainWindow::setServings(float servings){
+	ui->servingsLabel->setText(QString("Servings: ")+QString::fromStdString(toString(servings)));
+}
+
+void MainWindow::on_newButton_clicked(){
+	NewRecipeDialog d(this->recipeDB, this);
+	d.show();
+	d.exec();
+	if (d.isAccepted()){
+		Recipe r = d.getRecipe();
+		if (!this->recipeDB->storeRecipe(r)){
+			QMessageBox::critical(this, QString("Unable to Save Recipe"), QString("The program was not able to successfully save the recipe."));
+		}
+		this->loadFromRecipe(r);
+	}
 }

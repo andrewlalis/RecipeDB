@@ -39,6 +39,11 @@ bool TagListModel::addTag(RecipeTag tag){
 	return true;
 }
 
+void TagListModel::deleteTag(int index){
+	this->tags.erase(this->tags.begin() + index);
+	emit dataChanged(createIndex(0, 0), createIndex(this->tags.size()-1, 0));
+}
+
 vector<RecipeTag> TagListModel::getTags(){
 	return this->tags;
 }

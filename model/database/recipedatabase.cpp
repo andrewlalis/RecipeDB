@@ -223,6 +223,10 @@ vector<RecipeTag> RecipeDatabase::retrieveAllTags(){
 	return tags;
 }
 
+void RecipeDatabase::deleteTag(RecipeTag tag){
+	ResultTable t = this->executeSQL("DELETE FROM recipeTag WHERE tagName="+surroundString(tag.getValue(), "'"));
+}
+
 void RecipeDatabase::ensureTablesExist(){
 	//Make sure that foreign keys are enabled.
 	this->executeSQL("PRAGMA foreign_keys = ON;");

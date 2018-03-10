@@ -53,6 +53,11 @@ bool IngredientListModel::addIngredient(RecipeIngredient ri){
 	return true;
 }
 
+void IngredientListModel::deleteIngredient(int index){
+	this->ingredients.erase(this->ingredients.begin() + index);
+	emit dataChanged(createIndex(0, 0), createIndex(this->ingredients.size()-1, 0));
+}
+
 vector<RecipeIngredient> IngredientListModel::getIngredients(){
 	return this->ingredients;
 }

@@ -29,12 +29,13 @@ Recipe NewRecipeDialog::getRecipe(){
 	Recipe r(ui->recipeNameEdit->text().toStdString(),
 			 this->ingredientListModel.getIngredients(),
 			 ui->instructionsTextEdit->toHtml().toStdString(),
-			 QImage(),//Image
+			 this->img,//Image
 			 this->tagsListModel.getTags(),//Tags
 			 QDate::currentDate(),
 			 ui->prepTimeEdit->time(),
 			 ui->cookTimeEdit->time(),
 			 (float)ui->servingsSpinBox->value());
+	return r;
 }
 
 bool NewRecipeDialog::isAccepted() const{
@@ -100,4 +101,68 @@ void NewRecipeDialog::on_buttonBox_rejected(){
 void NewRecipeDialog::on_addTagButton_clicked(){
 	//Add a tag to the list of those prepared to be added.
 	this->tagsListModel.addTag(this->tags[ui->tagsComboBox->currentIndex()]);
+}
+
+void NewRecipeDialog::on_deleteTagButton_clicked(){
+	QModelIndexList indexList = ui->tagsListView->selectionModel()->selectedIndexes();
+	for (QModelIndexList::iterator it = indexList.begin(); it != indexList.end(); ++it){
+		QModelIndex i = *it;
+		this->tagsListModel.deleteTag(i.row());
+	}
+}
+
+void NewRecipeDialog::on_selectImageButton_clicked(){
+	QString filename = QFileDialog::getOpenFileName(this, "Open Image", QString(), "Image Files (*.png *.jpg *.bmp)");
+	if (!filename.isEmpty()){
+		this->img = QImage(filename);
+		ui->imageDisplayLabel->setPixmap(QPixmap(filename));
+	}
+}
+
+void NewRecipeDialog::on_deleteIngredientButton_clicked(){
+	QModelIndexList indexList = ui->ingredientsListView->selectionModel()->selectedIndexes();
+	for (QModelIndexList::iterator it = indexList.begin(); it != indexList.end(); ++it){
+		QModelIndex i = *it;
+		this->ingredientListModel.deleteIngredient(i.row());
+	}
+}
+
+void NewRecipeDialog::on_newIngredientButton_clicked(){
+	NewIngredientDialog d(this);
+	d.show();
+	if (d.exec() == QDialog::Accepted){
+		Ingredient i = d.getIngredient();
+		this->recipeDB->storeIngredient(i);
+		this->populateIngredientsBox();
+	}
+}
+
+void NewRecipeDialog::on_newTagButton_clicked(){
+	NewTagDialog d(this);
+	d.show();
+	if (d.exec() == QDialog::Accepted){
+		RecipeTag tag = d.getTag();
+		//Temporarily add this to the tags list, and it will be saved if the recipe is saved.
+		this->tags.push_back(tag);
+		ui->tagsComboBox->clear();
+		for (unsigned int i = 0; i < this->tags.size(); i++){
+			QString s = QString::fromStdString(this->tags[i].getValue());
+			ui->tagsComboBox->insertItem(i, s);
+		}
+	}
+
+}
+
+void NewRecipeDialog::on_removeTagButton_clicked(){
+	int index = ui->tagsComboBox->currentIndex();
+	if (index < 0 || index >= this->tags.size()){
+		return;
+	}
+	RecipeTag tag = this->tags[ui->tagsComboBox->currentIndex()];
+	string content = "Are you sure you wish to delete the following tag:\n"+tag.getValue();
+	QMessageBox::StandardButton reply = QMessageBox::question(this, QString("Delete Tag"), QString(content.c_str()));
+	if (reply == QMessageBox::Yes){
+		this->recipeDB->deleteTag(tag);
+		this->populateTagsBox();
+	}
 }

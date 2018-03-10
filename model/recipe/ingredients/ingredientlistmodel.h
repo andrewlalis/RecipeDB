@@ -18,6 +18,7 @@ public:
     //Custom methods to handle ingredient data.
     void setIngredients(vector<RecipeIngredient> ingredients);
 	bool addIngredient(RecipeIngredient ri);
+	void deleteIngredient(int index);
 	vector<RecipeIngredient> getIngredients();
 
 private:

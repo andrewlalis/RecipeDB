@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>RecipeDB</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../images.qrc">
+    <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
+  </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
@@ -237,40 +241,181 @@ QPushButton#browseButton:pressed{
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item alignment="Qt::AlignTop">
-        <widget class="QLabel" name="recipeNameLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>80</height>
-          </size>
-         </property>
+       <item>
+        <widget class="QWidget" name="basicInfoPanel" native="true">
          <property name="font">
           <font>
-           <family>Noto Sans CJK KR Light</family>
-           <pointsize>24</pointsize>
            <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
-           <stylestrategy>PreferAntialias</stylestrategy>
-           <kerning>true</kerning>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(219, 216, 216);</string>
+          <string notr="true">background-color: rgb(219, 216, 216);
+font: &quot;Noto Sans CJK KR&quot;;</string>
          </property>
-         <property name="text">
-          <string>Recipe Name</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item alignment="Qt::AlignLeft">
+           <widget class="QWidget" name="basicInfoSubPanel" native="true">
+            <property name="font">
+             <font>
+              <family>Noto Sans CJK KR Light</family>
+             </font>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QWidget" name="prepTimePanel" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="prepTimeLabel">
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans CJK KR Light</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Prep Time:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="cookTimePanel" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="cookTimeLabel">
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans CJK KR Light</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Cook Time:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="servingsPanel" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="servingsLabel">
+               <property name="font">
+                <font>
+                 <family>Noto Sans CJK KR Light</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Servings:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="recipeNameLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans CJK KR Light</family>
+              <pointsize>30</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>Recipe Name</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -413,6 +558,12 @@ QPushButton#browseButton:pressed{
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>0</height>
+             </size>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <property name="spacing">
               <number>0</number>
@@ -510,7 +661,7 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
           </item>
-          <item alignment="Qt::AlignRight">
+          <item>
            <widget class="QWidget" name="imagePanelWidget" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -543,6 +694,19 @@ p, li { white-space: pre-wrap; }
              <property name="bottomMargin">
               <number>0</number>
              </property>
+             <item>
+              <widget class="QLabel" name="imageLabel">
+               <property name="pixmap">
+                <pixmap resource="../images.qrc">:/images/images/no_image.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>false</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -556,6 +720,8 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

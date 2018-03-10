@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/no_image.png</file>
+        <file>images/icon.png</file>
+        <file>images/plus_icon.png</file>
+        <file>images/minus_icon.png</file>
+    </qresource>
+</RCC>
