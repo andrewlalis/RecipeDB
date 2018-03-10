@@ -22,6 +22,9 @@ void MainWindow::loadFromRecipe(Recipe recipe){
     setInstruction(recipe.getInstruction());
     setIngredients(recipe.getIngredients());
 	setImage(recipe.getImage());
+	setPrepTime(recipe.getPrepTime());
+	setCookTime(recipe.getCookTime());
+	setServings(recipe.getServings());
 }
 
 void MainWindow::setRecipeName(string name){
@@ -38,6 +41,18 @@ void MainWindow::setIngredients(vector<RecipeIngredient> ingredients){
 
 void MainWindow::setImage(QImage img){
 	ui->imageLabel->setPixmap(QPixmap::fromImage(img));
+}
+
+void MainWindow::setPrepTime(QTime prepTime){
+	ui->prepTimeLabel->setText(QString("Prep Time: ")+prepTime.toString("hh:mm:ss"));
+}
+
+void MainWindow::setCookTime(QTime cookTime){
+	ui->cookTimeLabel->setText(QString("Cook Time: ")+cookTime.toString("hh:mm:ss"));
+}
+
+void MainWindow::setServings(float servings){
+	ui->servingsLabel->setText(QString("Servings: ")+QString::fromStdString(toString(servings)));
 }
 
 void MainWindow::on_newButton_clicked(){

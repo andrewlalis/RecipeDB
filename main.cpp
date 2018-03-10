@@ -48,5 +48,7 @@ int main(int argc, char *argv[])
 //		printf("Accepted the dialog.\n");
 //	}
 
+	w.loadFromRecipe(recipeDB.retrieveRecipe("Generic Bread"));
+
 	return a.exec();
 }

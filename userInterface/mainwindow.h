@@ -39,6 +39,9 @@ public:
     void setInstruction(Instruction instruction);
     void setIngredients(vector<RecipeIngredient> ingredients);
 	void setImage(QImage img);
+	void setPrepTime(QTime prepTime);
+	void setCookTime(QTime cookTime);
+	void setServings(float servings);
 };
 
 #endif // MAINWINDOW_H
