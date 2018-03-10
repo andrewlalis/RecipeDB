@@ -86,7 +86,7 @@
                 <second>0</second>
                 <year>1999</year>
                 <month>12</month>
-                <day>28</day>
+                <day>27</day>
                </datetime>
               </property>
               <property name="currentSection">
@@ -160,7 +160,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox">
+             <widget class="QDoubleSpinBox" name="servingsSpinBox">
               <property name="decimals">
                <number>1</number>
               </property>
@@ -335,6 +335,13 @@
                   <item>
                    <widget class="QComboBox" name="unitComboBox"/>
                   </item>
+                  <item>
+                   <widget class="QPushButton" name="newUnitButton">
+                    <property name="text">
+                     <string>New</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </widget>
                </item>
@@ -389,14 +396,54 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QToolButton" name="toolButton">
-           <property name="text">
-            <string>italics</string>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonIconOnly</enum>
-           </property>
+         <item alignment="Qt::AlignLeft|Qt::AlignTop">
+          <widget class="QWidget" name="textControlPanel" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QToolButton" name="italicsButton">
+              <property name="font">
+               <font>
+                <family>Liberation Serif</family>
+                <pointsize>12</pointsize>
+                <italic>true</italic>
+               </font>
+              </property>
+              <property name="text">
+               <string>I</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonIconOnly</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="boldButton">
+              <property name="font">
+               <font>
+                <family>Liberation Serif</family>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>B</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+              <property name="autoRaise">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>

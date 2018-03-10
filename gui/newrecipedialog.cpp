@@ -5,6 +5,8 @@ NewRecipeDialog::NewRecipeDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::NewRecipeDialog){
 	ui->setupUi(this);
+
+	ui->ingredientsListView->setModel(&this->ingredientListModel);
 }
 
 NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecipeDialog(parent){
@@ -17,10 +19,6 @@ NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecip
 
 NewRecipeDialog::~NewRecipeDialog(){
 	delete ui;
-}
-
-void NewRecipeDialog::on_toolButton_clicked(){
-	ui->instructionsTextEdit->setFontItalic(!ui->instructionsTextEdit->fontItalic());
 }
 
 void NewRecipeDialog::populateIngredientsBox(){
@@ -38,5 +36,25 @@ void NewRecipeDialog::populateUnitsBox(){
 	for (unsigned int i = 0; i < this->units.size(); i++){
 		QString s = QString::fromStdString(this->units[i].getName());
 		ui->unitComboBox->insertItem(i, s);
+	}
+}
+
+void NewRecipeDialog::on_addIngredientButton_clicked(){
+	//Construct a recipe ingredient from the supplied data.
+	Ingredient i = this->ingredients[ui->ingredientNameBox->currentIndex()];
+	UnitOfMeasure u = this->units[ui->unitComboBox->currentIndex()];
+	RecipeIngredient ri(i, ui->quantitySpinBox->value(), u, ui->commentsLineEdit->text().toStdString());
+	this->ingredientListModel.addIngredient(ri);
+}
+
+void NewRecipeDialog::on_italicsButton_clicked(){
+	ui->instructionsTextEdit->setFontItalic(ui->italicsButton->isChecked());
+}
+
+void NewRecipeDialog::on_boldButton_clicked(){
+	if (ui->boldButton->isChecked()){
+		ui->instructionsTextEdit->setFontWeight(QFont::Bold);
+	} else {
+		ui->instructionsTextEdit->setFontWeight(QFont::Normal);
 	}
 }
