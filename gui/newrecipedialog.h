@@ -10,6 +10,9 @@
 #include "model/recipe/ingredients/ingredientlistmodel.h"
 #include "model/recipe/tags/taglistmodel.h"
 
+#include "gui/newDialogs/newingredientdialog.h"
+#include "gui/newDialogs/newtagdialog.h"
+
 namespace Ui {
 class NewRecipeDialog;
 }
@@ -41,6 +44,12 @@ class NewRecipeDialog : public QDialog
 		void on_deleteTagButton_clicked();
 
 		void on_selectImageButton_clicked();
+
+		void on_deleteIngredientButton_clicked();
+
+		void on_newIngredientButton_clicked();
+
+		void on_newTagButton_clicked();
 
 	private:
 		Ui::NewRecipeDialog *ui;

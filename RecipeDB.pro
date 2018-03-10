@@ -27,7 +27,9 @@ SOURCES += model/recipe/instruction.cpp \
     model/database/recipedatabase.cpp \
     utils/fileutils.cpp \
     gui/newrecipedialog.cpp \
-    model/recipe/tags/taglistmodel.cpp
+    model/recipe/tags/taglistmodel.cpp \
+    gui/newDialogs/newingredientdialog.cpp \
+    gui/newDialogs/newtagdialog.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
@@ -44,12 +46,16 @@ HEADERS  += model/recipe/instruction.h \
     model/database/recipedatabase.h \
     utils/fileutils.h \
     gui/newrecipedialog.h \
-    model/recipe/tags/taglistmodel.h
+    model/recipe/tags/taglistmodel.h \
+    gui/newDialogs/newingredientdialog.h \
+    gui/newDialogs/newtagdialog.h
 
 LIBS += -ldl \
 
 FORMS    += gui/mainwindow.ui \
-    gui/newrecipedialog.ui
+    gui/newrecipedialog.ui \
+    gui/newDialogs/newingredientdialog.ui \
+    gui/newDialogs/newtagdialog.ui
 
 DISTFILES += \
     .gitignore

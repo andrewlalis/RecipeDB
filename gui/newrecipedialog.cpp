@@ -118,3 +118,27 @@ void NewRecipeDialog::on_selectImageButton_clicked(){
 		ui->imageDisplayLabel->setPixmap(QPixmap(filename));
 	}
 }
+
+void NewRecipeDialog::on_deleteIngredientButton_clicked(){
+	QModelIndexList indexList = ui->ingredientsListView->selectionModel()->selectedIndexes();
+	for (QModelIndexList::iterator it = indexList.begin(); it != indexList.end(); ++it){
+		QModelIndex i = *it;
+		this->ingredientListModel.deleteIngredient(i.row());
+	}
+}
+
+void NewRecipeDialog::on_newIngredientButton_clicked(){
+	NewIngredientDialog d(this);
+	d.show();
+	if (d.exec() == QDialog::Accepted){
+		Ingredient i = d.getIngredient();
+		this->recipeDB->storeIngredient(i);
+		this->populateIngredientsBox();
+	}
+}
+
+void NewRecipeDialog::on_newTagButton_clicked(){
+	newTagDialog
+	d.show();
+
+}
