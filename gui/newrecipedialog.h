@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QTextCharFormat>
+#include <QFileDialog>
+#include <QPixmap>
 
 #include "model/database/recipedatabase.h"
 #include "model/recipe/ingredients/ingredientlistmodel.h"
@@ -36,6 +38,10 @@ class NewRecipeDialog : public QDialog
 
 		void on_addTagButton_clicked();
 
+		void on_deleteTagButton_clicked();
+
+		void on_selectImageButton_clicked();
+
 	private:
 		Ui::NewRecipeDialog *ui;
 		RecipeDatabase *recipeDB;
@@ -44,6 +50,7 @@ class NewRecipeDialog : public QDialog
 		vector<RecipeTag> tags;
 		IngredientListModel ingredientListModel;
 		TagListModel tagsListModel;
+		QImage img;
 		bool accepted = false;
 
 		//Helper functions to fill fields.

@@ -16,6 +16,7 @@ class TagListModel : public QAbstractListModel
 
 		void setTags(vector<RecipeTag> tags);
 		bool addTag(RecipeTag tag);
+		void deleteTag(int index);
 		vector<RecipeTag> getTags();
 	private:
 		vector<RecipeTag> tags;

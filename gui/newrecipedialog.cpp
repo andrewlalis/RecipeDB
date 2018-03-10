@@ -29,12 +29,13 @@ Recipe NewRecipeDialog::getRecipe(){
 	Recipe r(ui->recipeNameEdit->text().toStdString(),
 			 this->ingredientListModel.getIngredients(),
 			 ui->instructionsTextEdit->toHtml().toStdString(),
-			 QImage(),//Image
+			 this->img,//Image
 			 this->tagsListModel.getTags(),//Tags
 			 QDate::currentDate(),
 			 ui->prepTimeEdit->time(),
 			 ui->cookTimeEdit->time(),
 			 (float)ui->servingsSpinBox->value());
+	return r;
 }
 
 bool NewRecipeDialog::isAccepted() const{
@@ -103,9 +104,17 @@ void NewRecipeDialog::on_addTagButton_clicked(){
 }
 
 void NewRecipeDialog::on_deleteTagButton_clicked(){
-	QModelIndexList indexList = ui->tagsListView->selectedIndexes();
+	QModelIndexList indexList = ui->tagsListView->selectionModel()->selectedIndexes();
 	for (QModelIndexList::iterator it = indexList.begin(); it != indexList.end(); ++it){
 		QModelIndex i = *it;
 		this->tagsListModel.deleteTag(i.row());
+	}
+}
+
+void NewRecipeDialog::on_selectImageButton_clicked(){
+	QString filename = QFileDialog::getOpenFileName(this, "Open Image", QString(), "Image Files (*.png *.jpg *.bmp)");
+	if (!filename.isEmpty()){
+		this->img = QImage(filename);
+		ui->imageDisplayLabel->setPixmap(QPixmap(filename));
 	}
 }

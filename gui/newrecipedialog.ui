@@ -630,14 +630,30 @@
             </property>
             <item>
              <widget class="QLabel" name="imageDisplayLabel">
+              <property name="maximumSize">
+               <size>
+                <width>500</width>
+                <height>500</height>
+               </size>
+              </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap resource="../images.qrc">:/images/images/no_image.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="selectImageButton">
+              <property name="text">
+               <string>Select Image...</string>
               </property>
              </widget>
             </item>
@@ -735,6 +751,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>
