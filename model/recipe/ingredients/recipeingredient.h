@@ -16,9 +16,9 @@ class RecipeIngredient : public Ingredient
 {
 public:
     //Constructor for new RecipeIngredient without starting child ingredient.
-    RecipeIngredient(string name, string foodGroup, float quantity, UnitOfMeasure unit);
+	RecipeIngredient(string name, string foodGroup, float quantity, UnitOfMeasure unit, string comment);
     //Constructor using data from a child ingredient.
-    RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure unit);
+	RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure unit, string comment);
 	RecipeIngredient();
 
     //Getters

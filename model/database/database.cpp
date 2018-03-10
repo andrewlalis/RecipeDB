@@ -42,7 +42,7 @@ ResultTable Database::selectFrom(string tableName, string columnNames, string co
 	if (columnNames.size() == 0 || tableName.empty()){
 		return ResultTable();
 	}
-	string query = "SELECT " + columnNames + " FROM " + tableName + " WHERE " + conditions + ";";
+	string query = "SELECT " + columnNames + " FROM " + tableName + " " + conditions + ";";
 	return this->executeSQL(query);
 }
 
@@ -81,8 +81,7 @@ bool Database::tableExists(string tableName){
 	if (tableName.empty() || this->db == NULL || !this->dbIsOpen){
 		return false;
 	}
-	ResultTable t = this->selectFrom("sqlite_master", "name", "type='table' AND name='"+tableName+"'");
-	//ResultTable t = executeSQL("SELECT name FROM sqlite_master WHERE type='table' AND name='"+tableName+"';");
+	ResultTable t = this->selectFrom("sqlite_master", "name", "WHERE type='table' AND name='"+tableName+"'");
 	return !t.isEmpty();
 }
 

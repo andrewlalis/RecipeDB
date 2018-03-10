@@ -16,7 +16,7 @@ public:
     RecipeTag(string val);
 
     //Getters
-    string getValue();
+	string getValue() const;
     //Setters
     void setValue(string newValue);
 private:

@@ -8,7 +8,7 @@ RecipeTag::RecipeTag(string val){
     this->value = val;
 }
 
-string RecipeTag::getValue(){
+string RecipeTag::getValue() const{
     return this->value;
 }
 
