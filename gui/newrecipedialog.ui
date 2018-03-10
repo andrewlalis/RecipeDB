@@ -279,12 +279,34 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QComboBox" name="tagsComboBox"/>
+                <widget class="QComboBox" name="tagsComboBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignRight">
                 <widget class="QPushButton" name="newTagButton">
-                 <property name="text">
-                  <string>New</string>
+                 <property name="toolTip">
+                  <string>Create a new tag</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../images.qrc">
+                   <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignRight">
+                <widget class="QPushButton" name="removeTagButton">
+                 <property name="toolTip">
+                  <string>Permanently delete this tag</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../images.qrc">
+                   <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -460,6 +482,9 @@
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
+                       <property name="editable">
+                        <bool>false</bool>
+                       </property>
                        <property name="currentText">
                         <string/>
                        </property>
@@ -467,8 +492,12 @@
                      </item>
                      <item>
                       <widget class="QPushButton" name="newIngredientButton">
-                       <property name="text">
-                        <string>New</string>
+                       <property name="toolTip">
+                        <string>Create a new ingredient</string>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="../images.qrc">
+                         <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -532,12 +561,20 @@
                       </widget>
                      </item>
                      <item>
-                      <widget class="QComboBox" name="unitComboBox"/>
+                      <widget class="QComboBox" name="unitComboBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                      </widget>
                      </item>
-                     <item>
+                     <item alignment="Qt::AlignRight">
                       <widget class="QPushButton" name="newUnitButton">
-                       <property name="text">
-                        <string>New</string>
+                       <property name="icon">
+                        <iconset resource="../images.qrc">
+                         <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
                        </property>
                       </widget>
                      </item>

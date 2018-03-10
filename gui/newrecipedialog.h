@@ -5,6 +5,7 @@
 #include <QTextCharFormat>
 #include <QFileDialog>
 #include <QPixmap>
+#include <QMessageBox>
 
 #include "model/database/recipedatabase.h"
 #include "model/recipe/ingredients/ingredientlistmodel.h"
@@ -50,6 +51,8 @@ class NewRecipeDialog : public QDialog
 		void on_newIngredientButton_clicked();
 
 		void on_newTagButton_clicked();
+
+		void on_removeTagButton_clicked();
 
 	private:
 		Ui::NewRecipeDialog *ui;

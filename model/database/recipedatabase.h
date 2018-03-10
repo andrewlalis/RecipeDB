@@ -37,6 +37,9 @@ class RecipeDatabase : public Database
 		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();
 		vector<RecipeTag> retrieveTags(int recipeId);
 		vector<RecipeTag> retrieveAllTags();
+
+		//Deletion.
+		void deleteTag(RecipeTag tag);
 	private:
 
 		//Utility methods.

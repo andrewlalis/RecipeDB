@@ -138,7 +138,31 @@ void NewRecipeDialog::on_newIngredientButton_clicked(){
 }
 
 void NewRecipeDialog::on_newTagButton_clicked(){
-	newTagDialog
+	NewTagDialog d(this);
 	d.show();
+	if (d.exec() == QDialog::Accepted){
+		RecipeTag tag = d.getTag();
+		//Temporarily add this to the tags list, and it will be saved if the recipe is saved.
+		this->tags.push_back(tag);
+		ui->tagsComboBox->clear();
+		for (unsigned int i = 0; i < this->tags.size(); i++){
+			QString s = QString::fromStdString(this->tags[i].getValue());
+			ui->tagsComboBox->insertItem(i, s);
+		}
+	}
 
+}
+
+void NewRecipeDialog::on_removeTagButton_clicked(){
+	int index = ui->tagsComboBox->currentIndex();
+	if (index < 0 || index >= this->tags.size()){
+		return;
+	}
+	RecipeTag tag = this->tags[ui->tagsComboBox->currentIndex()];
+	string content = "Are you sure you wish to delete the following tag:\n"+tag.getValue();
+	QMessageBox::StandardButton reply = QMessageBox::question(this, QString("Delete Tag"), QString(content.c_str()));
+	if (reply == QMessageBox::Yes){
+		this->recipeDB->deleteTag(tag);
+		this->populateTagsBox();
+	}
 }
