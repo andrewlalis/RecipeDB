@@ -514,7 +514,7 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
           </item>
-          <item alignment="Qt::AlignRight">
+          <item>
            <widget class="QWidget" name="imagePanelWidget" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -547,6 +547,19 @@ p, li { white-space: pre-wrap; }
              <property name="bottomMargin">
               <number>0</number>
              </property>
+             <item>
+              <widget class="QLabel" name="imageLabel">
+               <property name="pixmap">
+                <pixmap resource="../images.qrc">:/images/images/no_image.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>false</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>

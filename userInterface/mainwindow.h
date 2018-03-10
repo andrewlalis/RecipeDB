@@ -7,6 +7,7 @@
 
 #include "model/recipe/recipe.h"
 #include "model/recipe/ingredients/ingredientlistmodel.h"
+#include "gui/newrecipedialog.h"
 
 using namespace std;
 
@@ -20,18 +21,24 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+	MainWindow(RecipeDatabase *db, QWidget *parent = 0);
     ~MainWindow();
 
     //Loads all data from a recipe into the GUI components.
     void loadFromRecipe(Recipe recipe);
-private:
+	private slots:
+	void on_newButton_clicked();
+
+	private:
     Ui::MainWindow *ui;
+	RecipeDatabase *recipeDB;
     IngredientListModel ingredientModel;
 
     //Hidden manipulation methods.
     void setRecipeName(string name);
     void setInstruction(Instruction instruction);
     void setIngredients(vector<RecipeIngredient> ingredients);
+	void setImage(QImage img);
 };
 
 #endif // MAINWINDOW_H
