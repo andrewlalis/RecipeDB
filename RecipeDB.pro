@@ -26,7 +26,8 @@ SOURCES += model/recipe/instruction.cpp \
     model/database/resulttable.cpp \
     model/database/recipedatabase.cpp \
     utils/fileutils.cpp \
-    gui/newrecipedialog.cpp
+    gui/newrecipedialog.cpp \
+    model/recipe/tags/taglistmodel.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
@@ -42,7 +43,8 @@ HEADERS  += model/recipe/instruction.h \
     model/database/resulttable.h \
     model/database/recipedatabase.h \
     utils/fileutils.h \
-    gui/newrecipedialog.h
+    gui/newrecipedialog.h \
+    model/recipe/tags/taglistmodel.h
 
 LIBS += -ldl \
 

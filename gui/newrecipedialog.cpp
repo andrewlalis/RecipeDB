@@ -6,7 +6,10 @@ NewRecipeDialog::NewRecipeDialog(QWidget *parent) :
 	ui(new Ui::NewRecipeDialog){
 	ui->setupUi(this);
 
+	setModal(true);
+
 	ui->ingredientsListView->setModel(&this->ingredientListModel);
+	ui->tagsListView->setModel(&this->tagsListModel);
 }
 
 NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecipeDialog(parent){
@@ -15,10 +18,27 @@ NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecip
 
 	this->populateIngredientsBox();
 	this->populateUnitsBox();
+	this->populateTagsBox();
 }
 
 NewRecipeDialog::~NewRecipeDialog(){
 	delete ui;
+}
+
+Recipe NewRecipeDialog::getRecipe(){
+	Recipe r(ui->recipeNameEdit->text().toStdString(),
+			 this->ingredientListModel.getIngredients(),
+			 ui->instructionsTextEdit->toHtml().toStdString(),
+			 QImage(),//Image
+			 this->tagsListModel.getTags(),//Tags
+			 QDate::currentDate(),
+			 ui->prepTimeEdit->time(),
+			 ui->cookTimeEdit->time(),
+			 (float)ui->servingsSpinBox->value());
+}
+
+bool NewRecipeDialog::isAccepted() const{
+	return this->accepted;
 }
 
 void NewRecipeDialog::populateIngredientsBox(){
@@ -36,6 +56,15 @@ void NewRecipeDialog::populateUnitsBox(){
 	for (unsigned int i = 0; i < this->units.size(); i++){
 		QString s = QString::fromStdString(this->units[i].getName());
 		ui->unitComboBox->insertItem(i, s);
+	}
+}
+
+void NewRecipeDialog::populateTagsBox(){
+	this->tags = this->recipeDB->retrieveAllTags();
+	ui->tagsComboBox->clear();
+	for (unsigned int i = 0; i < this->tags.size(); i++){
+		QString s = QString::fromStdString(this->tags[i].getValue());
+		ui->tagsComboBox->insertItem(i, s);
 	}
 }
 
@@ -57,4 +86,18 @@ void NewRecipeDialog::on_boldButton_clicked(){
 	} else {
 		ui->instructionsTextEdit->setFontWeight(QFont::Normal);
 	}
+}
+
+void NewRecipeDialog::on_buttonBox_accepted(){
+	this->accepted = true;
+	this->close();
+}
+
+void NewRecipeDialog::on_buttonBox_rejected(){
+	this->close();
+}
+
+void NewRecipeDialog::on_addTagButton_clicked(){
+	//Add a tag to the list of those prepared to be added.
+	this->tagsListModel.addTag(this->tags[ui->tagsComboBox->currentIndex()]);
 }

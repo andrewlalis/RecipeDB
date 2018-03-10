@@ -35,6 +35,8 @@ class RecipeDatabase : public Database
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();
 		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();
+		vector<RecipeTag> retrieveTags(int recipeId);
+		vector<RecipeTag> retrieveAllTags();
 	private:
 
 		//Utility methods.

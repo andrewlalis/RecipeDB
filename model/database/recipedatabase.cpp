@@ -151,6 +151,7 @@ Recipe RecipeDatabase::retrieveRecipe(string name){
 	r.setInstruction(FileUtils::loadInstruction(id));
 	r.setImage(FileUtils::loadImage(id));
 	r.setIngredients(this->retrieveRecipeIngredients(id));
+	r.setTags(this->retrieveTags(id));
 	return r;
 }
 
@@ -196,6 +197,30 @@ vector<UnitOfMeasure> RecipeDatabase::retrieveAllUnitsOfMeasure(){
 		}
 	}
 	return units;
+}
+
+vector<RecipeTag> RecipeDatabase::retrieveTags(int recipeId){
+	ResultTable t = this->selectFrom("recipeTag", "tagName", "WHERE recipeId="+std::to_string(recipeId));
+	vector<RecipeTag> tags;
+	if (!t.isEmpty()){
+		for (unsigned int row = 0; row < t.rowCount(); row++){
+			RecipeTag tag(t.valueAt(row, 0));
+			tags.push_back(tag);
+		}
+	}
+	return tags;
+}
+
+vector<RecipeTag> RecipeDatabase::retrieveAllTags(){
+	ResultTable t = this->selectFrom("recipeTag", "tagName", "ORDER BY tagName");
+	vector<RecipeTag> tags;
+	if (!t.isEmpty()){
+		for (unsigned int row = 0; row < t.rowCount(); row++){
+			RecipeTag tag(t.valueAt(row, 0));
+			tags.push_back(tag);
+		}
+	}
+	return tags;
 }
 
 void RecipeDatabase::ensureTablesExist(){
