@@ -173,7 +173,7 @@ void NewRecipeDialog::on_newUnitButton_clicked(){
 	d.show();
 	if (d.exec() == QDialog::Accepted){
 		UnitOfMeasure u = d.getUnit();
-		if (!this->recipeDB->storeUnitOfMeasure(u)){
+		if (!this->recipeDB->storeUnitOfMeasure(u) || u.getName().empty() || u.getNamePlural().empty() || u.getAbbreviation().empty()){
 			QMessageBox::critical(this, "Error", "Unable to store new unit.");
 		} else {
 			this->populateUnitsBox();

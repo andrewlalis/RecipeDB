@@ -33,7 +33,7 @@ SOURCES += model/recipe/instruction.cpp \
     gui/newDialogs/newunitdialog.cpp \
     utils/aspectratiopixmaplabel.cpp \
     utils/stringutils.cpp \
-    openrecipedialog.cpp
+    gui/openrecipedialog.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
@@ -56,7 +56,7 @@ HEADERS  += model/recipe/instruction.h \
     gui/newDialogs/newunitdialog.h \
     utils/aspectratiopixmaplabel.h \
     utils/stringutils.h \
-    openrecipedialog.h
+    gui/openrecipedialog.h
 
 LIBS += -ldl \
 
@@ -65,7 +65,7 @@ FORMS    += gui/mainwindow.ui \
     gui/newDialogs/newingredientdialog.ui \
     gui/newDialogs/newtagdialog.ui \
     gui/newDialogs/newunitdialog.ui \
-    openrecipedialog.ui
+    gui/openrecipedialog.ui
 
 DISTFILES += \
     .gitignore
