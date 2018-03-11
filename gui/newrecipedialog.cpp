@@ -144,6 +144,7 @@ void NewRecipeDialog::on_newTagButton_clicked(){
 		RecipeTag tag = d.getTag();
 		//Temporarily add this to the tags list, and it will be saved if the recipe is saved.
 		this->tags.push_back(tag);
+		this->tagsListModel.addTag(tag);
 		ui->tagsComboBox->clear();
 		for (unsigned int i = 0; i < this->tags.size(); i++){
 			QString s = QString::fromStdString(this->tags[i].getValue());
@@ -164,5 +165,18 @@ void NewRecipeDialog::on_removeTagButton_clicked(){
 	if (reply == QMessageBox::Yes){
 		this->recipeDB->deleteTag(tag);
 		this->populateTagsBox();
+	}
+}
+
+void NewRecipeDialog::on_newUnitButton_clicked(){
+	NewUnitDialog d(this);
+	d.show();
+	if (d.exec() == QDialog::Accepted){
+		UnitOfMeasure u = d.getUnit();
+		if (!this->recipeDB->storeUnitOfMeasure(u)){
+			QMessageBox::critical(this, "Error", "Unable to store new unit.");
+		} else {
+			this->populateUnitsBox();
+		}
 	}
 }

@@ -13,6 +13,7 @@
 
 #include "gui/newDialogs/newingredientdialog.h"
 #include "gui/newDialogs/newtagdialog.h"
+#include "gui/newDialogs/newunitdialog.h"
 
 namespace Ui {
 class NewRecipeDialog;
@@ -53,6 +54,8 @@ class NewRecipeDialog : public QDialog
 		void on_newTagButton_clicked();
 
 		void on_removeTagButton_clicked();
+
+		void on_newUnitButton_clicked();
 
 	private:
 		Ui::NewRecipeDialog *ui;

@@ -155,7 +155,7 @@
                       <second>0</second>
                       <year>1999</year>
                       <month>12</month>
-                      <day>27</day>
+                      <day>26</day>
                      </datetime>
                     </property>
                     <property name="currentSection">
@@ -662,6 +662,9 @@
          </item>
          <item>
           <widget class="QWidget" name="imagePanel" native="true">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_13">
             <property name="spacing">
              <number>0</number>
@@ -679,7 +682,13 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="imageDisplayLabel">
+             <widget class="AspectRatioPixmapLabel" name="imageDisplayLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>500</width>
@@ -693,7 +702,7 @@
                <pixmap resource="../images.qrc">:/images/images/no_image.png</pixmap>
               </property>
               <property name="scaledContents">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -816,6 +825,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AspectRatioPixmapLabel</class>
+   <extends>QLabel</extends>
+   <header>utils/aspectratiopixmaplabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../images.qrc"/>
  </resources>

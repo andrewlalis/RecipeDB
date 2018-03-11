@@ -28,6 +28,4 @@ private:
 
 };
 
-string toString(float val);
-
 #endif // INGREDIENTLISTMODEL_H

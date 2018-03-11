@@ -39,5 +39,18 @@ void RecipeIngredient::setUnit(UnitOfMeasure newUnit){
 }
 
 void RecipeIngredient::setComment(string newComment){
-    this->comment = newComment;
+	this->comment = newComment;
+}
+
+string RecipeIngredient::toString(){
+	string result;
+	if (std::ceil(this->getQuantity()) == this->getQuantity()){
+		result += std::to_string((int)this->getQuantity());
+	} else {
+		result += StringUtils::toString(this->getQuantity());
+	}
+	result += " " + this->getUnit().getAbbreviation() + " " + this->getName();
+	if (!this->getComment().empty()) result += " ~" + this->getComment();
+
+	return result;
 }
