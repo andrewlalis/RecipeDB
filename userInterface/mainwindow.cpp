@@ -77,3 +77,9 @@ void MainWindow::on_newButton_clicked(){
 		this->loadFromRecipe(r);
 	}
 }
+
+void MainWindow::on_openButton_clicked(){
+	OpenRecipeDialog d(this->recipeDB, this);
+	d.show();
+	d.exec();
+}

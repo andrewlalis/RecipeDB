@@ -32,6 +32,7 @@ class RecipeDatabase : public Database
 
 		//Retrieval.
 		Recipe retrieveRecipe(string name);
+		vector<Recipe> retrieveAllRecipes();
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();
 		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();

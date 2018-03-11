@@ -155,6 +155,15 @@ Recipe RecipeDatabase::retrieveRecipe(string name){
 	return r;
 }
 
+vector<Recipe> RecipeDatabase::retrieveAllRecipes(){
+	ResultTable t = this->selectFrom("recipe", "name", "ORDER BY name");
+	vector<Recipe> recipes;
+	for (unsigned int row = 0; row < t.rowCount(); row++){
+		recipes.push_back(this->retrieveRecipe(t.valueAt(row, 0)));
+	}
+	return recipes;
+}
+
 vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId){
 	ResultTable t = this->executeSQL("SELECT ingredient.name, ingredient.foodGroup, "//0, 1
 									 "recipeIngredient.quantity, recipeIngredient.unitName, recipeIngredient.comment,"//2, 3, 4
