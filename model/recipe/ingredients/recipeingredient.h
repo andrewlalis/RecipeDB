@@ -2,9 +2,11 @@
 #define RECIPEINGREDIENT_H
 
 #include <string>
+#include <cmath>
 
 #include "model/recipe/ingredients/ingredient.h"
 #include "model/recipe/ingredients/unitofmeasure.h"
+#include "utils/stringutils.h"
 
 using namespace std;
 
@@ -30,6 +32,7 @@ public:
     void setQuantity(float newQuantity);
     void setUnit(UnitOfMeasure newUnit);
     void setComment(string newComment);
+	string toString();
 private:
     float quantity;
     UnitOfMeasure unit;

@@ -8,6 +8,7 @@
 #include "model/recipe/recipe.h"
 #include "model/recipe/ingredients/ingredientlistmodel.h"
 #include "gui/newrecipedialog.h"
+#include "utils/stringutils.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ public:
     Ui::MainWindow *ui;
 	RecipeDatabase *recipeDB;
     IngredientListModel ingredientModel;
+	TagListModel tagsListModel;
 
     //Hidden manipulation methods.
     void setRecipeName(string name);
@@ -42,6 +44,7 @@ public:
 	void setPrepTime(QTime prepTime);
 	void setCookTime(QTime cookTime);
 	void setServings(float servings);
+	void setTags(vector<RecipeTag> tags);
 };
 
 #endif // MAINWINDOW_H

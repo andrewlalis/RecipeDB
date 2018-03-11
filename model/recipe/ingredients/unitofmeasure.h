@@ -13,10 +13,10 @@ class UnitOfMeasure
 {
 public:
 	//Constants Declarations.
-	static const int MASS = 1;
-	static const int VOLUME = 2;
-	static const int LENGTH = 3;
-	static const int MISC = 4;
+	static const int MASS = 0;
+	static const int VOLUME = 1;
+	static const int LENGTH = 2;
+	static const int MISC = 3;
 
     //Full constructor.
 	UnitOfMeasure(string name, string plural, string abbreviation, int type, double coef);

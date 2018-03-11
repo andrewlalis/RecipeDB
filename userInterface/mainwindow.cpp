@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
 	ui->ingredientsListView->setModel(&this->ingredientModel);
+	ui->tagsListView->setModel(&this->tagsListModel);
 }
 
 MainWindow::MainWindow(RecipeDatabase *db, QWidget *parent) : MainWindow(parent){
@@ -21,10 +22,15 @@ void MainWindow::loadFromRecipe(Recipe recipe){
     setRecipeName(recipe.getName());
     setInstruction(recipe.getInstruction());
     setIngredients(recipe.getIngredients());
-	setImage(recipe.getImage());
+	if (recipe.getImage().isNull()){
+		setImage(QImage(QString(":/images/images/no_image.png")));
+	} else {
+		setImage(recipe.getImage());
+	}
 	setPrepTime(recipe.getPrepTime());
 	setCookTime(recipe.getCookTime());
 	setServings(recipe.getServings());
+	setTags(recipe.getTags());
 }
 
 void MainWindow::setRecipeName(string name){
@@ -52,7 +58,11 @@ void MainWindow::setCookTime(QTime cookTime){
 }
 
 void MainWindow::setServings(float servings){
-	ui->servingsLabel->setText(QString("Servings: ")+QString::fromStdString(toString(servings)));
+	ui->servingsLabel->setText(QString("Servings: ")+QString::fromStdString(StringUtils::toString(servings)));
+}
+
+void MainWindow::setTags(vector<RecipeTag> tags){
+	this->tagsListModel.setTags(tags);
 }
 
 void MainWindow::on_newButton_clicked(){
