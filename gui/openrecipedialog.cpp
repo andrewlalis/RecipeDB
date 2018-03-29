@@ -20,13 +20,45 @@ OpenRecipeDialog::~OpenRecipeDialog()
 	delete ui;
 }
 
+Recipe OpenRecipeDialog::getSelectedRecipe(){
+	return this->selectedRecipe;
+}
+
 void OpenRecipeDialog::populateRecipesTable(){
+	this->recipeTableModel.clear();
 	vector<Recipe> recipes = this->recipeDB->retrieveAllRecipes();
-//	printf("Found %d recipes:\n", recipes.size());
-//	for (Recipe r : recipes){
-//		r.print();
-//		printf("\n------------------\n");
-//	}
 	this->recipeTableModel.setRecipes(recipes);
+	ui->recipeTableView->resizeColumnsToContents();
 	ui->recipeTableView->show();
+}
+
+void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
+	QItemSelectionModel *selectModel = ui->recipeTableView->selectionModel();
+	if (!selectModel->hasSelection()){
+		return;
+	}
+	vector<int> rows;
+	QModelIndexList indexes = selectModel->selectedIndexes();
+	for (int i = 0; i < indexes.count(); i++){
+		rows.push_back(indexes.at(i).row());
+	}
+	string recipePlural = (rows.size() == 1) ? "recipe" : "recipes";
+	QString title = QString::fromStdString("Delete " + recipePlural);
+	QString content = QString::fromStdString("Are you sure you wish to delete the selected "+recipePlural+"?");
+	QMessageBox::StandardButton reply = QMessageBox::question(this, title, content);
+	if (reply == QMessageBox::Yes){
+		for (int row : rows){
+			Recipe r = this->recipeTableModel.getRecipeAt(row);
+			bool success = this->recipeDB->deleteRecipe(r.getName());
+			if (!success){
+				QMessageBox::critical(this, QString::fromStdString("Unable to Delete"), QString::fromStdString("Could not delete recipe "+r.getName()));
+			}
+		}
+		this->populateRecipesTable();
+	}
+}
+
+void OpenRecipeDialog::on_recipeTableView_doubleClicked(const QModelIndex &index){
+	this->selectedRecipe = this->recipeTableModel.getRecipeAt(index.row());
+	this->close();
 }

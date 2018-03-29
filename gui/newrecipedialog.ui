@@ -158,7 +158,7 @@
                       <second>0</second>
                       <year>1999</year>
                       <month>12</month>
-                      <day>26</day>
+                      <day>25</day>
                      </datetime>
                     </property>
                     <property name="currentSection">
@@ -504,6 +504,17 @@
                        </property>
                       </widget>
                      </item>
+                     <item>
+                      <widget class="QPushButton" name="deleteIngredientButton">
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="../images.qrc">
+                         <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
+                       </property>
+                      </widget>
+                     </item>
                     </layout>
                    </widget>
                   </item>
@@ -579,6 +590,17 @@
                        </property>
                       </widget>
                      </item>
+                     <item>
+                      <widget class="QPushButton" name="deleteUnitButton">
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="../images.qrc">
+                         <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
+                       </property>
+                      </widget>
+                     </item>
                     </layout>
                    </widget>
                   </item>
@@ -627,7 +649,7 @@
                       </widget>
                      </item>
                      <item>
-                      <widget class="QPushButton" name="deleteIngredientButton">
+                      <widget class="QPushButton" name="removeIngredientButton">
                        <property name="text">
                         <string>Delete</string>
                        </property>

@@ -143,6 +143,12 @@ QPushButton#newButton:pressed{
           </item>
           <item alignment="Qt::AlignTop">
            <widget class="QPushButton" name="openButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>150</width>
@@ -175,6 +181,9 @@ QPushButton#openButton:pressed{
           </item>
           <item alignment="Qt::AlignTop">
            <widget class="QPushButton" name="browseButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>150</width>
@@ -205,6 +214,56 @@ QPushButton#browseButton:pressed{
             </property>
             <property name="text">
              <string>Browse</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="exitButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>150</horstretch>
+              <verstretch>80</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans CJK KR Light</family>
+              <pointsize>20</pointsize>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#exitButton {
+	background-color: rgb(255, 216, 216);
+	border: 0px;
+}
+QPushButton#exitButton:hover{
+	background-color: rgb(255, 191, 191);
+}
+QPushButton#exitButton:pressed{
+	background-color: rgb(255, 147, 147);
+}</string>
+            </property>
+            <property name="text">
+             <string>Exit</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="default">
+             <bool>false</bool>
             </property>
             <property name="flat">
              <bool>false</bool>
@@ -367,6 +426,9 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                <property name="text">
                 <string>Prep Time:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
              <item>
@@ -383,6 +445,9 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                <property name="text">
                 <string>Cook Time:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
              <item>
@@ -395,6 +460,9 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                </property>
                <property name="text">
                 <string>Servings:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>

@@ -147,18 +147,16 @@ Recipe RecipeDatabase::retrieveRecipe(string name){
 		fprintf(stderr, "Error: No recipe with name %s found!\n", name.c_str());
 		return Recipe();
 	}
-	Recipe r;
-	int id = std::stoi(t.valueAt(0, 0));
-	r.setName(t.valueAt(0, 1));
-	r.setCreatedDate(QDate::fromString(QString::fromStdString(t.valueAt(0, 2))));
-	r.setPrepTime(QTime::fromString(QString::fromStdString(t.valueAt(0, 3))));
-	r.setCookTime(QTime::fromString(QString::fromStdString(t.valueAt(0, 4))));
-	r.setServings(std::stof(t.valueAt(0, 5)));
-	r.setInstruction(FileUtils::loadInstruction(id));
-	r.setImage(FileUtils::loadImage(id));
-	r.setIngredients(this->retrieveRecipeIngredients(id));
-	r.setTags(this->retrieveTags(id));
-	return r;
+	return this->readFromResultTable(t);
+}
+
+Recipe RecipeDatabase::retrieveRandomRecipe(){
+	ResultTable t = this->selectFrom("recipe", "*", "ORDER BY RANDOM() LIMIT 1");
+	if (t.isEmpty()){
+		fprintf(stderr, "Unable to find a random recipe.\n");
+		return Recipe();
+	}
+	return this->readFromResultTable(t);
 }
 
 vector<Recipe> RecipeDatabase::retrieveAllRecipes(){
@@ -239,7 +237,7 @@ vector<RecipeTag> RecipeDatabase::retrieveAllTags(){
 }
 
 bool RecipeDatabase::deleteRecipe(string name){
-	ResultTable t = this->selectFrom("recipe", "recipeId", "WHERE name="+name);
+	ResultTable t = this->selectFrom("recipe", "recipeId", "WHERE name='"+name+"'");
 	if (t.rowCount() != 1){
 		return false;
 	}
@@ -250,6 +248,7 @@ bool RecipeDatabase::deleteRecipe(string name){
 bool RecipeDatabase::deleteRecipe(int recipeId){
 	string idString = std::to_string(recipeId);
 	if (this->selectFrom("recipe", "recipeId", "WHERE recipeId="+idString).isEmpty()){
+		printf("Cannot delete. No recipe with ID %d exists.\n", recipeId);
 		return false;
 	}
 	this->executeSQL("BEGIN;");
@@ -266,27 +265,28 @@ bool RecipeDatabase::deleteRecipe(int recipeId){
 }
 
 bool RecipeDatabase::deleteIngredient(string name){
-	ResultTable t = this->selectFrom("recipeIngredient", "recipeId", "WHERE ingredientId=("
-																	 "SELECT ingredientId"
-																	 "FROM ingredient"
-																	 "WHERE name="+name+")");
+	ResultTable t = this->executeSQL("SELECT recipeId "
+									 "FROM recipeIngredient "
+									 "INNER JOIN ingredient "
+									 "ON recipeIngredient.ingredientId = ingredient.ingredientId "
+									 "WHERE ingredient.name='"+name+"';");
 	if (!t.isEmpty()){
 		//There is at least one recipe dependent on the ingredient.
 		return false;
 	}
-	return this->deleteFrom("ingredient", "WHERE name="+name);
+	return this->deleteFrom("ingredient", "WHERE name='"+name+"'");
 }
 
 bool RecipeDatabase::deleteUnitOfMeasure(string name){
-	ResultTable t = this->selectFrom("recipeIngredient", "recipeId", "WHERE unitName="+name);
+	ResultTable t = this->selectFrom("recipeIngredient", "recipeId", "WHERE unitName='"+name+"'");
 	if (!t.isEmpty()){
 		return false;
 	}
-	return this->deleteFrom("unitOfMeasure", "WHERE name="+name);
+	return this->deleteFrom("unitOfMeasure", "WHERE name='"+name+"'");
 }
 
 bool RecipeDatabase::deleteTag(RecipeTag tag){
-	return this->deleteFrom("recipeTag", "WHERE tagName="+tag.getValue());
+	return this->deleteFrom("recipeTag", "WHERE tagName='"+tag.getValue()+"'");
 }
 
 void RecipeDatabase::ensureTablesExist(){
@@ -330,4 +330,19 @@ void RecipeDatabase::ensureTablesExist(){
 					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId),"
 					 "FOREIGN KEY (unitName) REFERENCES unitOfMeasure(name));");
 	this->executeSQL("COMMIT;");
+}
+
+Recipe RecipeDatabase::readFromResultTable(ResultTable t, int row){
+	Recipe r;
+	int id = std::stoi(t.valueAt(row, 0));
+	r.setName(t.valueAt(row, 1));
+	r.setCreatedDate(QDate::fromString(QString::fromStdString(t.valueAt(row, 2))));
+	r.setPrepTime(QTime::fromString(QString::fromStdString(t.valueAt(row, 3))));
+	r.setCookTime(QTime::fromString(QString::fromStdString(t.valueAt(row, 4))));
+	r.setServings(std::stof(t.valueAt(row, 5)));
+	r.setInstruction(FileUtils::loadInstruction(id));
+	r.setImage(FileUtils::loadImage(id));
+	r.setIngredients(this->retrieveRecipeIngredients(id));
+	r.setTags(this->retrieveTags(id));
+	return r;
 }

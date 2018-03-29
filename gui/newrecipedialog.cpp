@@ -119,11 +119,27 @@ void NewRecipeDialog::on_selectImageButton_clicked(){
 	}
 }
 
-void NewRecipeDialog::on_deleteIngredientButton_clicked(){
+void NewRecipeDialog::on_removeIngredientButton_clicked(){
 	QModelIndexList indexList = ui->ingredientsListView->selectionModel()->selectedIndexes();
 	for (QModelIndexList::iterator it = indexList.begin(); it != indexList.end(); ++it){
 		QModelIndex i = *it;
 		this->ingredientListModel.deleteIngredient(i.row());
+	}
+}
+
+void NewRecipeDialog::on_deleteIngredientButton_clicked(){
+	int index = ui->ingredientNameBox->currentIndex();
+	Ingredient ing = this->ingredients.at(index);
+	QMessageBox::StandardButton reply = QMessageBox::question(this,
+															  QString::fromStdString("Delete Ingredient"),
+															  QString::fromStdString("Are you sure you want to delete the ingredient " + ing.getName() + "?"));
+	if (reply == QMessageBox::Yes){
+		bool success = this->recipeDB->deleteIngredient(ing.getName());
+		if (!success){
+			QMessageBox::critical(this, QString::fromStdString("Error"), QString::fromStdString("Unable to delete ingredient: " + ing.getName() + ", some recipes use it!"));
+		} else {
+			this->populateIngredientsBox();
+		}
 	}
 }
 
@@ -155,8 +171,8 @@ void NewRecipeDialog::on_newTagButton_clicked(){
 }
 
 void NewRecipeDialog::on_removeTagButton_clicked(){
-	int index = ui->tagsComboBox->currentIndex();
-	if (index < 0 || index >= this->tags.size()){
+	unsigned int index = ui->tagsComboBox->currentIndex();
+	if (index >= this->tags.size()){
 		return;
 	}
 	RecipeTag tag = this->tags[ui->tagsComboBox->currentIndex()];
@@ -175,6 +191,21 @@ void NewRecipeDialog::on_newUnitButton_clicked(){
 		UnitOfMeasure u = d.getUnit();
 		if (!this->recipeDB->storeUnitOfMeasure(u) || u.getName().empty() || u.getNamePlural().empty() || u.getAbbreviation().empty()){
 			QMessageBox::critical(this, "Error", "Unable to store new unit.");
+		} else {
+			this->populateUnitsBox();
+		}
+	}
+}
+
+void NewRecipeDialog::on_deleteUnitButton_clicked(){
+	int index = ui->unitComboBox->currentIndex();
+	UnitOfMeasure unit = this->units[index];
+	QMessageBox::StandardButton reply = QMessageBox::question(this,
+															  QString::fromStdString("Delete Unit Of Measure"),
+															  QString::fromStdString("Are you sure you want to delete the unit " + unit.getName() + "?"));
+	if (reply == QMessageBox::Yes){
+		if (!this->recipeDB->deleteUnitOfMeasure(unit.getName())){
+			QMessageBox::critical(this, "Error", "Unable to delete unit. There may be recipes which still use it!");
 		} else {
 			this->populateUnitsBox();
 		}

@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 
 #include "model/recipe/recipe.h"
+#include "utils/stringutils.h"
 
 class RecipeTableModel : public QAbstractTableModel
 {
@@ -19,7 +20,8 @@ class RecipeTableModel : public QAbstractTableModel
 
 		//Normal methods.
 		void setRecipes(vector<Recipe> recipes);
-
+		Recipe getRecipeAt(int index);
+		void clear();
 	private:
 		vector<Recipe> recipes;
 };

@@ -31,6 +31,8 @@ public:
 	bool tableExists(string tableName);
 	int getLastInsertedRowId();
 
+	void closeConnection();
+
 protected:
 	string surroundString(string s, string surround);
 
@@ -44,7 +46,6 @@ private:
     char* errorMsg;
 
     void openConnection();
-	void closeConnection();
 	std::string combineVector(std::vector<std::string> strings, std::string mid);
 };
 

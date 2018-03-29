@@ -47,6 +47,8 @@ class NewRecipeDialog : public QDialog
 
 		void on_selectImageButton_clicked();
 
+		void on_removeIngredientButton_clicked();
+
 		void on_deleteIngredientButton_clicked();
 
 		void on_newIngredientButton_clicked();
@@ -56,6 +58,8 @@ class NewRecipeDialog : public QDialog
 		void on_removeTagButton_clicked();
 
 		void on_newUnitButton_clicked();
+
+		void on_deleteUnitButton_clicked();
 
 	private:
 		Ui::NewRecipeDialog *ui;

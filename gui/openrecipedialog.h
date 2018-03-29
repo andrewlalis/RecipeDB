@@ -2,6 +2,7 @@
 #define OPENRECIPEDIALOG_H
 
 #include <QDialog>
+#include <QMessageBox>
 
 #include "model/database/recipedatabase.h"
 #include "model/recipe/recipetablemodel.h"
@@ -19,10 +20,18 @@ class OpenRecipeDialog : public QDialog
 		OpenRecipeDialog(RecipeDatabase *recipeDB, QWidget *parent = 0);
 		~OpenRecipeDialog();
 
+		Recipe getSelectedRecipe();
+
+	private slots:
+		void on_deleteRecipeButton_clicked();
+
+		void on_recipeTableView_doubleClicked(const QModelIndex &index);
+
 	private:
 		Ui::OpenRecipeDialog *ui;
 		RecipeDatabase *recipeDB;
 		RecipeTableModel recipeTableModel;
+		Recipe selectedRecipe;
 
 		void populateRecipesTable();
 };

@@ -86,6 +86,23 @@
      </layout>
     </widget>
    </item>
+   <item alignment="Qt::AlignLeft|Qt::AlignTop">
+    <widget class="QWidget" name="interactionPanel" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QPushButton" name="deleteRecipeButton">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../images.qrc">
+          <normaloff>:/images/images/trash.png</normaloff>:/images/images/trash.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <widget class="QWidget" name="contentPanel" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -93,6 +110,9 @@
        <widget class="QTableView" name="recipeTableView">
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
         </property>
         <property name="sortingEnabled">
          <bool>true</bool>

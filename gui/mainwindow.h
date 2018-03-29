@@ -34,6 +34,8 @@ public:
 
 	void on_openButton_clicked();
 
+	void on_exitButton_clicked();
+
 	private:
     Ui::MainWindow *ui;
 	RecipeDatabase *recipeDB;
