@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += model/recipe/instruction.cpp \
     model/recipe/recipe.cpp \
-    userInterface/mainwindow.cpp \
     main.cpp \
     model/database/database.cpp \
     model/recipe/ingredients/unitofmeasure.cpp \
@@ -34,7 +33,8 @@ SOURCES += model/recipe/instruction.cpp \
     utils/aspectratiopixmaplabel.cpp \
     utils/stringutils.cpp \
     gui/openrecipedialog.cpp \
-    model/recipe/recipetablemodel.cpp
+    model/recipe/recipetablemodel.cpp \
+    gui/mainwindow.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
@@ -58,7 +58,8 @@ HEADERS  += model/recipe/instruction.h \
     utils/aspectratiopixmaplabel.h \
     utils/stringutils.h \
     gui/openrecipedialog.h \
-    model/recipe/recipetablemodel.h
+    model/recipe/recipetablemodel.h \
+    gui/mainwindow.h
 
 LIBS += -ldl \
 
@@ -67,7 +68,8 @@ FORMS    += gui/mainwindow.ui \
     gui/newDialogs/newingredientdialog.ui \
     gui/newDialogs/newtagdialog.ui \
     gui/newDialogs/newunitdialog.ui \
-    gui/openrecipedialog.ui
+    gui/openrecipedialog.ui \
+    gui/mainwindow.ui
 
 DISTFILES += \
     .gitignore
