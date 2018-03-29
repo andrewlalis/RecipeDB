@@ -28,6 +28,7 @@ public:
 
     //Loads all data from a recipe into the GUI components.
     void loadFromRecipe(Recipe recipe);
+
 	private slots:
 	void on_newButton_clicked();
 

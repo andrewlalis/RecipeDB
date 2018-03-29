@@ -1,4 +1,4 @@
-#include "userInterface/mainwindow.h"
+#include "gui/mainwindow.h"
 #include "gui/newrecipedialog.h"
 #include <QApplication>
 

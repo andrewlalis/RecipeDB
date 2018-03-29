@@ -22,6 +22,11 @@ OpenRecipeDialog::~OpenRecipeDialog()
 
 void OpenRecipeDialog::populateRecipesTable(){
 	vector<Recipe> recipes = this->recipeDB->retrieveAllRecipes();
+	printf("Found %d recipes:\n", recipes.size());
+	for (Recipe r : recipes){
+		r.print();
+		printf("\n------------------\n");
+	}
 	this->recipeTableModel.setRecipes(recipes);
-	ui->recipeTableView->update(QModelIndex());
+	ui->recipeTableView->show();
 }

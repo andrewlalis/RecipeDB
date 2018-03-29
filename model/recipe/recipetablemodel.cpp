@@ -45,6 +45,10 @@ QVariant RecipeTableModel::headerData(int section, Qt::Orientation orientation, 
 				return "Name";
 			case 1:
 				return "Created On";
+			case 2:
+
+			default:
+				return QVariant();
 		}
 	} else if (orientation == Qt::Vertical){
 		return QString::fromStdString(std::to_string(section));
@@ -53,6 +57,7 @@ QVariant RecipeTableModel::headerData(int section, Qt::Orientation orientation, 
 }
 
 void RecipeTableModel::setRecipes(vector<Recipe> recipes){
+	beginInsertRows({}, 0, recipes.size()-1);
 	this->recipes = recipes;
-	emit dataChanged(createIndex(0, 0), createIndex(this->recipes.size()-1, 2));
+	endInsertRows();
 }

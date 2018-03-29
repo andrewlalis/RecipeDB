@@ -232,8 +232,8 @@ vector<RecipeTag> RecipeDatabase::retrieveAllTags(){
 	return tags;
 }
 
-void RecipeDatabase::deleteTag(RecipeTag tag){
-	ResultTable t = this->executeSQL("DELETE FROM recipeTag WHERE tagName="+surroundString(tag.getValue(), "'"));
+bool RecipeDatabase::deleteRecipe(string name){
+
 }
 
 void RecipeDatabase::ensureTablesExist(){

@@ -40,6 +40,7 @@ class RecipeDatabase : public Database
 		vector<RecipeTag> retrieveAllTags();
 
 		//Deletion.
+		bool deleteRecipe(string name);
 		void deleteTag(RecipeTag tag);
 	private:
 

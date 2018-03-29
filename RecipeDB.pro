@@ -38,7 +38,6 @@ SOURCES += model/recipe/instruction.cpp \
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
-    userInterface/mainwindow.h \
     model/database/database.h \
     model/recipe/ingredients/unitofmeasure.h \
     model/recipe/ingredients/ingredient.h \
