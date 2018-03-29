@@ -26,6 +26,7 @@ public:
 	ResultTable executeSQL(string statement);
 	bool insertInto(string tableName, vector<string> columnNames, vector<string> values);
 	ResultTable selectFrom(string tableName, string columnNames, string conditions);
+	bool deleteFrom(string tableName, string conditions);
 
 	bool tableExists(string tableName);
 	int getLastInsertedRowId();

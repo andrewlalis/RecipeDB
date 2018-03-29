@@ -45,8 +45,6 @@ QVariant RecipeTableModel::headerData(int section, Qt::Orientation orientation, 
 				return "Name";
 			case 1:
 				return "Created On";
-			case 2:
-
 			default:
 				return QVariant();
 		}

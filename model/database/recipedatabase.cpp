@@ -5,6 +5,12 @@ RecipeDatabase::RecipeDatabase(string filename) : Database(filename){
 }
 
 bool RecipeDatabase::storeRecipe(Recipe recipe){
+	//Some primary checks to avoid garbage in the database.
+	if (recipe.getName().empty() ||
+			recipe.getInstruction().getHTML().empty() ||
+			recipe.getIngredients().empty()){
+		return false;
+	}
 	//Store a recipe, if it doesn't already exist. This first tries to create the recipe entry, then all subsequent supporting table entries.
 	this->executeSQL("BEGIN;");
 	ResultTable t = this->selectFrom("recipe", "*", "WHERE name="+surroundString(recipe.getName(), "'"));
@@ -233,7 +239,54 @@ vector<RecipeTag> RecipeDatabase::retrieveAllTags(){
 }
 
 bool RecipeDatabase::deleteRecipe(string name){
+	ResultTable t = this->selectFrom("recipe", "recipeId", "WHERE name="+name);
+	if (t.rowCount() != 1){
+		return false;
+	}
+	string recipeId = t.valueAt(0, 0);
+	return this->deleteRecipe(std::stoi(recipeId));
+}
 
+bool RecipeDatabase::deleteRecipe(int recipeId){
+	string idString = std::to_string(recipeId);
+	if (this->selectFrom("recipe", "recipeId", "WHERE recipeId="+idString).isEmpty()){
+		return false;
+	}
+	this->executeSQL("BEGIN;");
+	bool tagsDeleted = this->deleteFrom("recipeTag", "WHERE recipeId="+idString);
+	bool recipeIngredientDeleted = this->deleteFrom("recipeIngredient", "WHERE recipeId="+idString);
+	bool recipeDeleted = this->deleteFrom("recipe", "WHERE recipeId="+idString);
+	if (tagsDeleted && recipeIngredientDeleted && recipeDeleted){
+		this->executeSQL("COMMIT;");
+		return true;
+	} else {
+		this->executeSQL("ROLLBACK;");
+		return false;
+	}
+}
+
+bool RecipeDatabase::deleteIngredient(string name){
+	ResultTable t = this->selectFrom("recipeIngredient", "recipeId", "WHERE ingredientId=("
+																	 "SELECT ingredientId"
+																	 "FROM ingredient"
+																	 "WHERE name="+name+")");
+	if (!t.isEmpty()){
+		//There is at least one recipe dependent on the ingredient.
+		return false;
+	}
+	return this->deleteFrom("ingredient", "WHERE name="+name);
+}
+
+bool RecipeDatabase::deleteUnitOfMeasure(string name){
+	ResultTable t = this->selectFrom("recipeIngredient", "recipeId", "WHERE unitName="+name);
+	if (!t.isEmpty()){
+		return false;
+	}
+	return this->deleteFrom("unitOfMeasure", "WHERE name="+name);
+}
+
+bool RecipeDatabase::deleteTag(RecipeTag tag){
+	return this->deleteFrom("recipeTag", "WHERE tagName="+tag.getValue());
 }
 
 void RecipeDatabase::ensureTablesExist(){

@@ -160,7 +160,7 @@ void NewRecipeDialog::on_removeTagButton_clicked(){
 		return;
 	}
 	RecipeTag tag = this->tags[ui->tagsComboBox->currentIndex()];
-	string content = "Are you sure you wish to delete the following tag:\n"+tag.getValue();
+	string content = "Are you sure you wish to delete the following tag:\n"+tag.getValue()+"\nThis will delete the tag for all recipes that use it.";
 	QMessageBox::StandardButton reply = QMessageBox::question(this, QString("Delete Tag"), QString(content.c_str()));
 	if (reply == QMessageBox::Yes){
 		this->recipeDB->deleteTag(tag);

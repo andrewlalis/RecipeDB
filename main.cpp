@@ -48,6 +48,9 @@ int main(int argc, char *argv[])
 //		printf("Accepted the dialog.\n");
 //	}
 
+	bool success = recipeDB.deleteRecipe(4);
+	printf("Success: %d\n", success);
+	recipeDB.selectFrom("recipe", "recipeId, name", "").printData();
 	w.loadFromRecipe(recipeDB.retrieveRecipe("Generic Bread"));
 
 	return a.exec();

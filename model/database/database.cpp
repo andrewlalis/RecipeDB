@@ -46,6 +46,20 @@ ResultTable Database::selectFrom(string tableName, string columnNames, string co
 	return this->executeSQL(query);
 }
 
+bool Database::deleteFrom(string tableName, string conditions){
+	if (tableName.empty()){
+		return false;
+	}
+	string query = "DELETE FROM " + tableName + " " + conditions + ";";
+	ResultTable t = this->executeSQL(query);
+	if (t.getReturnCode() != SQLITE_DONE){
+		fprintf(stderr, "Can't delete from table %s.Return code: %d\n%s\n", tableName.c_str(), t.getReturnCode(), sqlite3_errmsg(this->db));
+		exit(EXIT_FAILURE);
+	} else {
+		return true;
+	}
+}
+
 void Database::openConnection(){
     this->returnCode = sqlite3_open(this->filename.c_str(), &this->db);
     if (this->returnCode || this->db == NULL){
