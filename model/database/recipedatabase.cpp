@@ -255,6 +255,8 @@ bool RecipeDatabase::deleteRecipe(int recipeId){
 	bool tagsDeleted = this->deleteFrom("recipeTag", "WHERE recipeId="+idString);
 	bool recipeIngredientDeleted = this->deleteFrom("recipeIngredient", "WHERE recipeId="+idString);
 	bool recipeDeleted = this->deleteFrom("recipe", "WHERE recipeId="+idString);
+	bool instructionDeleted = FileUtils::deleteInstruction(recipeId);
+	bool imageDeleted = FileUtils::deleteImage(recipeId);
 	if (tagsDeleted && recipeIngredientDeleted && recipeDeleted){
 		this->executeSQL("COMMIT;");
 		return true;

@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QImage>
+#include <stdio.h>
 
 #include "model/recipe/instruction.h"
 
@@ -19,9 +20,13 @@ namespace FileUtils{
 
 	Instruction loadInstruction(int nr);
 
+	bool deleteInstruction(int nr);
+
 	bool saveImage(int nr, QImage image);
 
 	QImage loadImage(int nr);
+
+	bool deleteImage(int nr);
 }
 
 #endif // FILEUTILS_H

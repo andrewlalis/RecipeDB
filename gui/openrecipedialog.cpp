@@ -38,7 +38,7 @@ void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
 		return;
 	}
 	vector<int> rows;
-	QModelIndexList indexes = selectModel->selectedIndexes();
+	QModelIndexList indexes = selectModel->selectedRows();
 	for (int i = 0; i < indexes.count(); i++){
 		rows.push_back(indexes.at(i).row());
 	}

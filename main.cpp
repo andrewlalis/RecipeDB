@@ -4,10 +4,11 @@
 
 #include "model/database/database.h"
 #include "model/database/recipedatabase.h"
+#include "utils/fileutils.h"
 
 int main(int argc, char *argv[])
 {
-	RecipeDatabase recipeDB("recipes");
+	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
     QApplication a(argc, argv);
 	MainWindow w(&recipeDB);
     w.show();
