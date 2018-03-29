@@ -8,6 +8,7 @@
 #include "model/recipe/recipe.h"
 #include "model/recipe/ingredients/ingredientlistmodel.h"
 #include "gui/newrecipedialog.h"
+#include "gui/openrecipedialog.h"
 #include "utils/stringutils.h"
 
 using namespace std;
@@ -27,8 +28,13 @@ public:
 
     //Loads all data from a recipe into the GUI components.
     void loadFromRecipe(Recipe recipe);
+
 	private slots:
 	void on_newButton_clicked();
+
+	void on_openButton_clicked();
+
+	void on_exitButton_clicked();
 
 	private:
     Ui::MainWindow *ui;

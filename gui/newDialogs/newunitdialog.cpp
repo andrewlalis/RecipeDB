@@ -8,10 +8,8 @@ NewUnitDialog::NewUnitDialog(QWidget *parent) :
 	ui->setupUi(this);
 
 	ui->typeComboBox->clear();
-	ui->typeComboBox->setItemData(0, "Mass");
-	ui->typeComboBox->setItemData(1, "Volume");
-	ui->typeComboBox->setItemData(2, "Length");
-	ui->typeComboBox->setItemData(3, "Misc");
+	QStringList list({"Mass", "Volume", "Length", "Misc"});
+	ui->typeComboBox->insertItems(0, list);
 
 }
 
@@ -23,7 +21,7 @@ NewUnitDialog::~NewUnitDialog()
 UnitOfMeasure NewUnitDialog::getUnit(){
 	return UnitOfMeasure(ui->unitNameEdit->text().toLower().toStdString(),
 						 ui->pluralNameEdit->text().toLower().toStdString(),
-						 ui->abbreviationEdit->text().toLower().toStdString(),
+						 ui->abbreviationEdit->text().toStdString(),
 						 this->getSelectedType(),
 						 ui->coefficientSpinBox->value());
 }

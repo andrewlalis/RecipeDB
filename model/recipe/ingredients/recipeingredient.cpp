@@ -50,7 +50,7 @@ string RecipeIngredient::toString(){
 		result += StringUtils::toString(this->getQuantity());
 	}
 	result += " " + this->getUnit().getAbbreviation() + " " + this->getName();
-	if (!this->getComment().empty()) result += " ~" + this->getComment();
+	if (!this->getComment().empty()) result += " (" + this->getComment() + ")";
 
 	return result;
 }

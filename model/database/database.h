@@ -26,9 +26,12 @@ public:
 	ResultTable executeSQL(string statement);
 	bool insertInto(string tableName, vector<string> columnNames, vector<string> values);
 	ResultTable selectFrom(string tableName, string columnNames, string conditions);
+	bool deleteFrom(string tableName, string conditions);
 
 	bool tableExists(string tableName);
 	int getLastInsertedRowId();
+
+	void closeConnection();
 
 protected:
 	string surroundString(string s, string surround);
@@ -43,7 +46,6 @@ private:
     char* errorMsg;
 
     void openConnection();
-	void closeConnection();
 	std::string combineVector(std::vector<std::string> strings, std::string mid);
 };
 

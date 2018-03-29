@@ -1,4 +1,4 @@
-#include "userInterface/mainwindow.h"
+#include "gui/mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -58,7 +58,7 @@ void MainWindow::setCookTime(QTime cookTime){
 }
 
 void MainWindow::setServings(float servings){
-	ui->servingsLabel->setText(QString("Servings: ")+QString::fromStdString(StringUtils::toString(servings)));
+	ui->servingsLabel->setText(QString(QString::fromStdString(StringUtils::toString(servings) + " Serving" + ((servings != 1.0f) ? "s" : ""))));
 }
 
 void MainWindow::setTags(vector<RecipeTag> tags){
@@ -72,8 +72,22 @@ void MainWindow::on_newButton_clicked(){
 	if (d.isAccepted()){
 		Recipe r = d.getRecipe();
 		if (!this->recipeDB->storeRecipe(r)){
-			QMessageBox::critical(this, QString("Unable to Save Recipe"), QString("The program was not able to successfully save the recipe."));
+			QMessageBox::critical(this, QString("Unable to Save Recipe"), QString("The program was not able to successfully save the recipe. Make sure to give the recipe a name, instructions, and some ingredients!"));
+		} else {
+			this->loadFromRecipe(r);
 		}
-		this->loadFromRecipe(r);
 	}
+}
+
+void MainWindow::on_openButton_clicked(){
+	OpenRecipeDialog d(this->recipeDB, this);
+	d.show();
+	d.exec();
+	if (!d.getSelectedRecipe().isEmpty()){
+		this->loadFromRecipe(d.getSelectedRecipe());
+	}
+}
+
+void MainWindow::on_exitButton_clicked(){
+	this->close();
 }

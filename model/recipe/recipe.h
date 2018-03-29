@@ -46,6 +46,7 @@ public:
     QTime getCookTime() const;
     QTime getTotalTime() const;                 //Derived method to add prep and cook times.
     float getServings() const;
+	bool isEmpty() const;
 
     //Setters
     void setName(string newName);

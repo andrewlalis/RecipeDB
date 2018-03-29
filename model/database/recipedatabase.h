@@ -32,6 +32,8 @@ class RecipeDatabase : public Database
 
 		//Retrieval.
 		Recipe retrieveRecipe(string name);
+		Recipe retrieveRandomRecipe();
+		vector<Recipe> retrieveAllRecipes();
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();
 		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();
@@ -39,11 +41,17 @@ class RecipeDatabase : public Database
 		vector<RecipeTag> retrieveAllTags();
 
 		//Deletion.
-		void deleteTag(RecipeTag tag);
+		bool deleteRecipe(string name);
+		bool deleteRecipe(int recipeId);
+		bool deleteIngredient(string name);
+		bool deleteUnitOfMeasure(string name);
+		bool deleteTag(RecipeTag tag);
 	private:
 
 		//Utility methods.
 		void ensureTablesExist();
+		//Read a recipe from a row of a result table.
+		Recipe readFromResultTable(ResultTable t, int row=0);
 };
 
 #endif // RECIPEDATABASE_H
