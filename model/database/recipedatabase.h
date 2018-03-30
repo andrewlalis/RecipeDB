@@ -34,6 +34,7 @@ class RecipeDatabase : public Database
 		Recipe retrieveRecipe(string name);
 		Recipe retrieveRandomRecipe();
 		vector<Recipe> retrieveAllRecipes();
+		vector<Recipe> retrieveRecipesWithIngredients(vector<Ingredient> ingredients);
 		vector<string> retrieveAllFoodGroups();
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();
@@ -53,6 +54,7 @@ class RecipeDatabase : public Database
 		void ensureTablesExist();
 		//Read a recipe from a row of a result table.
 		Recipe readFromResultTable(ResultTable t, int row=0);
+		vector<Recipe> readRecipesFromTable(ResultTable t);
 };
 
 #endif // RECIPEDATABASE_H

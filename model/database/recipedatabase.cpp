@@ -158,14 +158,35 @@ Recipe RecipeDatabase::retrieveRandomRecipe(){
 	}
 	return this->readFromResultTable(t);
 }
-
+//TODO: Change this to be more efficient! One query per recipe is not good!
 vector<Recipe> RecipeDatabase::retrieveAllRecipes(){
-	ResultTable t = this->selectFrom("recipe", "name", "ORDER BY name");
+	ResultTable t = this->executeSQL("SELECT * FROM recipe ORDER BY name;");
+	return this->readRecipesFromTable(t);
+}
+
+vector<Recipe> RecipeDatabase::retrieveRecipesWithIngredients(vector<Ingredient> ingredients){
 	vector<Recipe> recipes;
-	for (TableRow row : t.rows()){
-		recipes.push_back(this->retrieveRecipe(row.at(0)));
+	if (ingredients.empty()){
+		return recipes;
 	}
-	return recipes;
+	string filterList = surroundString(ingredients.at(0).getName(), "'");
+	for (unsigned int i = 1; i < ingredients.size(); i++){
+		filterList += ", " + surroundString(ingredients[i].getName(), "'");
+	}
+	filterList = '(' + filterList + ')';
+	ResultTable t = this->executeSQL("SELECT * "
+									 "FROM recipe "
+									 "WHERE recipeId IN ("
+									 "	SELECT recipeIngredient.recipeId "
+									 "	FROM recipeIngredient "
+									 "	INNER JOIN ("
+									 "		SELECT ingredientId "
+									 "		FROM ingredient "
+									 "		WHERE name IN "+filterList+""
+									 "	) filteredIngredients "
+									 "	ON recipeIngredient.ingredientId = filteredIngredients.ingredientId"
+									 ") ORDER BY name;");
+	return this->readRecipesFromTable(t);
 }
 
 vector<string> RecipeDatabase::retrieveAllFoodGroups(){
@@ -359,4 +380,14 @@ Recipe RecipeDatabase::readFromResultTable(ResultTable t, int tRow){
 	r.setIngredients(this->retrieveRecipeIngredients(id));
 	r.setTags(this->retrieveTags(id));
 	return r;
+}
+
+//Retrieves recipes from a table with the following format:
+// id, name, createdDate, prepTime, cookTime, servings
+vector<Recipe> RecipeDatabase::readRecipesFromTable(ResultTable t){
+	vector<Recipe> recipes;
+	for (unsigned int row = 0; row < t.rowCount(); row++){
+		recipes.push_back(readFromResultTable(t, row));
+	}
+	return recipes;
 }

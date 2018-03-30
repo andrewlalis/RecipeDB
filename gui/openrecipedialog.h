@@ -30,7 +30,7 @@ class OpenRecipeDialog : public QDialog
 
 		void on_recipeTableView_doubleClicked(const QModelIndex &index);
 
-		void on_ingredientsListView_selectionChanged(const QItemSelection &selection);
+		void onIngredientsListViewSelectionChanged(const QItemSelection &selection);
 
 	private:
 		Ui::OpenRecipeDialog *ui;
@@ -41,7 +41,7 @@ class OpenRecipeDialog : public QDialog
 		IngredientListModel ingredientsModel;
 		TagListModel tagsModel;
 
-		void populateRecipesTable();
+		void populateRecipesTable(vector<Recipe> recipes);
 		void populateIngredientsList();
 		void populateTagsList();
 };

@@ -11,17 +11,17 @@ OpenRecipeDialog::OpenRecipeDialog(QWidget *parent) :
 	ui->ingredientsListView->setModel(&this->ingredientsModel);
 	ui->tagsListView->setModel(&this->tagsModel);
 
-	connect(ui->ingredientsListView->selectionModel(),
-			SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+	QObject::connect(ui->ingredientsListView->selectionModel(),
+			SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 			this,
-			SLOT(on_ingredientsListView_selectionChanged(QItemSelection)));
+			SLOT(onIngredientsListViewSelectionChanged(QItemSelection)));
 }
 
 OpenRecipeDialog::OpenRecipeDialog(RecipeDatabase *recipeDB, QWidget *parent) : OpenRecipeDialog(parent){
 	this->recipeDB = recipeDB;
 	this->populateIngredientsList();
 	this->populateTagsList();
-	this->populateRecipesTable();
+	this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
 }
 
 OpenRecipeDialog::~OpenRecipeDialog()
@@ -33,9 +33,8 @@ Recipe OpenRecipeDialog::getSelectedRecipe(){
 	return this->selectedRecipe;
 }
 
-void OpenRecipeDialog::populateRecipesTable(){
+void OpenRecipeDialog::populateRecipesTable(vector<Recipe> recipes){
 	this->recipeTableModel.clear();
-	vector<Recipe> recipes = this->recipeDB->retrieveAllRecipes();
 	this->recipeTableModel.setRecipes(recipes);
 	ui->recipeTableView->resizeColumnsToContents();
 	ui->recipeTableView->show();
@@ -69,9 +68,10 @@ void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
 			bool success = this->recipeDB->deleteRecipe(r.getName());
 			if (!success){
 				QMessageBox::critical(this, QString::fromStdString("Unable to Delete"), QString::fromStdString("Could not delete recipe "+r.getName()));
+			} else {
+				this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
 			}
 		}
-		this->populateRecipesTable();
 	}
 }
 
@@ -80,13 +80,12 @@ void OpenRecipeDialog::on_recipeTableView_doubleClicked(const QModelIndex &index
 	this->close();
 }
 
-void OpenRecipeDialog::on_ingredientsListView_selectionChanged(const QItemSelection &selection){
-	printf("Selection changed!\n");
+void OpenRecipeDialog::onIngredientsListViewSelectionChanged(const QItemSelection &selection){
 	vector<Ingredient> ingredients;
-	for (QModelIndex index : selection.indexes()){
+	QModelIndexList indexes = ui->ingredientsListView->selectionModel()->selectedRows();
+	for (QModelIndex index : indexes){
 		Ingredient i = this->ingredientsModel.getIngredients().at(index.row());
 		ingredients.push_back(i);
-		printf("Selected: %s\n", i.getName().c_str());
 	}
-
+	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithIngredients(ingredients));
 }
