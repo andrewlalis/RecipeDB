@@ -51,6 +51,9 @@ class RecipeDatabase : public Database
 		bool deleteIngredient(string name);
 		bool deleteUnitOfMeasure(string name);
 		bool deleteTag(RecipeTag tag);
+
+		//Updating.
+		bool updateRecipe(Recipe recipe);
 	private:
 
 		//Utility methods.

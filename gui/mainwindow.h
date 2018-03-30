@@ -36,11 +36,14 @@ public:
 
 	void on_exitButton_clicked();
 
+	void on_editButton_clicked();
+
 	private:
     Ui::MainWindow *ui;
 	RecipeDatabase *recipeDB;
 	RecipeIngredientListModel ingredientModel;
 	TagListModel tagsListModel;
+	Recipe currentRecipe;
 
     //Hidden manipulation methods.
     void setRecipeName(string name);

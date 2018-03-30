@@ -31,6 +31,7 @@ void MainWindow::loadFromRecipe(Recipe recipe){
 	setCookTime(recipe.getCookTime());
 	setServings(recipe.getServings());
 	setTags(recipe.getTags());
+	this->currentRecipe = recipe;
 }
 
 void MainWindow::setRecipeName(string name){
@@ -90,4 +91,18 @@ void MainWindow::on_openButton_clicked(){
 
 void MainWindow::on_exitButton_clicked(){
 	this->close();
+}
+
+void MainWindow::on_editButton_clicked(){
+	NewRecipeDialog d(this->recipeDB, this->currentRecipe, this);
+	d.show();
+	d.exec();
+	if (d.isAccepted()){
+		Recipe r = d.getRecipe();
+		if (!this->recipeDB->storeRecipe(r)){
+			QMessageBox::critical(this, QString("Unable to Save Recipe"), QString("The program was not able to successfully save the recipe. Make sure to give the recipe a name, instructions, and some ingredients!"));
+		} else {
+			this->loadFromRecipe(r);
+		}
+	}
 }

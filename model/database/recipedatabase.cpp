@@ -356,6 +356,10 @@ bool RecipeDatabase::deleteTag(RecipeTag tag){
 	return this->deleteFrom("recipeTag", "WHERE tagName='"+tag.getValue()+"'");
 }
 
+bool RecipeDatabase::updateRecipe(Recipe recipe){
+
+}
+
 void RecipeDatabase::ensureTablesExist(){
 	//Make sure that foreign keys are enabled.
 	this->executeSQL("PRAGMA foreign_keys = ON;");
