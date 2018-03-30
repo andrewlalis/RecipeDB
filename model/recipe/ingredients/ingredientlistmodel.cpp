@@ -1,7 +1,7 @@
 #include "model/recipe/ingredients/ingredientlistmodel.h"
 
 IngredientListModel::IngredientListModel(){
-    this->ingredients = vector<RecipeIngredient>();
+	this->ingredients = vector<Ingredient>();
 }
 
 int IngredientListModel::rowCount(const QModelIndex &parent) const{
@@ -10,7 +10,7 @@ int IngredientListModel::rowCount(const QModelIndex &parent) const{
 
 QVariant IngredientListModel::data(const QModelIndex &index, int role) const{
     int row = index.row();
-	RecipeIngredient i = this->ingredients[row];
+	Ingredient i = this->ingredients[row];
 
 	string displayStr = i.toString();
 
@@ -22,14 +22,14 @@ QVariant IngredientListModel::data(const QModelIndex &index, int role) const{
     return QVariant();
 }
 
-void IngredientListModel::setIngredients(vector<RecipeIngredient> ingredients){
+void IngredientListModel::setIngredients(vector<Ingredient> ingredients){
     this->ingredients = ingredients;
     QModelIndex index = createIndex(0, 0);
     QModelIndex bottomIndex = createIndex(ingredients.size()-1, 0);
 	emit dataChanged(index, bottomIndex);
 }
 
-bool IngredientListModel::addIngredient(RecipeIngredient ri){
+bool IngredientListModel::addIngredient(Ingredient ri){
 	//Add only if it doesn't exist already.
 	for (unsigned int i = 0; i < this->ingredients.size(); i++){
 		if (!this->ingredients[i].getName().compare(ri.getName())){
@@ -48,6 +48,6 @@ void IngredientListModel::deleteIngredient(int index){
 	emit dataChanged(createIndex(0, 0), createIndex(this->ingredients.size()-1, 0));
 }
 
-vector<RecipeIngredient> IngredientListModel::getIngredients(){
+vector<Ingredient> IngredientListModel::getIngredients(){
 	return this->ingredients;
 }

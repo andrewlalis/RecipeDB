@@ -1,7 +1,7 @@
 #ifndef RECIPEDATABASE_H
 #define RECIPEDATABASE_H
 
-
+#include <map>
 
 #include "database.h"
 #include "model/recipe/recipe.h"

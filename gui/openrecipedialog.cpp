@@ -8,10 +8,14 @@ OpenRecipeDialog::OpenRecipeDialog(QWidget *parent) :
 	ui->setupUi(this);
 
 	ui->recipeTableView->setModel(&this->recipeTableModel);
+	ui->ingredientsListView->setModel(&this->ingredientsModel);
+	ui->tagsListView->setModel(&this->tagsModel);
 }
 
 OpenRecipeDialog::OpenRecipeDialog(RecipeDatabase *recipeDB, QWidget *parent) : OpenRecipeDialog(parent){
 	this->recipeDB = recipeDB;
+	this->populateIngredientsList();
+	this->populateTagsList();
 	this->populateRecipesTable();
 }
 
@@ -30,6 +34,14 @@ void OpenRecipeDialog::populateRecipesTable(){
 	this->recipeTableModel.setRecipes(recipes);
 	ui->recipeTableView->resizeColumnsToContents();
 	ui->recipeTableView->show();
+}
+
+void OpenRecipeDialog::populateIngredientsList(){
+	this->ingredientsModel.setIngredients(this->recipeDB->retrieveAllIngredients());
+}
+
+void OpenRecipeDialog::populateTagsList(){
+	this->tagsModel.setTags(this->recipeDB->retrieveAllTags());
 }
 
 void OpenRecipeDialog::on_deleteRecipeButton_clicked(){

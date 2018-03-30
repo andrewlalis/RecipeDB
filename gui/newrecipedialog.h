@@ -8,7 +8,7 @@
 #include <QMessageBox>
 
 #include "model/database/recipedatabase.h"
-#include "model/recipe/ingredients/ingredientlistmodel.h"
+#include "model/recipe/ingredients/recipeingredientlistmodel.h"
 #include "model/recipe/tags/taglistmodel.h"
 
 #include "gui/newDialogs/newingredientdialog.h"
@@ -67,7 +67,7 @@ class NewRecipeDialog : public QDialog
 		vector<Ingredient> ingredients;
 		vector<UnitOfMeasure> units;
 		vector<RecipeTag> tags;
-		IngredientListModel ingredientListModel;
+		RecipeIngredientListModel ingredientListModel;
 		TagListModel tagsListModel;
 		QImage img;
 		bool accepted = false;

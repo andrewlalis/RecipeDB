@@ -14,6 +14,10 @@ RecipeIngredient::RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure u
 	setComment(comment);
 }
 
+RecipeIngredient::RecipeIngredient(Ingredient &i) : RecipeIngredient(i, 0.0f, UnitOfMeasure("bleh"), "Fuck"){
+	//Constructs recipe ingredient from ingredient which is a hidden recipe ingredient.
+}
+
 RecipeIngredient::RecipeIngredient(){
 
 }

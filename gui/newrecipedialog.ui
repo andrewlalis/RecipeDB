@@ -273,6 +273,12 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(113, 119, 255);</string>
+                 </property>
+                 <property name="insertPolicy">
+                  <enum>QComboBox::InsertAlphabetically</enum>
+                 </property>
                 </widget>
                </item>
                <item alignment="Qt::AlignRight">
@@ -459,11 +465,20 @@
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(113, 119, 255);</string>
+                       </property>
                        <property name="editable">
                         <bool>false</bool>
                        </property>
                        <property name="currentText">
                         <string/>
+                       </property>
+                       <property name="insertPolicy">
+                        <enum>QComboBox::InsertAlphabetically</enum>
+                       </property>
+                       <property name="frame">
+                        <bool>true</bool>
                        </property>
                       </widget>
                      </item>
@@ -553,6 +568,12 @@
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(113, 119, 255);</string>
+                       </property>
+                       <property name="insertPolicy">
+                        <enum>QComboBox::InsertAlphabetically</enum>
                        </property>
                       </widget>
                      </item>

@@ -21,6 +21,7 @@ public:
 	RecipeIngredient(string name, string foodGroup, float quantity, UnitOfMeasure unit, string comment);
     //Constructor using data from a child ingredient.
 	RecipeIngredient(Ingredient i, float quantity, UnitOfMeasure unit, string comment);
+	RecipeIngredient(Ingredient &i);
 	RecipeIngredient();
 
     //Getters

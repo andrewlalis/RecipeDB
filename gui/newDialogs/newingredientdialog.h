@@ -2,8 +2,11 @@
 #define NEWINGREDIENTDIALOG_H
 
 #include <QDialog>
+#include <QMessageBox>
+
 #include "model/recipe/ingredients/ingredient.h"
 #include "model/database/recipedatabase.h"
+#include "gui/newDialogs/newfoodgroupdialog.h"
 
 namespace Ui {
 class NewIngredientDialog;
@@ -20,6 +23,11 @@ class NewIngredientDialog : public QDialog
 
 		//Access values.
 		Ingredient getIngredient();
+
+	private slots:
+		void on_addFoodGroupButton_clicked();
+
+		void on_deleteFoodGroupButton_clicked();
 
 	private:
 		Ui::NewIngredientDialog *ui;

@@ -29,7 +29,9 @@ public:
 	bool deleteFrom(string tableName, string conditions);
 
 	bool tableExists(string tableName);
-	int getLastInsertedRowId();
+	int getLastInsertedRowId() const;
+
+	unsigned long getQueryCount() const;
 
 	void closeConnection();
 
@@ -44,6 +46,9 @@ private:
     int returnCode;
     string sql;
     char* errorMsg;
+
+	//Data tracking.
+	unsigned long queryCount;
 
     void openConnection();
 	std::string combineVector(std::vector<std::string> strings, std::string mid);

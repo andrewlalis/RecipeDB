@@ -24,6 +24,8 @@ int main(int argc, char *argv[])
 
 	a.exec();
 	recipeDB.closeConnection();
+	printf("Total queries: %lu\n", recipeDB.getQueryCount());
+
 	return 0;
 }
 

@@ -2,6 +2,7 @@
 
 Database::Database(string filename){
     this->filename = filename;
+	this->queryCount = 0;
     openConnection();
 }
 
@@ -22,6 +23,7 @@ ResultTable Database::executeSQL(string statement){
 	t.extractData(stmt);
 
 	this->returnCode = sqlite3_finalize(stmt);
+	this->queryCount++;
 
 	return t;
 }
@@ -99,6 +101,10 @@ bool Database::tableExists(string tableName){
 	return !t.isEmpty();
 }
 
-int Database::getLastInsertedRowId(){
+int Database::getLastInsertedRowId() const{
 	return sqlite3_last_insert_rowid(this->db);
+}
+
+unsigned long Database::getQueryCount() const{
+	return this->queryCount;
 }

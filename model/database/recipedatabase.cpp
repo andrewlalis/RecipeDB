@@ -234,7 +234,7 @@ vector<RecipeTag> RecipeDatabase::retrieveTags(int recipeId){
 }
 
 vector<RecipeTag> RecipeDatabase::retrieveAllTags(){
-	ResultTable t = this->selectFrom("recipeTag", "tagName", "ORDER BY tagName");
+	ResultTable t = this->executeSQL("SELECT DISTINCT tagName FROM recipeTag ORDER BY tagName;");
 	vector<RecipeTag> tags;
 	if (!t.isEmpty()){
 		for (TableRow row : t.rows()){

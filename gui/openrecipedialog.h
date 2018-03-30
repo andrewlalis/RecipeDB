@@ -6,6 +6,8 @@
 
 #include "model/database/recipedatabase.h"
 #include "model/recipe/recipetablemodel.h"
+#include "model/recipe/ingredients/ingredientlistmodel.h"
+#include "model/recipe/tags/taglistmodel.h"
 
 namespace Ui {
 class OpenRecipeDialog;
@@ -33,7 +35,12 @@ class OpenRecipeDialog : public QDialog
 		RecipeTableModel recipeTableModel;
 		Recipe selectedRecipe;
 
+		IngredientListModel ingredientsModel;
+		TagListModel tagsModel;
+
 		void populateRecipesTable();
+		void populateIngredientsList();
+		void populateTagsList();
 };
 
 #endif // OPENRECIPEDIALOG_H
