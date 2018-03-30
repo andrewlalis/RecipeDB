@@ -35,6 +35,9 @@ class RecipeDatabase : public Database
 		Recipe retrieveRandomRecipe();
 		vector<Recipe> retrieveAllRecipes();
 		vector<Recipe> retrieveRecipesWithIngredients(vector<Ingredient> ingredients);
+		vector<Recipe> retrieveRecipesWithTags(vector<RecipeTag> tags);
+		vector<Recipe> retrieveRecipesWithSubstring(string s);
+		vector<Recipe> retrieveRecipesWithFoodGroups(vector<string> groups);
 		vector<string> retrieveAllFoodGroups();
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();

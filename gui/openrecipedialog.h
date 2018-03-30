@@ -32,6 +32,12 @@ class OpenRecipeDialog : public QDialog
 
 		void onIngredientsListViewSelectionChanged(const QItemSelection &selection);
 
+		void onTagsListViewSelectionChanged(const QItemSelection &selection);
+
+		void on_nameEdit_textChanged(const QString &arg1);
+
+		void on_foodGroupsListWidget_itemSelectionChanged();
+
 	private:
 		Ui::OpenRecipeDialog *ui;
 		RecipeDatabase *recipeDB;
@@ -44,6 +50,7 @@ class OpenRecipeDialog : public QDialog
 		void populateRecipesTable(vector<Recipe> recipes);
 		void populateIngredientsList();
 		void populateTagsList();
+		void populateFoodGroupsList();
 };
 
 #endif // OPENRECIPEDIALOG_H

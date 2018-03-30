@@ -189,6 +189,39 @@ vector<Recipe> RecipeDatabase::retrieveRecipesWithIngredients(vector<Ingredient>
 	return this->readRecipesFromTable(t);
 }
 
+vector<Recipe> RecipeDatabase::retrieveRecipesWithTags(vector<RecipeTag> tags){
+	vector<Recipe> recipes;
+	if (tags.empty()){
+		return recipes;
+	}
+	string filterList = surroundString(tags.at(0).getValue(), "'");
+	for (unsigned int i = 1; i < tags.size(); i++){
+		filterList += ", " + surroundString(tags[i].getValue(), "'");
+	}
+	filterList = '(' + filterList + ')';
+	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE recipeId IN (SELECT recipeId FROM recipeTag WHERE tagName IN "+filterList+" );");
+	return this->readRecipesFromTable(t);
+}
+
+vector<Recipe> RecipeDatabase::retrieveRecipesWithSubstring(string s){
+	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE name LIKE '%"+s+"%' COLLATE NOCASE;");
+	return this->readRecipesFromTable(t);
+}
+
+vector<Recipe> RecipeDatabase::retrieveRecipesWithFoodGroups(vector<string> groups){
+	vector<Recipe> recipes;
+	if (groups.empty()){
+		return recipes;
+	}
+	string filterList = surroundString(groups.at(0), "'");
+	for (unsigned int i = 1; i < groups.size(); i++){
+		filterList += ", " + surroundString(groups.at(i), "'");
+	}
+	filterList = '(' + filterList + ')';
+	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE recipeId IN (SELECT recipeId FROM recipeIngredient WHERE ingredientId IN (SELECT ingredientId FROM ingredient WHERE foodGroup IN "+filterList+" ) ) ORDER BY name;");
+	return this->readRecipesFromTable(t);
+}
+
 vector<string> RecipeDatabase::retrieveAllFoodGroups(){
 	ResultTable t = this->executeSQL("SELECT DISTINCT foodGroup FROM ingredient ORDER BY foodGroup;");
 	vector<string> foodGroups;
