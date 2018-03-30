@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 	Recipe rec("Example",
 			   ri,
-			   Instruction("<b>BOLD</b><i>iTaLiCs</i>"),
+			   Instruction("Placeholder Text"),
 			   QImage(),
 			   vector<RecipeTag>({RecipeTag("testing"),
 								  RecipeTag("fake")}),
@@ -32,7 +32,6 @@ int main(int argc, char *argv[])
 	bool success = recipeDB.storeRecipe(rec);
 	printf("Storage successful: %d\n", success);
 
-	//recipeDB.selectFrom("recipe", "recipeId, name", "").printData();
 	w.loadFromRecipe(recipeDB.retrieveRandomRecipe());
 
 	a.exec();

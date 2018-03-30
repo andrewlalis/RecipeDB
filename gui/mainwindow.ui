@@ -329,10 +329,10 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignRight">
            <widget class="QLabel" name="recipeNameLabel">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -358,6 +358,26 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft|Qt::AlignBottom">
+           <widget class="QLabel" name="authorLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans CJK KR Light</family>
+              <pointsize>14</pointsize>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>By Unknown Author</string>
             </property>
            </widget>
           </item>
