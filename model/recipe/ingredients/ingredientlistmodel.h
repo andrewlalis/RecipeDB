@@ -16,13 +16,13 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     //Custom methods to handle ingredient data.
-    void setIngredients(vector<RecipeIngredient> ingredients);
-	bool addIngredient(RecipeIngredient ri);
+	void setIngredients(vector<Ingredient> ingredients);
+	bool addIngredient(Ingredient ri);
 	void deleteIngredient(int index);
-	vector<RecipeIngredient> getIngredients();
+	vector<Ingredient> getIngredients();
 
 private:
-    vector<RecipeIngredient> ingredients;
+	vector<Ingredient> ingredients;
 
 	//Helper for printing.
 

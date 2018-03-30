@@ -75,6 +75,7 @@ void NewRecipeDialog::on_addIngredientButton_clicked(){
 	UnitOfMeasure u = this->units[ui->unitComboBox->currentIndex()];
 	RecipeIngredient ri(i, ui->quantitySpinBox->value(), u, ui->commentsLineEdit->text().toStdString());
 	this->ingredientListModel.addIngredient(ri);
+	ui->commentsLineEdit->clear();
 }
 
 void NewRecipeDialog::on_italicsButton_clicked(){
@@ -144,12 +145,17 @@ void NewRecipeDialog::on_deleteIngredientButton_clicked(){
 }
 
 void NewRecipeDialog::on_newIngredientButton_clicked(){
-	NewIngredientDialog d(this);
+	NewIngredientDialog d(this->recipeDB, this);
 	d.show();
 	if (d.exec() == QDialog::Accepted){
 		Ingredient i = d.getIngredient();
-		this->recipeDB->storeIngredient(i);
-		this->populateIngredientsBox();
+		if (!i.getName().empty() && !i.getFoodGroup().empty() && this->recipeDB->storeIngredient(i)){
+			this->populateIngredientsBox();
+			ui->ingredientNameBox->setCurrentText(QString::fromStdString(i.getName()));
+		} else {
+			QMessageBox::critical(this, "Error", "Unable to add ingredient.");
+		}
+
 	}
 }
 
@@ -159,12 +165,16 @@ void NewRecipeDialog::on_newTagButton_clicked(){
 	if (d.exec() == QDialog::Accepted){
 		RecipeTag tag = d.getTag();
 		//Temporarily add this to the tags list, and it will be saved if the recipe is saved.
-		this->tags.push_back(tag);
-		this->tagsListModel.addTag(tag);
-		ui->tagsComboBox->clear();
-		for (unsigned int i = 0; i < this->tags.size(); i++){
-			QString s = QString::fromStdString(this->tags[i].getValue());
-			ui->tagsComboBox->insertItem(i, s);
+		if (!tag.getValue().empty()){
+			this->tags.push_back(tag);
+			this->tagsListModel.addTag(tag);
+			ui->tagsComboBox->clear();
+			for (unsigned int i = 0; i < this->tags.size(); i++){
+				QString s = QString::fromStdString(this->tags[i].getValue());
+				ui->tagsComboBox->insertItem(i, s);
+			}
+		} else {
+			QMessageBox::warning(this, "Empty Tag", "The tag you entered is blank!");
 		}
 	}
 
@@ -189,10 +199,11 @@ void NewRecipeDialog::on_newUnitButton_clicked(){
 	d.show();
 	if (d.exec() == QDialog::Accepted){
 		UnitOfMeasure u = d.getUnit();
-		if (!this->recipeDB->storeUnitOfMeasure(u) || u.getName().empty() || u.getNamePlural().empty() || u.getAbbreviation().empty()){
-			QMessageBox::critical(this, "Error", "Unable to store new unit.");
+		if (u.getName().empty() || u.getNamePlural().empty() || u.getAbbreviation().empty() || !this->recipeDB->storeUnitOfMeasure(u)){
+			QMessageBox::critical(this, "Error", "Unable to store new unit. Make sure all the information is filled in!");
 		} else {
 			this->populateUnitsBox();
+			ui->unitComboBox->setCurrentText(QString::fromStdString(u.getName()));
 		}
 	}
 }

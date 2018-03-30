@@ -1,7 +1,7 @@
 #ifndef RECIPEDATABASE_H
 #define RECIPEDATABASE_H
 
-
+#include <map>
 
 #include "database.h"
 #include "model/recipe/recipe.h"
@@ -34,6 +34,7 @@ class RecipeDatabase : public Database
 		Recipe retrieveRecipe(string name);
 		Recipe retrieveRandomRecipe();
 		vector<Recipe> retrieveAllRecipes();
+		vector<string> retrieveAllFoodGroups();
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();
 		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();

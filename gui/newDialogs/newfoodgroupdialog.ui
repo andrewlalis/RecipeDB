@@ -1,63 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>newTagDialog</class>
- <widget class="QDialog" name="newTagDialog">
+ <class>newFoodGroupDialog</class>
+ <widget class="QDialog" name="newFoodGroupDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>240</width>
-    <height>121</height>
+    <height>114</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>New Tag</string>
+   <string>New Food Group</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../images.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">font: 25 &quot;Noto Sans CJK KR Light&quot;;</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item alignment="Qt::AlignTop">
-    <widget class="QWidget" name="tagEditWidget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QLabel" name="tagLabel">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-          <weight>3</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>New Tag</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tagEdit">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-          <weight>3</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-       </widget>
-      </item>
-     </layout>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <family>Noto Sans CJK KR Light</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Add New Food Group</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="font">
+      <font>
+       <family>Noto Sans CJK KR Light</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
     </widget>
    </item>
    <item>
@@ -79,7 +68,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>newTagDialog</receiver>
+   <receiver>newFoodGroupDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -95,7 +84,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>newTagDialog</receiver>
+   <receiver>newFoodGroupDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

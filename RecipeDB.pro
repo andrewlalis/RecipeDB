@@ -34,7 +34,9 @@ SOURCES += model/recipe/instruction.cpp \
     utils/stringutils.cpp \
     gui/openrecipedialog.cpp \
     model/recipe/recipetablemodel.cpp \
-    gui/mainwindow.cpp
+    gui/mainwindow.cpp \
+    gui/newDialogs/newfoodgroupdialog.cpp \
+    model/recipe/ingredients/recipeingredientlistmodel.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
@@ -58,7 +60,9 @@ HEADERS  += model/recipe/instruction.h \
     utils/stringutils.h \
     gui/openrecipedialog.h \
     model/recipe/recipetablemodel.h \
-    gui/mainwindow.h
+    gui/mainwindow.h \
+    gui/newDialogs/newfoodgroupdialog.h \
+    model/recipe/ingredients/recipeingredientlistmodel.h
 
 LIBS += -ldl \
 
@@ -68,7 +72,8 @@ FORMS    += gui/mainwindow.ui \
     gui/newDialogs/newtagdialog.ui \
     gui/newDialogs/newunitdialog.ui \
     gui/openrecipedialog.ui \
-    gui/mainwindow.ui
+    gui/mainwindow.ui \
+    gui/newDialogs/newfoodgroupdialog.ui
 
 DISTFILES += \
     .gitignore

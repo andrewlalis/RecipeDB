@@ -72,8 +72,8 @@ void RecipeTableModel::setRecipes(vector<Recipe> recipes){
 	endInsertRows();
 }
 
-Recipe RecipeTableModel::getRecipeAt(int index){
-	if (index < 0 || index >= this->recipes.size()){
+Recipe RecipeTableModel::getRecipeAt(unsigned int index){
+	if (index >= this->recipes.size()){
 		return Recipe();
 	}
 	return this->recipes[index];

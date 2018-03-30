@@ -8,10 +8,19 @@ OpenRecipeDialog::OpenRecipeDialog(QWidget *parent) :
 	ui->setupUi(this);
 
 	ui->recipeTableView->setModel(&this->recipeTableModel);
+	ui->ingredientsListView->setModel(&this->ingredientsModel);
+	ui->tagsListView->setModel(&this->tagsModel);
+
+	connect(ui->ingredientsListView->selectionModel(),
+			SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+			this,
+			SLOT(on_ingredientsListView_selectionChanged(QItemSelection)));
 }
 
 OpenRecipeDialog::OpenRecipeDialog(RecipeDatabase *recipeDB, QWidget *parent) : OpenRecipeDialog(parent){
 	this->recipeDB = recipeDB;
+	this->populateIngredientsList();
+	this->populateTagsList();
 	this->populateRecipesTable();
 }
 
@@ -32,13 +41,21 @@ void OpenRecipeDialog::populateRecipesTable(){
 	ui->recipeTableView->show();
 }
 
+void OpenRecipeDialog::populateIngredientsList(){
+	this->ingredientsModel.setIngredients(this->recipeDB->retrieveAllIngredients());
+}
+
+void OpenRecipeDialog::populateTagsList(){
+	this->tagsModel.setTags(this->recipeDB->retrieveAllTags());
+}
+
 void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
 	QItemSelectionModel *selectModel = ui->recipeTableView->selectionModel();
 	if (!selectModel->hasSelection()){
 		return;
 	}
 	vector<int> rows;
-	QModelIndexList indexes = selectModel->selectedIndexes();
+	QModelIndexList indexes = selectModel->selectedRows();
 	for (int i = 0; i < indexes.count(); i++){
 		rows.push_back(indexes.at(i).row());
 	}
@@ -61,4 +78,15 @@ void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
 void OpenRecipeDialog::on_recipeTableView_doubleClicked(const QModelIndex &index){
 	this->selectedRecipe = this->recipeTableModel.getRecipeAt(index.row());
 	this->close();
+}
+
+void OpenRecipeDialog::on_ingredientsListView_selectionChanged(const QItemSelection &selection){
+	printf("Selection changed!\n");
+	vector<Ingredient> ingredients;
+	for (QModelIndex index : selection.indexes()){
+		Ingredient i = this->ingredientsModel.getIngredients().at(index.row());
+		ingredients.push_back(i);
+		printf("Selected: %s\n", i.getName().c_str());
+	}
+
 }

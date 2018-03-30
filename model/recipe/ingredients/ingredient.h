@@ -23,6 +23,8 @@ public:
     //Setters
     void setName(string newName);
     void setFoodGroup(string newFoodGroup);
+
+	string toString();
 protected:
     string name;
     string foodGroup;

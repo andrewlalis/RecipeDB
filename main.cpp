@@ -4,22 +4,39 @@
 
 #include "model/database/database.h"
 #include "model/database/recipedatabase.h"
+#include "utils/fileutils.h"
+
+void test(RecipeDatabase *recipeDB);
 
 int main(int argc, char *argv[])
 {
-	RecipeDatabase recipeDB("recipes");
+	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
     QApplication a(argc, argv);
 	MainWindow w(&recipeDB);
     w.show();
 
 	//TESTING CODE
+	test(&recipeDB);
+
+	//END TESTING CODE.
+
+	w.loadFromRecipe(recipeDB.retrieveRandomRecipe());
+
+	a.exec();
+	recipeDB.closeConnection();
+	printf("Total queries: %lu\n", recipeDB.getQueryCount());
+
+	return 0;
+}
+
+void test(RecipeDatabase *recipeDB){
 	vector<RecipeIngredient> ri;
 	ri.push_back(RecipeIngredient("flour", "grains", 3.0f, UnitOfMeasure("cup", "cups", "c", UnitOfMeasure::VOLUME, 1.0), ""));
 	ri.push_back(RecipeIngredient("baking powder", "additives", 1.0f, UnitOfMeasure("teaspoon", "teaspoons", "tsp", UnitOfMeasure::VOLUME, 1.0), ""));
 
 	Recipe rec("Example",
 			   ri,
-			   Instruction("<b>BOLD</b><i>iTaLiCs</i>"),
+			   Instruction("Placeholder Text"),
 			   QImage(),
 			   vector<RecipeTag>({RecipeTag("testing"),
 								  RecipeTag("fake")}),
@@ -28,13 +45,21 @@ int main(int argc, char *argv[])
 			   QTime(0, 25),
 			   10.0f);
 
-	bool success = recipeDB.storeRecipe(rec);
+	bool success = recipeDB->storeRecipe(rec);
 	printf("Storage successful: %d\n", success);
 
-	//recipeDB.selectFrom("recipe", "recipeId, name", "").printData();
-	w.loadFromRecipe(recipeDB.retrieveRandomRecipe());
+	vector<string> foodGroups = recipeDB->retrieveAllFoodGroups();
+	printf("Food Groups:\n");
+	for (string s : foodGroups){
+		printf("\t%s\n", s.c_str());
+	}
 
-	a.exec();
-	recipeDB.closeConnection();
-	return 0;
+	//Get food groups from recipe.
+	Recipe r = recipeDB->retrieveRecipe("Pannenkoeken");
+	vector<string> foodGroupsR = r.getFoodGroups();
+	printf("Pannenkoeken Food Groups:\n");
+	for (string s : foodGroupsR){
+		printf("\t%s\n", s.c_str());
+	}
+
 }

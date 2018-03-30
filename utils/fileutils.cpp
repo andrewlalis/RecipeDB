@@ -61,4 +61,18 @@ QImage loadImage(int nr){
 	return img;
 }
 
+bool deleteInstruction(int nr){
+	ensureAppDataFolderExists();
+	QString filename = appDataPath + QString::fromStdString(std::to_string(nr)) +".html";
+	QFile file(filename);
+	return file.remove();
+}
+
+bool deleteImage(int nr){
+	ensureAppDataFolderExists();
+	QString filename = appDataPath + QString::fromStdString(std::to_string(nr)) +".png";
+	QFile file(filename);
+	return file.remove();
+}
+
 }

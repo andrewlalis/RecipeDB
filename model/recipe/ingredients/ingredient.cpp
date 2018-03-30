@@ -23,5 +23,9 @@ void Ingredient::setName(string newName){
 }
 
 void Ingredient::setFoodGroup(string newFoodGroup){
-    this->foodGroup = newFoodGroup;
+	this->foodGroup = newFoodGroup;
+}
+
+string Ingredient::toString(){
+	return this->getName();
 }

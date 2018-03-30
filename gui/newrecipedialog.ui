@@ -97,26 +97,10 @@
              <widget class="QWidget" name="recipeNamePanel" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_9">
                <item>
-                <widget class="QLabel" name="recipeNameLabel">
-                 <property name="font">
-                  <font>
-                   <weight>3</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Edit Recipe</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QLineEdit" name="recipeNameEdit">
                  <property name="font">
                   <font>
+                   <pointsize>16</pointsize>
                    <weight>3</weight>
                    <italic>false</italic>
                    <bold>false</bold>
@@ -158,7 +142,7 @@
                       <second>0</second>
                       <year>1999</year>
                       <month>12</month>
-                      <day>25</day>
+                      <day>24</day>
                      </datetime>
                     </property>
                     <property name="currentSection">
@@ -288,6 +272,12 @@
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(113, 119, 255);</string>
+                 </property>
+                 <property name="insertPolicy">
+                  <enum>QComboBox::InsertAlphabetically</enum>
                  </property>
                 </widget>
                </item>
@@ -419,16 +409,6 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="ingredientsPanelLabel">
-              <property name="text">
-               <string>Ingredients</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QWidget" name="ingredientsSubPanel" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
@@ -485,11 +465,20 @@
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(113, 119, 255);</string>
+                       </property>
                        <property name="editable">
                         <bool>false</bool>
                        </property>
                        <property name="currentText">
                         <string/>
+                       </property>
+                       <property name="insertPolicy">
+                        <enum>QComboBox::InsertAlphabetically</enum>
+                       </property>
+                       <property name="frame">
+                        <bool>true</bool>
                        </property>
                       </widget>
                      </item>
@@ -579,6 +568,12 @@
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(113, 119, 255);</string>
+                       </property>
+                       <property name="insertPolicy">
+                        <enum>QComboBox::InsertAlphabetically</enum>
                        </property>
                       </widget>
                      </item>
@@ -832,7 +827,10 @@
          <enum>Qt::LeftToRight</enum>
         </property>
         <property name="autoFillBackground">
-         <bool>false</bool>
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="standardButtons">
          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>

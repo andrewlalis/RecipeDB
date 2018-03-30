@@ -20,7 +20,7 @@ class RecipeTableModel : public QAbstractTableModel
 
 		//Normal methods.
 		void setRecipes(vector<Recipe> recipes);
-		Recipe getRecipeAt(int index);
+		Recipe getRecipeAt(unsigned int index);
 		void clear();
 	private:
 		vector<Recipe> recipes;
