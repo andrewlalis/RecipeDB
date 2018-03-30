@@ -12,6 +12,8 @@ using namespace std;
  * @brief The ResultTable class is an object that contains the results of an SQL query, in string form.
  */
 
+typedef vector<string> TableRow;
+
 class ResultTable
 {
 	public:
@@ -28,11 +30,12 @@ class ResultTable
 		void printData();
 
 		bool isEmpty();
-		string valueAt(unsigned int row, unsigned int col);
+		string at(unsigned int row, unsigned int col);
 		int getReturnCode();
 		string getOriginalQuery();
 		unsigned int columnCount();
 		unsigned int rowCount();
+		vector<vector<string>> rows();
 	private:
 		vector<vector<string>> values;
 		int queryCode;

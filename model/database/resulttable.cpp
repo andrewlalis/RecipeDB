@@ -47,7 +47,7 @@ bool ResultTable::isEmpty(){
 	return this->values.empty();
 }
 
-string ResultTable::valueAt(unsigned int row, unsigned int col){
+string ResultTable::at(unsigned int row, unsigned int col){
 	if (isIndexValid(row, col)){
 		return this->values[row][col];
 	} else {
@@ -76,6 +76,10 @@ unsigned int ResultTable::rowCount(){
 		return 0;
 	}
 	return this->values.size();
+}
+
+vector<vector<string> > ResultTable::rows(){
+	return this->values;
 }
 
 string ResultTable::convertToString(sqlite3_value *val){

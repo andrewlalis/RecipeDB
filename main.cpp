@@ -6,6 +6,8 @@
 #include "model/database/recipedatabase.h"
 #include "utils/fileutils.h"
 
+void test(RecipeDatabase *recipeDB);
+
 int main(int argc, char *argv[])
 {
 	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
@@ -14,6 +16,18 @@ int main(int argc, char *argv[])
     w.show();
 
 	//TESTING CODE
+	test(&recipeDB);
+
+	//END TESTING CODE.
+
+	w.loadFromRecipe(recipeDB.retrieveRandomRecipe());
+
+	a.exec();
+	recipeDB.closeConnection();
+	return 0;
+}
+
+void test(RecipeDatabase *recipeDB){
 	vector<RecipeIngredient> ri;
 	ri.push_back(RecipeIngredient("flour", "grains", 3.0f, UnitOfMeasure("cup", "cups", "c", UnitOfMeasure::VOLUME, 1.0), ""));
 	ri.push_back(RecipeIngredient("baking powder", "additives", 1.0f, UnitOfMeasure("teaspoon", "teaspoons", "tsp", UnitOfMeasure::VOLUME, 1.0), ""));
@@ -29,12 +43,21 @@ int main(int argc, char *argv[])
 			   QTime(0, 25),
 			   10.0f);
 
-	bool success = recipeDB.storeRecipe(rec);
+	bool success = recipeDB->storeRecipe(rec);
 	printf("Storage successful: %d\n", success);
 
-	w.loadFromRecipe(recipeDB.retrieveRandomRecipe());
+	vector<string> foodGroups = recipeDB->retrieveAllFoodGroups();
+	printf("Food Groups:\n");
+	for (string s : foodGroups){
+		printf("\t%s\n", s.c_str());
+	}
 
-	a.exec();
-	recipeDB.closeConnection();
-	return 0;
+	//Get food groups from recipe.
+	Recipe r = recipeDB->retrieveRecipe("Pannenkoeken");
+	vector<string> foodGroupsR = r.getFoodGroups();
+	printf("Pannenkoeken Food Groups:\n");
+	for (string s : foodGroupsR){
+		printf("\t%s\n", s.c_str());
+	}
+
 }

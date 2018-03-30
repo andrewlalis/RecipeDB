@@ -21,7 +21,17 @@ string Recipe::getName() const{
 }
 
 vector<RecipeIngredient> Recipe::getIngredients() const{
-    return this->ingredients;
+	return this->ingredients;
+}
+
+vector<string> Recipe::getFoodGroups() const{
+	vector<string> foodGroups;
+	for (RecipeIngredient ri : this->ingredients){
+		if (find(foodGroups.begin(), foodGroups.end(), ri.getFoodGroup()) == foodGroups.end()){
+			foodGroups.push_back(ri.getFoodGroup());
+		}
+	}
+	return foodGroups;
 }
 
 Instruction Recipe::getInstruction() const{

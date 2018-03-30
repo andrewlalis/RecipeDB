@@ -88,7 +88,7 @@ int RecipeDatabase::storeIngredient(Ingredient ingredient){
 			return -1;
 		}
 	} else {
-		return std::stoi(t.valueAt(0, 0));
+		return std::stoi(t.at(0, 0));
 	}
 }
 
@@ -162,10 +162,19 @@ Recipe RecipeDatabase::retrieveRandomRecipe(){
 vector<Recipe> RecipeDatabase::retrieveAllRecipes(){
 	ResultTable t = this->selectFrom("recipe", "name", "ORDER BY name");
 	vector<Recipe> recipes;
-	for (unsigned int row = 0; row < t.rowCount(); row++){
-		recipes.push_back(this->retrieveRecipe(t.valueAt(row, 0)));
+	for (TableRow row : t.rows()){
+		recipes.push_back(this->retrieveRecipe(row.at(0)));
 	}
 	return recipes;
+}
+
+vector<string> RecipeDatabase::retrieveAllFoodGroups(){
+	ResultTable t = this->executeSQL("SELECT DISTINCT foodGroup FROM ingredient ORDER BY foodGroup;");
+	vector<string> foodGroups;
+	for (TableRow row : t.rows()){
+		foodGroups.push_back(row.at(0));
+	}
+	return foodGroups;
 }
 
 vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId){
@@ -179,33 +188,33 @@ vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId)
 									 "ON recipeIngredient.unitName = unitOfMeasure.name "
 									 "WHERE recipeIngredient.recipeId = "+std::to_string(recipeId)+";");
 	vector<RecipeIngredient> ings;
-	for (unsigned int row = 0; row < t.rowCount(); row++){
-		RecipeIngredient r(t.valueAt(row, 0),
-						   t.valueAt(row, 1),
-						   std::stof(t.valueAt(row, 2)),
-						   UnitOfMeasure(t.valueAt(row, 5), t.valueAt(row, 6), t.valueAt(row, 7), std::stoi(t.valueAt(row, 8)), std::stod(t.valueAt(row, 9))),
-						   t.valueAt(row, 4));
+	for (TableRow row : t.rows()){
+		RecipeIngredient r(row.at(0),
+						   row.at(1),
+						   std::stof(row.at(2)),
+						   UnitOfMeasure(row.at(5), row.at(6), row.at(7), std::stoi(row.at(8)), std::stod(row.at(9))),
+						   row.at(4));
 		ings.push_back(r);
 	}
 	return ings;
 }
 
 vector<Ingredient> RecipeDatabase::retrieveAllIngredients(){
-	ResultTable t = this->selectFrom("ingredient", "*", "ORDER BY name");
+	ResultTable t = this->selectFrom("ingredient", "name, foodGroup", "ORDER BY name");
 	vector<Ingredient> ings;
-	for (unsigned int row = 0; row < t.rowCount(); row++){
-		Ingredient i(t.valueAt(row, 2), t.valueAt(row, 1));
+	for (TableRow row : t.rows()){
+		Ingredient i(row.at(0), row.at(1));
 		ings.push_back(i);
 	}
 	return ings;
 }
 
 vector<UnitOfMeasure> RecipeDatabase::retrieveAllUnitsOfMeasure(){
-	ResultTable t = this->selectFrom("unitOfMeasure", "*", "ORDER BY name");
+	ResultTable t = this->selectFrom("unitOfMeasure", "name, plural, abbreviation, type, metricCoefficient", "ORDER BY name");
 	vector<UnitOfMeasure> units;
 	if (!t.isEmpty()){
-		for (unsigned int row = 0; row < t.rowCount(); row++){
-			UnitOfMeasure u(t.valueAt(row, 0), t.valueAt(row, 1), t.valueAt(row, 2), std::stoi(t.valueAt(row, 3)), std::stod(t.valueAt(row, 4)));
+		for (TableRow row : t.rows()){
+			UnitOfMeasure u(row.at(0), row.at(1), row.at(2), std::stoi(row.at(3)), std::stod(row.at(4)));
 			units.push_back(u);
 		}
 	}
@@ -213,11 +222,11 @@ vector<UnitOfMeasure> RecipeDatabase::retrieveAllUnitsOfMeasure(){
 }
 
 vector<RecipeTag> RecipeDatabase::retrieveTags(int recipeId){
-	ResultTable t = this->selectFrom("recipeTag", "tagName", "WHERE recipeId="+std::to_string(recipeId));
+	ResultTable t = this->selectFrom("recipeTag", "tagName", "WHERE recipeId="+std::to_string(recipeId)+" ORDER BY tagName");
 	vector<RecipeTag> tags;
 	if (!t.isEmpty()){
-		for (unsigned int row = 0; row < t.rowCount(); row++){
-			RecipeTag tag(t.valueAt(row, 0));
+		for (TableRow row : t.rows()){
+			RecipeTag tag(row.at(0));
 			tags.push_back(tag);
 		}
 	}
@@ -228,8 +237,8 @@ vector<RecipeTag> RecipeDatabase::retrieveAllTags(){
 	ResultTable t = this->selectFrom("recipeTag", "tagName", "ORDER BY tagName");
 	vector<RecipeTag> tags;
 	if (!t.isEmpty()){
-		for (unsigned int row = 0; row < t.rowCount(); row++){
-			RecipeTag tag(t.valueAt(row, 0));
+		for (TableRow row : t.rows()){
+			RecipeTag tag(row.at(0));
 			tags.push_back(tag);
 		}
 	}
@@ -241,7 +250,7 @@ bool RecipeDatabase::deleteRecipe(string name){
 	if (t.rowCount() != 1){
 		return false;
 	}
-	string recipeId = t.valueAt(0, 0);
+	string recipeId = t.at(0, 0);
 	return this->deleteRecipe(std::stoi(recipeId));
 }
 
@@ -257,6 +266,8 @@ bool RecipeDatabase::deleteRecipe(int recipeId){
 	bool recipeDeleted = this->deleteFrom("recipe", "WHERE recipeId="+idString);
 	bool instructionDeleted = FileUtils::deleteInstruction(recipeId);
 	bool imageDeleted = FileUtils::deleteImage(recipeId);
+	Q_UNUSED(instructionDeleted);
+	Q_UNUSED(imageDeleted);
 	if (tagsDeleted && recipeIngredientDeleted && recipeDeleted){
 		this->executeSQL("COMMIT;");
 		return true;
@@ -334,14 +345,15 @@ void RecipeDatabase::ensureTablesExist(){
 	this->executeSQL("COMMIT;");
 }
 
-Recipe RecipeDatabase::readFromResultTable(ResultTable t, int row){
+Recipe RecipeDatabase::readFromResultTable(ResultTable t, int tRow){
 	Recipe r;
-	int id = std::stoi(t.valueAt(row, 0));
-	r.setName(t.valueAt(row, 1));
-	r.setCreatedDate(QDate::fromString(QString::fromStdString(t.valueAt(row, 2))));
-	r.setPrepTime(QTime::fromString(QString::fromStdString(t.valueAt(row, 3))));
-	r.setCookTime(QTime::fromString(QString::fromStdString(t.valueAt(row, 4))));
-	r.setServings(std::stof(t.valueAt(row, 5)));
+	TableRow row = t.rows().at(tRow);
+	int id = std::stoi(row.at(0));
+	r.setName(row.at(1));
+	r.setCreatedDate(QDate::fromString(QString::fromStdString(row.at(2))));
+	r.setPrepTime(QTime::fromString(QString::fromStdString(row.at(3))));
+	r.setCookTime(QTime::fromString(QString::fromStdString(row.at(4))));
+	r.setServings(std::stof(row.at(5)));
 	r.setInstruction(FileUtils::loadInstruction(id));
 	r.setImage(FileUtils::loadImage(id));
 	r.setIngredients(this->retrieveRecipeIngredients(id));

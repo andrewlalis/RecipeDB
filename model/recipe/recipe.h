@@ -6,6 +6,7 @@
 #include <QDate>
 #include <QTime>
 #include <QImage>
+#include <algorithm>
 
 #include "model/recipe/ingredients/recipeingredient.h"
 #include "model/recipe/instruction.h"
@@ -38,6 +39,7 @@ public:
     //Getters
     string getName() const;
     vector<RecipeIngredient> getIngredients() const;
+	vector<string> getFoodGroups() const;
     Instruction getInstruction() const;
     QImage getImage() const;
     vector<RecipeTag> getTags() const;

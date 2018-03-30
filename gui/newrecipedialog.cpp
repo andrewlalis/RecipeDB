@@ -195,6 +195,7 @@ void NewRecipeDialog::on_newUnitButton_clicked(){
 			QMessageBox::critical(this, "Error", "Unable to store new unit.");
 		} else {
 			this->populateUnitsBox();
+			ui->unitComboBox->setCurrentText(QString::fromStdString(u.getName()));
 		}
 	}
 }

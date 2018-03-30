@@ -34,6 +34,7 @@ class RecipeDatabase : public Database
 		Recipe retrieveRecipe(string name);
 		Recipe retrieveRandomRecipe();
 		vector<Recipe> retrieveAllRecipes();
+		vector<string> retrieveAllFoodGroups();
 		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();
 		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();

@@ -29,4 +29,13 @@ std::string toString(float val){
 	return s;
 }
 
+void printVector(std::vector<std::string> &vect){
+	std::printf("Vector of %ld elements:\n", vect.size());
+	int c = 0;
+	for (std::string s : vect){
+		std::printf("\t[%d] = %s\n", c, s.c_str());
+		c++;
+	}
+}
+
 }
