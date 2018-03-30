@@ -180,9 +180,9 @@ QPushButton#openButton:pressed{
            </widget>
           </item>
           <item alignment="Qt::AlignTop">
-           <widget class="QPushButton" name="browseButton">
+           <widget class="QPushButton" name="editButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -201,19 +201,19 @@ QPushButton#openButton:pressed{
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton#browseButton {
+             <string notr="true">QPushButton#editButton {
 	background-color: rgb(215, 215, 255);
 	border: 0px;
 }
-QPushButton#browseButton:hover{
+QPushButton#editButton:hover{
 	background-color: rgb(225, 225, 255);
 }
-QPushButton#browseButton:pressed{
+QPushButton#editButton:pressed{
 	background-color: rgb(255, 255, 255);
 }</string>
             </property>
             <property name="text">
-             <string>Browse</string>
+             <string>Edit</string>
             </property>
             <property name="flat">
              <bool>false</bool>
@@ -363,6 +363,9 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
           </item>
           <item alignment="Qt::AlignLeft|Qt::AlignBottom">
            <widget class="QLabel" name="authorLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>

@@ -21,6 +21,17 @@ NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecip
 	this->populateTagsBox();
 }
 
+NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, Recipe recipe, QWidget *parent) : NewRecipeDialog(db, parent){
+	ui->recipeNameEdit->setText(QString::fromStdString(recipe.getName()));
+	ui->prepTimeEdit->setTime(recipe.getPrepTime());
+	ui->cookTimeEdit->setTime(recipe.getCookTime());
+	ui->servingsSpinBox->setValue((double)recipe.getServings());
+	ui->instructionsTextEdit->setHtml(QString::fromStdString(recipe.getInstruction().getHTML()));
+	ui->imageDisplayLabel->setPixmap(QPixmap::fromImage(recipe.getImage()));
+	this->tagsListModel.setTags(recipe.getTags());
+	this->ingredientListModel.setIngredients(recipe.getIngredients());
+}
+
 NewRecipeDialog::~NewRecipeDialog(){
 	delete ui;
 }

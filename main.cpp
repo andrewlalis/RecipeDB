@@ -48,18 +48,18 @@ void test(RecipeDatabase *recipeDB){
 	bool success = recipeDB->storeRecipe(rec);
 	printf("Storage successful: %d\n", success);
 
-	vector<string> foodGroups = recipeDB->retrieveAllFoodGroups();
-	printf("Food Groups:\n");
-	for (string s : foodGroups){
-		printf("\t%s\n", s.c_str());
-	}
+//	vector<string> foodGroups = recipeDB->retrieveAllFoodGroups();
+//	printf("Food Groups:\n");
+//	for (string s : foodGroups){
+//		printf("\t%s\n", s.c_str());
+//	}
 
 	//Get food groups from recipe.
-	Recipe r = recipeDB->retrieveRecipe("Pannenkoeken");
-	vector<string> foodGroupsR = r.getFoodGroups();
-	printf("Pannenkoeken Food Groups:\n");
-	for (string s : foodGroupsR){
-		printf("\t%s\n", s.c_str());
-	}
+//	Recipe r = recipeDB->retrieveRecipe("Pannenkoeken");
+//	vector<string> foodGroupsR = r.getFoodGroups();
+//	printf("Pannenkoeken Food Groups:\n");
+//	for (string s : foodGroupsR){
+//		printf("\t%s\n", s.c_str());
+//	}
 
 }

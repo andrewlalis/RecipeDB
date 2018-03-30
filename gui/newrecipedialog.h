@@ -26,6 +26,7 @@ class NewRecipeDialog : public QDialog
 	public:
 		explicit NewRecipeDialog(QWidget *parent = 0);
 		NewRecipeDialog(RecipeDatabase *db, QWidget *parent = 0);
+		NewRecipeDialog(RecipeDatabase *db, Recipe recipe, QWidget *parent = 0);
 		~NewRecipeDialog();
 
 		Recipe getRecipe();

@@ -1,5 +1,7 @@
 # Recipe DB
 
+![screenshot](http://i.imgur.com/FbltFit.png)
+
 Recipe DB is a simple, lightweight database powered by Qt and SQLite to allow you to save, retrieve, and search through many recipes without needing to be connected to the internet. Meant as a tool for those who enjoy making recipes their own, this tool lets you edit recipes, search by ingredients or food groups, and filter out recipes that meet certain criteria. Recipe DB was created initially out of a desire to organize my many recipes in one uniform way, as simply as possible, while still making sure that retrieving any given recipe is as effortless as possible. I wanted something where I could save recipes offline, change them if I need to, convert units on-the-fly, and add a few other small utilities that would save a few precious minutes in the kitchen.
 
 ### How it works

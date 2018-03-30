@@ -11,17 +11,22 @@ OpenRecipeDialog::OpenRecipeDialog(QWidget *parent) :
 	ui->ingredientsListView->setModel(&this->ingredientsModel);
 	ui->tagsListView->setModel(&this->tagsModel);
 
-	connect(ui->ingredientsListView->selectionModel(),
+	QObject::connect(ui->ingredientsListView->selectionModel(),
+			SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+			this,
+			SLOT(onIngredientsListViewSelectionChanged(QItemSelection)));
+	QObject::connect(ui->tagsListView->selectionModel(),
 			SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
 			this,
-			SLOT(on_ingredientsListView_selectionChanged(QItemSelection)));
+			SLOT(onTagsListViewSelectionChanged(QItemSelection)));
 }
 
 OpenRecipeDialog::OpenRecipeDialog(RecipeDatabase *recipeDB, QWidget *parent) : OpenRecipeDialog(parent){
 	this->recipeDB = recipeDB;
 	this->populateIngredientsList();
 	this->populateTagsList();
-	this->populateRecipesTable();
+	this->populateFoodGroupsList();
+	this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
 }
 
 OpenRecipeDialog::~OpenRecipeDialog()
@@ -33,9 +38,8 @@ Recipe OpenRecipeDialog::getSelectedRecipe(){
 	return this->selectedRecipe;
 }
 
-void OpenRecipeDialog::populateRecipesTable(){
+void OpenRecipeDialog::populateRecipesTable(vector<Recipe> recipes){
 	this->recipeTableModel.clear();
-	vector<Recipe> recipes = this->recipeDB->retrieveAllRecipes();
 	this->recipeTableModel.setRecipes(recipes);
 	ui->recipeTableView->resizeColumnsToContents();
 	ui->recipeTableView->show();
@@ -47,6 +51,13 @@ void OpenRecipeDialog::populateIngredientsList(){
 
 void OpenRecipeDialog::populateTagsList(){
 	this->tagsModel.setTags(this->recipeDB->retrieveAllTags());
+}
+
+void OpenRecipeDialog::populateFoodGroupsList(){
+	for (string s : this->recipeDB->retrieveAllFoodGroups()){
+		ui->foodGroupsListWidget->addItem(QString::fromStdString(s));
+	}
+	//ui->foodGroupsListWidget->show();
 }
 
 void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
@@ -69,9 +80,10 @@ void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
 			bool success = this->recipeDB->deleteRecipe(r.getName());
 			if (!success){
 				QMessageBox::critical(this, QString::fromStdString("Unable to Delete"), QString::fromStdString("Could not delete recipe "+r.getName()));
+			} else {
+				this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
 			}
 		}
-		this->populateRecipesTable();
 	}
 }
 
@@ -80,13 +92,38 @@ void OpenRecipeDialog::on_recipeTableView_doubleClicked(const QModelIndex &index
 	this->close();
 }
 
-void OpenRecipeDialog::on_ingredientsListView_selectionChanged(const QItemSelection &selection){
-	printf("Selection changed!\n");
+void OpenRecipeDialog::onIngredientsListViewSelectionChanged(const QItemSelection &selection){
+	Q_UNUSED(selection);
 	vector<Ingredient> ingredients;
-	for (QModelIndex index : selection.indexes()){
+	QModelIndexList indexes = ui->ingredientsListView->selectionModel()->selectedRows();
+	for (QModelIndex index : indexes){
 		Ingredient i = this->ingredientsModel.getIngredients().at(index.row());
 		ingredients.push_back(i);
-		printf("Selected: %s\n", i.getName().c_str());
 	}
+	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithIngredients(ingredients));
+}
 
+void OpenRecipeDialog::onTagsListViewSelectionChanged(const QItemSelection &selection){
+	Q_UNUSED(selection);
+	vector<RecipeTag> tags;
+	QModelIndexList indexes = ui->tagsListView->selectionModel()->selectedRows();
+	for (QModelIndex index : indexes){
+		RecipeTag t = this->tagsModel.getTags().at(index.row());
+		tags.push_back(t);
+	}
+	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithTags(tags));
+}
+
+void OpenRecipeDialog::on_nameEdit_textChanged(const QString &arg1){
+	Q_UNUSED(arg1);
+	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithSubstring(ui->nameEdit->text().toStdString()));
+}
+
+void OpenRecipeDialog::on_foodGroupsListWidget_itemSelectionChanged(){
+	vector<string> groups;
+	for (QModelIndex index : ui->foodGroupsListWidget->selectionModel()->selectedRows()){
+		QListWidgetItem *item = ui->foodGroupsListWidget->item(index.row());
+		groups.push_back(item->text().toStdString());
+	}
+	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithFoodGroups(groups));
 }
