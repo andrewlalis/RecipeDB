@@ -75,6 +75,7 @@ void NewRecipeDialog::on_addIngredientButton_clicked(){
 	UnitOfMeasure u = this->units[ui->unitComboBox->currentIndex()];
 	RecipeIngredient ri(i, ui->quantitySpinBox->value(), u, ui->commentsLineEdit->text().toStdString());
 	this->ingredientListModel.addIngredient(ri);
+	ui->commentsLineEdit->clear();
 }
 
 void NewRecipeDialog::on_italicsButton_clicked(){
@@ -150,6 +151,7 @@ void NewRecipeDialog::on_newIngredientButton_clicked(){
 		Ingredient i = d.getIngredient();
 		this->recipeDB->storeIngredient(i);
 		this->populateIngredientsBox();
+		ui->ingredientNameBox->setCurrentText(QString::fromStdString(i.getName()));
 	}
 }
 
