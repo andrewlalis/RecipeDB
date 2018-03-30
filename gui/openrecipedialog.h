@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <QItemSelection>
 
 #include "model/database/recipedatabase.h"
 #include "model/recipe/recipetablemodel.h"
@@ -28,6 +29,8 @@ class OpenRecipeDialog : public QDialog
 		void on_deleteRecipeButton_clicked();
 
 		void on_recipeTableView_doubleClicked(const QModelIndex &index);
+
+		void on_ingredientsListView_selectionChanged(const QItemSelection &selection);
 
 	private:
 		Ui::OpenRecipeDialog *ui;

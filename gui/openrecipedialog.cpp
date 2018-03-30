@@ -10,6 +10,11 @@ OpenRecipeDialog::OpenRecipeDialog(QWidget *parent) :
 	ui->recipeTableView->setModel(&this->recipeTableModel);
 	ui->ingredientsListView->setModel(&this->ingredientsModel);
 	ui->tagsListView->setModel(&this->tagsModel);
+
+	connect(ui->ingredientsListView->selectionModel(),
+			SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+			this,
+			SLOT(on_ingredientsListView_selectionChanged(QItemSelection)));
 }
 
 OpenRecipeDialog::OpenRecipeDialog(RecipeDatabase *recipeDB, QWidget *parent) : OpenRecipeDialog(parent){
@@ -73,4 +78,15 @@ void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
 void OpenRecipeDialog::on_recipeTableView_doubleClicked(const QModelIndex &index){
 	this->selectedRecipe = this->recipeTableModel.getRecipeAt(index.row());
 	this->close();
+}
+
+void OpenRecipeDialog::on_ingredientsListView_selectionChanged(const QItemSelection &selection){
+	printf("Selection changed!\n");
+	vector<Ingredient> ingredients;
+	for (QModelIndex index : selection.indexes()){
+		Ingredient i = this->ingredientsModel.getIngredients().at(index.row());
+		ingredients.push_back(i);
+		printf("Selected: %s\n", i.getName().c_str());
+	}
+
 }
