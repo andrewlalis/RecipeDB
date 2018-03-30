@@ -145,13 +145,17 @@ void NewRecipeDialog::on_deleteIngredientButton_clicked(){
 }
 
 void NewRecipeDialog::on_newIngredientButton_clicked(){
-	NewIngredientDialog d(this);
+	NewIngredientDialog d(this->recipeDB, this);
 	d.show();
 	if (d.exec() == QDialog::Accepted){
 		Ingredient i = d.getIngredient();
-		this->recipeDB->storeIngredient(i);
-		this->populateIngredientsBox();
-		ui->ingredientNameBox->setCurrentText(QString::fromStdString(i.getName()));
+		if (!i.getName().empty() && !i.getFoodGroup().empty() && this->recipeDB->storeIngredient(i)){
+			this->populateIngredientsBox();
+			ui->ingredientNameBox->setCurrentText(QString::fromStdString(i.getName()));
+		} else {
+			QMessageBox::critical(this, "Error", "Unable to add ingredient.");
+		}
+
 	}
 }
 
@@ -161,12 +165,16 @@ void NewRecipeDialog::on_newTagButton_clicked(){
 	if (d.exec() == QDialog::Accepted){
 		RecipeTag tag = d.getTag();
 		//Temporarily add this to the tags list, and it will be saved if the recipe is saved.
-		this->tags.push_back(tag);
-		this->tagsListModel.addTag(tag);
-		ui->tagsComboBox->clear();
-		for (unsigned int i = 0; i < this->tags.size(); i++){
-			QString s = QString::fromStdString(this->tags[i].getValue());
-			ui->tagsComboBox->insertItem(i, s);
+		if (!tag.getValue().empty()){
+			this->tags.push_back(tag);
+			this->tagsListModel.addTag(tag);
+			ui->tagsComboBox->clear();
+			for (unsigned int i = 0; i < this->tags.size(); i++){
+				QString s = QString::fromStdString(this->tags[i].getValue());
+				ui->tagsComboBox->insertItem(i, s);
+			}
+		} else {
+			QMessageBox::warning(this, "Empty Tag", "The tag you entered is blank!");
 		}
 	}
 
