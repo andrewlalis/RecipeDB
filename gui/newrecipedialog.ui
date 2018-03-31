@@ -23,7 +23,7 @@
    <string>New Recipe</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images.qrc">
+   <iconset resource="../res.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <property name="styleSheet">
@@ -103,7 +103,6 @@
                 <widget class="QLineEdit" name="recipeNameEdit">
                  <property name="font">
                   <font>
-                   <pointsize>14</pointsize>
                    <weight>3</weight>
                    <italic>false</italic>
                    <bold>false</bold>
@@ -127,7 +126,6 @@
                 <widget class="QLineEdit" name="authorNameEdit">
                  <property name="font">
                   <font>
-                   <pointsize>12</pointsize>
                    <weight>3</weight>
                    <italic>false</italic>
                    <bold>false</bold>
@@ -175,7 +173,7 @@
                       <second>0</second>
                       <year>1999</year>
                       <month>12</month>
-                      <day>22</day>
+                      <day>21</day>
                      </datetime>
                     </property>
                     <property name="currentSection">
@@ -326,7 +324,7 @@
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../images.qrc">
+                  <iconset resource="../res.qrc">
                    <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
                  </property>
                 </widget>
@@ -340,7 +338,7 @@
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../images.qrc">
+                  <iconset resource="../res.qrc">
                    <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
                  </property>
                 </widget>
@@ -578,7 +576,7 @@ QPushButton#deleteTagButton:pressed{
                         <string>Create a new ingredient</string>
                        </property>
                        <property name="icon">
-                        <iconset resource="../images.qrc">
+                        <iconset resource="../res.qrc">
                          <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
                        </property>
                       </widget>
@@ -592,7 +590,7 @@ QPushButton#deleteTagButton:pressed{
                         <string/>
                        </property>
                        <property name="icon">
-                        <iconset resource="../images.qrc">
+                        <iconset resource="../res.qrc">
                          <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
                        </property>
                       </widget>
@@ -676,7 +674,7 @@ QPushButton#deleteTagButton:pressed{
                         <string>Create a new unit of measure</string>
                        </property>
                        <property name="icon">
-                        <iconset resource="../images.qrc">
+                        <iconset resource="../res.qrc">
                          <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
                        </property>
                       </widget>
@@ -690,7 +688,7 @@ QPushButton#deleteTagButton:pressed{
                         <string/>
                        </property>
                        <property name="icon">
-                        <iconset resource="../images.qrc">
+                        <iconset resource="../res.qrc">
                          <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
                        </property>
                       </widget>
@@ -864,7 +862,7 @@ QPushButton#removeIngredientButton:pressed{
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="../images.qrc">:/images/images/no_image.png</pixmap>
+               <pixmap resource="../res.qrc">:/images/images/no_image.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>false</bool>
@@ -990,7 +988,7 @@ QPushButton#removeIngredientButton:pressed{
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../images.qrc"/>
+  <include location="../res.qrc"/>
  </resources>
  <connections/>
 </ui>

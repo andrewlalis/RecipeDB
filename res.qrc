@@ -10,4 +10,8 @@
         <file>images/foodPyramid.png</file>
         <file>images/ingredients.png</file>
     </qresource>
+    <qresource prefix="/fonts">
+        <file>fonts/NotoSans-Light.ttf</file>
+        <file>fonts/NotoSans-LightItalic.ttf</file>
+    </qresource>
 </RCC>

@@ -5,6 +5,7 @@ IngredientListModel::IngredientListModel(){
 }
 
 int IngredientListModel::rowCount(const QModelIndex &parent) const{
+	Q_UNUSED(parent);
     return this->ingredients.size();
 }
 

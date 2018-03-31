@@ -79,6 +79,4 @@ DISTFILES += \
     .gitignore
 
 RESOURCES += \
-    res.qrc \
-    images.qrc \
-    images.qrc
+    res.qrc

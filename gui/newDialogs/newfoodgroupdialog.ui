@@ -19,7 +19,7 @@
    <string>New Food Group</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../images.qrc">
+   <iconset resource="../../res.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -62,7 +62,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../images.qrc"/>
+  <include location="../../res.qrc"/>
  </resources>
  <connections>
   <connection>

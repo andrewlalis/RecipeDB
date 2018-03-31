@@ -14,7 +14,7 @@
    <string>New Unit</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../images.qrc">
+   <iconset resource="../../res.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <property name="styleSheet">
@@ -31,7 +31,6 @@
        <widget class="QLabel" name="label">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
           <weight>3</weight>
           <italic>false</italic>
           <bold>false</bold>
@@ -52,7 +51,6 @@
        <widget class="QLabel" name="label_2">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
           <weight>3</weight>
           <italic>false</italic>
           <bold>false</bold>
@@ -73,7 +71,6 @@
        <widget class="QLabel" name="label_3">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
           <weight>3</weight>
           <italic>false</italic>
           <bold>false</bold>
@@ -115,7 +112,6 @@
            </property>
            <property name="font">
             <font>
-             <pointsize>12</pointsize>
              <weight>3</weight>
              <italic>false</italic>
              <bold>false</bold>
@@ -146,7 +142,6 @@
           <widget class="QLabel" name="label_5">
            <property name="font">
             <font>
-             <pointsize>12</pointsize>
              <weight>3</weight>
              <italic>false</italic>
              <bold>false</bold>
@@ -189,7 +184,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../images.qrc"/>
+  <include location="../../res.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -26,7 +26,7 @@
    <string>RecipeDB</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images.qrc">
+   <iconset resource="../res.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -111,13 +111,6 @@
               <height>80</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <family>Noto Sans CJK KR Light</family>
-              <pointsize>20</pointsize>
-              <stylestrategy>PreferAntialias</stylestrategy>
-             </font>
-            </property>
             <property name="autoFillBackground">
              <bool>false</bool>
             </property>
@@ -155,13 +148,6 @@ QPushButton#newButton:pressed{
               <height>80</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <family>Noto Sans CJK KR Light</family>
-              <pointsize>20</pointsize>
-              <stylestrategy>PreferAntialias</stylestrategy>
-             </font>
-            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton#openButton {
 	background-color: rgb(222, 226, 255);
@@ -189,13 +175,6 @@ QPushButton#openButton:pressed{
               <width>150</width>
               <height>80</height>
              </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Noto Sans CJK KR Light</family>
-              <pointsize>20</pointsize>
-              <stylestrategy>PreferAntialias</stylestrategy>
-             </font>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -233,13 +212,6 @@ QPushButton#editButton:pressed{
               <width>150</width>
               <height>80</height>
              </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Noto Sans CJK KR Light</family>
-              <pointsize>20</pointsize>
-              <stylestrategy>PreferAntialias</stylestrategy>
-             </font>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -372,13 +344,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font">
-             <font>
-              <family>Noto Sans CJK KR Light</family>
-              <pointsize>14</pointsize>
-              <stylestrategy>PreferAntialias</stylestrategy>
-             </font>
-            </property>
             <property name="text">
              <string>By Unknown Author</string>
             </property>
@@ -440,12 +405,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
              </property>
              <item>
               <widget class="QLabel" name="prepTimeLabel">
-               <property name="font">
-                <font>
-                 <family>Noto Sans CJK KR Light</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
                <property name="text">
                 <string>Prep Time:</string>
                </property>
@@ -459,12 +418,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                <property name="enabled">
                 <bool>true</bool>
                </property>
-               <property name="font">
-                <font>
-                 <family>Noto Sans CJK KR Light</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
                <property name="text">
                 <string>Cook Time:</string>
                </property>
@@ -475,12 +428,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
              </item>
              <item>
               <widget class="QLabel" name="servingsLabel">
-               <property name="font">
-                <font>
-                 <family>Noto Sans CJK KR Light</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
                <property name="text">
                 <string>Servings:</string>
                </property>
@@ -560,12 +507,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                     <height>40</height>
                    </size>
                   </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans CJK KR Thin</family>
-                    <pointsize>18</pointsize>
-                   </font>
-                  </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(194, 196, 233);</string>
                   </property>
@@ -584,13 +525,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans CJK KR Light</family>
-                    <pointsize>12</pointsize>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                   </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(232, 232, 232);</string>
@@ -671,12 +605,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                     <height>40</height>
                    </size>
                   </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans CJK KR Thin</family>
-                    <pointsize>18</pointsize>
-                   </font>
-                  </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(218, 219, 234);</string>
                   </property>
@@ -690,12 +618,6 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                 </item>
                 <item>
                  <widget class="QTextEdit" name="instructionsTextEdit">
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans CJK KR Medium</family>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                   </font>
-                  </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(244, 244, 244);</string>
                   </property>
@@ -727,7 +649,7 @@ font: &quot;Noto Sans CJK KR&quot;;</string>
                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans CJK KR Medium'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Serif Bold'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; color:#00ff40;&quot;&gt;This is some &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:16pt; color:#a33c3e;&quot;&gt;colored text and &lt;/span&gt;&lt;a href=&quot;https://www.google.com&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;link&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="textInteractionFlags">
@@ -810,7 +732,7 @@ p, li { white-space: pre-wrap; }
                       </size>
                      </property>
                      <property name="pixmap">
-                      <pixmap resource="../images.qrc">:/images/images/no_image.png</pixmap>
+                      <pixmap resource="../res.qrc">:/images/images/no_image.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>false</bool>
@@ -849,13 +771,6 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <item>
                     <widget class="QLabel" name="tagsLabel">
-                     <property name="font">
-                      <font>
-                       <family>Noto Sans CJK KR Light</family>
-                       <pointsize>16</pointsize>
-                       <stylestrategy>PreferAntialias</stylestrategy>
-                      </font>
-                     </property>
                      <property name="text">
                       <string>Tags</string>
                      </property>
@@ -866,13 +781,6 @@ p, li { white-space: pre-wrap; }
                    </item>
                    <item>
                     <widget class="QListView" name="tagsListView">
-                     <property name="font">
-                      <font>
-                       <family>Noto Sans CJK KR Light</family>
-                       <pointsize>12</pointsize>
-                       <stylestrategy>PreferAntialias</stylestrategy>
-                      </font>
-                     </property>
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -908,7 +816,7 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../images.qrc"/>
+  <include location="../res.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -41,7 +41,9 @@ Recipe checkForFirstRun(RecipeDatabase *recipeDB){
 }
 
 void loadAndSetFonts(){
-	QFontDatabase::
+	int id = QFontDatabase::addApplicationFont(":/fonts/NotoSans-Light.ttf");
+	QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+	printf("%s\n", family.toStdString().c_str());
 }
 
 int main(int argc, char *argv[])
@@ -49,6 +51,9 @@ int main(int argc, char *argv[])
 	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
 
 	QApplication a(argc, argv);
+
+	loadAndSetFonts();
+
 	MainWindow w(&recipeDB);
 	w.loadFromRecipe(checkForFirstRun(&recipeDB));
 	w.show();
