@@ -1,37 +1,12 @@
 #include "gui/mainwindow.h"
 #include "gui/newrecipedialog.h"
+
 #include <QApplication>
+#include <QFontDatabase>
 
 #include "model/database/database.h"
 #include "model/database/recipedatabase.h"
 #include "utils/fileutils.h"
-
-void test(RecipeDatabase *recipeDB);
-
-Recipe checkForFirstRun(RecipeDatabase *recipeDB){
-	Recipe r = recipeDB->retrieveRandomRecipe();
-	if (r.isEmpty()){//There are no recipes in the database.
-		//Add some basic units to the units, and some basic ingredients.
-		recipeDB->addBasicUnits();
-		recipeDB->addBasicIngredients();
-	}
-	return r;
-}
-
-int main(int argc, char *argv[])
-{
-	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
-
-	QApplication a(argc, argv);
-	MainWindow w(&recipeDB);
-	w.loadFromRecipe(checkForFirstRun(&recipeDB));
-	w.show();
-
-	a.exec();
-	recipeDB.closeConnection();
-
-	return 0;
-}
 
 void test(RecipeDatabase *recipeDB){
 	vector<RecipeIngredient> ri;
@@ -53,4 +28,33 @@ void test(RecipeDatabase *recipeDB){
 	bool success = recipeDB->storeRecipe(rec);
 	printf("Storage successful: %d\n", success);
 
+}
+
+Recipe checkForFirstRun(RecipeDatabase *recipeDB){
+	Recipe r = recipeDB->retrieveRandomRecipe();
+	if (r.isEmpty()){//There are no recipes in the database.
+		//Add some basic units to the units, and some basic ingredients.
+		recipeDB->addBasicUnits();
+		recipeDB->addBasicIngredients();
+	}
+	return r;
+}
+
+void loadAndSetFonts(){
+	QFontDatabase::
+}
+
+int main(int argc, char *argv[])
+{
+	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
+
+	QApplication a(argc, argv);
+	MainWindow w(&recipeDB);
+	w.loadFromRecipe(checkForFirstRun(&recipeDB));
+	w.show();
+
+	a.exec();
+	recipeDB.closeConnection();
+
+	return 0;
 }
