@@ -17,13 +17,37 @@
    <iconset resource="../images.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 25 &quot;Noto Sans CJK KR Light&quot;;</string>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
-   <item alignment="Qt::AlignLeft|Qt::AlignTop">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item alignment="Qt::AlignLeft">
     <widget class="QWidget" name="searchPanel" native="true">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(245, 245, 255);</string>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item alignment="Qt::AlignLeft">
        <widget class="QTabWidget" name="tabWidget">
         <property name="minimumSize">
@@ -39,13 +63,35 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
-        <widget class="QWidget" name="tagsTab">
+        <widget class="QWidget" name="Tags">
+         <attribute name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/images/images/tag.png</normaloff>:/images/images/tag.png</iconset>
+         </attribute>
          <attribute name="title">
+          <string/>
+         </attribute>
+         <attribute name="toolTip">
           <string>Tags</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QListView" name="tagsListView">
             <property name="sizePolicy">
@@ -74,10 +120,32 @@
          </layout>
         </widget>
         <widget class="QWidget" name="ingredientsTab">
+         <attribute name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/images/images/ingredients.png</normaloff>:/images/images/ingredients.png</iconset>
+         </attribute>
          <attribute name="title">
+          <string/>
+         </attribute>
+         <attribute name="toolTip">
           <string>Ingredients</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QListView" name="ingredientsListView">
             <property name="sizePolicy">
@@ -105,11 +173,33 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab">
+        <widget class="QWidget" name="foodGroups">
+         <attribute name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/images/images/foodPyramid.png</normaloff>:/images/images/foodPyramid.png</iconset>
+         </attribute>
          <attribute name="title">
+          <string/>
+         </attribute>
+         <attribute name="toolTip">
           <string>Food Groups</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QListWidget" name="foodGroupsListWidget">
             <property name="frameShape">
@@ -132,6 +222,9 @@
       </item>
       <item>
        <widget class="QWidget" name="nameSearchPanel" native="true">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(240, 240, 255);</string>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="nameLabel">
@@ -141,15 +234,114 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="nameEdit"/>
+          <widget class="QLineEdit" name="nameEdit">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+             <weight>3</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="placeholderText">
+            <string>Recipe Name</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="clearSearchButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#clearSearchButton {
+	background-color: rgb(235, 235, 255);
+	border: 0px;
+}
+QPushButton#clearSearchButton:hover{
+	background-color: rgb(245, 245, 255);
+}
+QPushButton#clearSearchButton:pressed{
+	background-color: rgb(255, 255, 255);
+}</string>
+        </property>
         <property name="text">
          <string>Clear search criteria</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="deleteRecipeButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#deleteRecipeButton {
+	background-color: rgb(225, 225, 255);
+	border: 0px;
+}
+QPushButton#deleteRecipeButton:hover{
+	background-color: rgb(235, 235, 255);
+}
+QPushButton#deleteRecipeButton:pressed{
+	background-color: rgb(245, 245, 255);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../images.qrc">
+          <normaloff>:/images/images/trash.png</normaloff>:/images/images/trash.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="exitButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#exitButton {
+	background-color: rgb(215, 215, 255);
+	border: 0px;
+}
+QPushButton#exitButton:hover{
+	background-color: rgb(225, 225, 255);
+}
+QPushButton#exitButton:pressed{
+	background-color: rgb(235, 235, 255);
+}</string>
+        </property>
+        <property name="text">
+         <string>Close</string>
         </property>
        </widget>
       </item>
@@ -159,34 +351,55 @@
    <item>
     <widget class="QWidget" name="contentPanel" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item alignment="Qt::AlignLeft">
-       <widget class="QWidget" name="interactionPanel" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QPushButton" name="deleteRecipeButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../images.qrc">
-             <normaloff>:/images/images/trash.png</normaloff>:/images/images/trash.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QTableView" name="recipeTableView">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>3</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(250, 250, 255);</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
         </property>
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectRows</enum>
         </property>
+        <property name="verticalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::NoPen</enum>
+        </property>
         <property name="sortingEnabled">
          <bool>true</bool>
         </property>
+        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
         <attribute name="verticalHeaderVisible">
          <bool>false</bool>
         </attribute>

@@ -6,5 +6,8 @@
         <file>images/minus_icon.png</file>
         <file>images/search_icon.png</file>
         <file>images/trash.png</file>
+        <file>images/tag.png</file>
+        <file>images/foodPyramid.png</file>
+        <file>images/ingredients.png</file>
     </qresource>
 </RCC>

@@ -12,7 +12,7 @@ Recipe::Recipe(string name, vector<RecipeIngredient> ingredients, Instruction in
     setServings(servings);
 }
 
-Recipe::Recipe() : Recipe::Recipe("", vector<RecipeIngredient>(), Instruction(), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(1, 0), QTime(0, 30), 10.0f){
+Recipe::Recipe() : Recipe::Recipe("", vector<RecipeIngredient>(), Instruction(), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(), QTime(), 1.0f){
     //Set default values when none are specified.
 }
 

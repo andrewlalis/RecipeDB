@@ -70,7 +70,6 @@ class NewRecipeDialog : public QDialog
 		vector<RecipeTag> tags;
 		RecipeIngredientListModel ingredientListModel;
 		TagListModel tagsListModel;
-		QImage img;
 		bool accepted = false;
 
 		//Helper functions to fill fields.

@@ -204,7 +204,7 @@ vector<Recipe> RecipeDatabase::retrieveRecipesWithTags(vector<RecipeTag> tags){
 }
 
 vector<Recipe> RecipeDatabase::retrieveRecipesWithSubstring(string s){
-	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE name LIKE '%"+s+"%' COLLATE NOCASE;");
+	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE name LIKE '%"+s+"%' COLLATE NOCASE ORDER BY name;");
 	return this->readRecipesFromTable(t);
 }
 

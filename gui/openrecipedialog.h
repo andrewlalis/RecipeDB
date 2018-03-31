@@ -40,6 +40,8 @@ class OpenRecipeDialog : public QDialog
 
 		void on_clearSearchButton_clicked();
 
+		void on_exitButton_clicked();
+
 	private:
 		Ui::OpenRecipeDialog *ui;
 		RecipeDatabase *recipeDB;

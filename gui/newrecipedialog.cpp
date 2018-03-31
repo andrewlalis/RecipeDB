@@ -40,7 +40,7 @@ Recipe NewRecipeDialog::getRecipe(){
 	Recipe r(ui->recipeNameEdit->text().toStdString(),
 			 this->ingredientListModel.getIngredients(),
 			 ui->instructionsTextEdit->toHtml().toStdString(),
-			 this->img,//Image
+			 ui->imageDisplayLabel->pixmap()->toImage(),//Image
 			 this->tagsListModel.getTags(),//Tags
 			 QDate::currentDate(),
 			 ui->prepTimeEdit->time(),
@@ -126,7 +126,6 @@ void NewRecipeDialog::on_deleteTagButton_clicked(){
 void NewRecipeDialog::on_selectImageButton_clicked(){
 	QString filename = QFileDialog::getOpenFileName(this, "Open Image", QString(), "Image Files (*.png *.jpg *.bmp)");
 	if (!filename.isEmpty()){
-		this->img = QImage(filename);
 		ui->imageDisplayLabel->setPixmap(QPixmap(filename));
 	}
 }
