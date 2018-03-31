@@ -22,12 +22,14 @@
    <iconset resource="../../res.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
-       <family>Noto Sans CJK KR Light</family>
        <pointsize>12</pointsize>
       </font>
      </property>
@@ -43,7 +45,6 @@
     <widget class="QLineEdit" name="lineEdit">
      <property name="font">
       <font>
-       <family>Noto Sans CJK KR Light</family>
        <pointsize>12</pointsize>
       </font>
      </property>

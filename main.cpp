@@ -41,9 +41,11 @@ Recipe checkForFirstRun(RecipeDatabase *recipeDB){
 }
 
 void loadAndSetFonts(){
-	int id = QFontDatabase::addApplicationFont(":/fonts/NotoSans-Light.ttf");
+	int id = QFontDatabase::addApplicationFont(":/fonts/fonts/NotoSans-Light.ttf");
+	if (id == -1){
+		return;
+	}
 	QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-	printf("%s\n", family.toStdString().c_str());
 }
 
 int main(int argc, char *argv[])
@@ -53,6 +55,10 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 
 	loadAndSetFonts();
+	QFont notoFont("Noto Sans");
+	notoFont.setStyleHint(QFont::SansSerif);
+	notoFont.setWeight(QFont::Thin);
+	a.setFont(notoFont);
 
 	MainWindow w(&recipeDB);
 	w.loadFromRecipe(checkForFirstRun(&recipeDB));

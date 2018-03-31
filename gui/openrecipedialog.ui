@@ -18,7 +18,7 @@
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 25 &quot;Noto Sans CJK KR Light&quot;;</string>
+   <string notr="true"/>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -63,7 +63,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="Tags">
          <attribute name="icon">
@@ -237,7 +237,8 @@
           <widget class="QLineEdit" name="nameEdit">
            <property name="font">
             <font>
-             <weight>3</weight>
+             <pointsize>12</pointsize>
+             <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
             </font>
@@ -369,7 +370,8 @@ QPushButton#exitButton:pressed{
        <widget class="QTableView" name="recipeTableView">
         <property name="font">
          <font>
-          <weight>3</weight>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>

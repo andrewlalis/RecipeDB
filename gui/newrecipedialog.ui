@@ -27,7 +27,7 @@
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 25 &quot;Noto Sans CJK KR&quot;;</string>
+   <string notr="true"/>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -103,7 +103,8 @@
                 <widget class="QLineEdit" name="recipeNameEdit">
                  <property name="font">
                   <font>
-                   <weight>3</weight>
+                   <pointsize>14</pointsize>
+                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -126,7 +127,8 @@
                 <widget class="QLineEdit" name="authorNameEdit">
                  <property name="font">
                   <font>
-                   <weight>3</weight>
+                   <pointsize>12</pointsize>
+                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -626,7 +628,7 @@ QPushButton#deleteTagButton:pressed{
                       <widget class="QLabel" name="amountLabel">
                        <property name="font">
                         <font>
-                         <weight>3</weight>
+                         <weight>50</weight>
                          <italic>false</italic>
                          <bold>false</bold>
                         </font>
@@ -898,7 +900,7 @@ QPushButton#removeIngredientButton:pressed{
              <widget class="QToolButton" name="italicsButton">
               <property name="font">
                <font>
-                <weight>3</weight>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -918,7 +920,7 @@ QPushButton#removeIngredientButton:pressed{
              <widget class="QToolButton" name="boldButton">
               <property name="font">
                <font>
-                <weight>3</weight>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
