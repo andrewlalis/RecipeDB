@@ -21,6 +21,8 @@ class ResultTable
 		ResultTable();
 		//Constructs a table with the original query saved.
 		ResultTable(string query);
+		//Constructs an empty table with a result code.
+		ResultTable(int resultCode);
 
 		//Gets all the data from the result set and stores it internally as strings.
 		void extractData(sqlite3_stmt* stmt);

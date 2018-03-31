@@ -14,12 +14,11 @@ ResultTable Database::executeSQL(string statement){
 	sqlite3_stmt* stmt;
 	this->sql = statement;
 	this->returnCode = sqlite3_prepare_v2(this->db, statement.c_str(), -1, &stmt, NULL);
-	ResultTable t(statement);
 	if (this->returnCode != SQLITE_OK){
 		fprintf(stderr, "Unable to successfully prepare SQL statement. Error code: %d\n\tError Message: %s\n", this->returnCode, sqlite3_errmsg(this->db));
-		return t;
+		return ResultTable(this->returnCode);
 	}
-
+	ResultTable t(statement);
 	t.extractData(stmt);
 
 	this->returnCode = sqlite3_finalize(stmt);
@@ -76,6 +75,18 @@ void Database::openConnection(){
 void Database::closeConnection(){
     this->returnCode = sqlite3_close(this->db);
 	this->dbIsOpen = false;
+}
+
+void Database::beginTransaction(){
+	this->executeSQL("BEGIN;");
+}
+
+void Database::commitTransaction(){
+	this->executeSQL("COMMIT;");
+}
+
+void Database::rollbackTransaction(){
+	this->executeSQL("ROLLBACK;");
 }
 
 string Database::combineVector(std::vector<string> strings, string mid){

@@ -38,6 +38,8 @@ class OpenRecipeDialog : public QDialog
 
 		void on_foodGroupsListWidget_itemSelectionChanged();
 
+		void on_clearSearchButton_clicked();
+
 	private:
 		Ui::OpenRecipeDialog *ui;
 		RecipeDatabase *recipeDB;

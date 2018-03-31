@@ -147,13 +147,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="searchButton">
+       <widget class="QPushButton" name="clearSearchButton">
         <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../images.qrc">
-          <normaloff>:/images/images/search_icon.png</normaloff>:/images/images/search_icon.png</iconset>
+         <string>Clear search criteria</string>
         </property>
        </widget>
       </item>

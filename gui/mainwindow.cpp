@@ -95,11 +95,12 @@ void MainWindow::on_exitButton_clicked(){
 
 void MainWindow::on_editButton_clicked(){
 	NewRecipeDialog d(this->recipeDB, this->currentRecipe, this);
+	string originalName = this->currentRecipe.getName();
 	d.show();
 	d.exec();
 	if (d.isAccepted()){
 		Recipe r = d.getRecipe();
-		if (!this->recipeDB->storeRecipe(r)){
+		if (!this->recipeDB->updateRecipe(r, originalName)){
 			QMessageBox::critical(this, QString("Unable to Save Recipe"), QString("The program was not able to successfully save the recipe. Make sure to give the recipe a name, instructions, and some ingredients!"));
 		} else {
 			this->loadFromRecipe(r);

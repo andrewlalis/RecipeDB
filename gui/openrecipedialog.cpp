@@ -127,3 +127,11 @@ void OpenRecipeDialog::on_foodGroupsListWidget_itemSelectionChanged(){
 	}
 	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithFoodGroups(groups));
 }
+
+void OpenRecipeDialog::on_clearSearchButton_clicked(){
+	ui->nameEdit->clear();
+	ui->foodGroupsListWidget->selectionModel()->clearSelection();
+	ui->tagsListView->selectionModel()->clearSelection();
+	ui->ingredientsListView->selectionModel()->clearSelection();
+	this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
+}

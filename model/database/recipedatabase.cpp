@@ -253,6 +253,18 @@ vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId)
 	return ings;
 }
 
+int RecipeDatabase::retrieveIngredientId(string ingredientName){
+	return std::stoi(this->selectFrom("ingredient", "ingredientId", "WHERE name = '"+ingredientName+"'").at(0, 0));
+}
+
+bool RecipeDatabase::deleteRecipeTags(int recipeId){
+	return this->deleteFrom("recipeTag", "WHERE recipeId = "+std::to_string(recipeId));
+}
+
+bool RecipeDatabase::deleteRecipeIngredients(int recipeId){
+	return this->deleteFrom("recipeIngredient", "WHERE recipeId = "+std::to_string(recipeId));
+}
+
 vector<Ingredient> RecipeDatabase::retrieveAllIngredients(){
 	ResultTable t = this->selectFrom("ingredient", "name, foodGroup", "ORDER BY name");
 	vector<Ingredient> ings;
@@ -356,8 +368,71 @@ bool RecipeDatabase::deleteTag(RecipeTag tag){
 	return this->deleteFrom("recipeTag", "WHERE tagName='"+tag.getValue()+"'");
 }
 
-bool RecipeDatabase::updateRecipe(Recipe recipe){
-
+bool RecipeDatabase::updateRecipe(Recipe recipe, string originalName) {
+	string idS = this->selectFrom("recipe", "recipeId", "WHERE name="+surroundString(originalName, "'")).at(0, 0);
+	int id = std::stoi(idS);
+	this->beginTransaction();
+	ResultTable t = this->executeSQL("UPDATE recipe "
+									 "SET name = '"+recipe.getName()+"', "
+									 "createdDate = '"+recipe.getCreatedDate().toString().toStdString()+"', "
+									 "prepTime = '"+recipe.getPrepTime().toString().toStdString()+"', "
+									 "cookTime = '"+recipe.getCookTime().toString().toStdString()+"', "
+									 "servingCount = "+std::to_string(recipe.getServings())+" "
+									 "WHERE recipeId = "+idS+";");
+	bool recipeSuccess = t.getReturnCode() == SQLITE_DONE;
+	if (!recipeSuccess){
+		this->rollbackTransaction();
+		return false;
+	}
+	bool tagsSuccess = this->deleteRecipeTags(id);
+	for (RecipeTag tag : recipe.getTags()){
+		tagsSuccess = tagsSuccess && this->insertInto(
+					"recipeTag",
+					  vector<string>({
+										 "recipeId",
+										 "tagName"
+									 }),
+					  vector<string>({
+										 idS,
+										 tag.getValue()
+									 }));
+	}
+	if (!tagsSuccess){
+		this->rollbackTransaction();
+		return false;
+	}
+	bool ingredientsSuccess = this->deleteRecipeIngredients(id);
+	for (RecipeIngredient ri : recipe.getIngredients()){
+		ingredientsSuccess = ingredientsSuccess && this->insertInto(
+					"recipeIngredient",
+					vector<string>({
+									   "recipeId",
+									   "ingredientId",
+									   "unitName",
+									   "quantity",
+									   "comment"
+								   }),
+					vector<string>({
+									   idS,
+									   std::to_string(this->retrieveIngredientId(ri.getName())),
+									   ri.getUnit().getName(),
+									   std::to_string(ri.getQuantity()),
+									   ri.getComment()
+								   }));
+	}
+	if (!ingredientsSuccess){
+		this->rollbackTransaction();
+		return false;
+	}
+	bool instructionSuccess = FileUtils::saveInstruction(id, recipe.getInstruction());
+	bool imageSuccess = FileUtils::saveImage(id, recipe.getImage());
+	if (!(instructionSuccess && imageSuccess)){
+		this->rollbackTransaction();
+		return false;
+	} else {
+		this->commitTransaction();
+		return true;
+	}
 }
 
 void RecipeDatabase::ensureTablesExist(){

@@ -100,7 +100,6 @@
                 <widget class="QLineEdit" name="recipeNameEdit">
                  <property name="font">
                   <font>
-                   <pointsize>16</pointsize>
                    <weight>3</weight>
                    <italic>false</italic>
                    <bold>false</bold>
@@ -142,7 +141,7 @@
                       <second>0</second>
                       <year>1999</year>
                       <month>12</month>
-                      <day>24</day>
+                      <day>23</day>
                      </datetime>
                     </property>
                     <property name="currentSection">
@@ -351,6 +350,9 @@
               </property>
               <property name="selectionMode">
                <enum>QAbstractItemView::MultiSelection</enum>
+              </property>
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
               </property>
              </widget>
             </item>
@@ -667,6 +669,9 @@
                  <property name="selectionMode">
                   <enum>QAbstractItemView::MultiSelection</enum>
                  </property>
+                 <property name="verticalScrollMode">
+                  <enum>QAbstractItemView::ScrollPerPixel</enum>
+                 </property>
                  <property name="batchSize">
                   <number>100</number>
                  </property>
@@ -746,16 +751,6 @@
          <string notr="true">background-color: rgb(250, 250, 255);</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
-         <item>
-          <widget class="QLabel" name="instructionsLabel">
-           <property name="text">
-            <string>Instructions</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
          <item alignment="Qt::AlignLeft|Qt::AlignTop">
           <widget class="QWidget" name="textControlPanel" native="true">
            <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -769,7 +764,7 @@
                </font>
               </property>
               <property name="text">
-               <string>I</string>
+               <string>Italic</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -789,7 +784,7 @@
                </font>
               </property>
               <property name="text">
-               <string>B</string>
+               <string>Bold</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -827,7 +822,7 @@
          <enum>Qt::LeftToRight</enum>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
