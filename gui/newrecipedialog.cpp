@@ -23,6 +23,7 @@ NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecip
 
 NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, Recipe recipe, QWidget *parent) : NewRecipeDialog(db, parent){
 	ui->recipeNameEdit->setText(QString::fromStdString(recipe.getName()));
+	ui->authorNameEdit->setText(QString::fromStdString(recipe.getAuthor()));
 	ui->prepTimeEdit->setTime(recipe.getPrepTime());
 	ui->cookTimeEdit->setTime(recipe.getCookTime());
 	ui->servingsSpinBox->setValue((double)recipe.getServings());
@@ -38,9 +39,10 @@ NewRecipeDialog::~NewRecipeDialog(){
 
 Recipe NewRecipeDialog::getRecipe(){
 	Recipe r(ui->recipeNameEdit->text().toStdString(),
+			 ui->authorNameEdit->text().toStdString(),
 			 this->ingredientListModel.getIngredients(),
 			 ui->instructionsTextEdit->toHtml().toStdString(),
-			 this->img,//Image
+			 ui->imageDisplayLabel->pixmap()->toImage(),//Image
 			 this->tagsListModel.getTags(),//Tags
 			 QDate::currentDate(),
 			 ui->prepTimeEdit->time(),
@@ -126,7 +128,6 @@ void NewRecipeDialog::on_deleteTagButton_clicked(){
 void NewRecipeDialog::on_selectImageButton_clicked(){
 	QString filename = QFileDialog::getOpenFileName(this, "Open Image", QString(), "Image Files (*.png *.jpg *.bmp)");
 	if (!filename.isEmpty()){
-		this->img = QImage(filename);
 		ui->imageDisplayLabel->setPixmap(QPixmap(filename));
 	}
 }

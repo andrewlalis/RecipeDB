@@ -19,19 +19,24 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::loadFromRecipe(Recipe recipe){
-    setRecipeName(recipe.getName());
-    setInstruction(recipe.getInstruction());
-    setIngredients(recipe.getIngredients());
-	if (recipe.getImage().isNull()){
-		setImage(QImage(QString(":/images/images/no_image.png")));
+	if (recipe.isEmpty()){
+		setRecipeName("No recipes found.");
+		setAuthorName("Click 'New' to get started.");
 	} else {
-		setImage(recipe.getImage());
+		setRecipeName(recipe.getName());
+		setInstruction(recipe.getInstruction());
+		setIngredients(recipe.getIngredients());
+		if (recipe.getImage().isNull()){
+			setImage(QImage(QString(":/images/images/no_image.png")));
+		} else {
+			setImage(recipe.getImage());
+		}
+		setPrepTime(recipe.getPrepTime());
+		setCookTime(recipe.getCookTime());
+		setServings(recipe.getServings());
+		setTags(recipe.getTags());
+		this->currentRecipe = recipe;
 	}
-	setPrepTime(recipe.getPrepTime());
-	setCookTime(recipe.getCookTime());
-	setServings(recipe.getServings());
-	setTags(recipe.getTags());
-	this->currentRecipe = recipe;
 }
 
 void MainWindow::setRecipeName(string name){
@@ -66,6 +71,10 @@ void MainWindow::setTags(vector<RecipeTag> tags){
 	this->tagsListModel.setTags(tags);
 }
 
+void MainWindow::setAuthorName(string name){
+	ui->authorLabel->setText(QString::fromStdString(name));
+}
+
 void MainWindow::on_newButton_clicked(){
 	NewRecipeDialog d(this->recipeDB, this);
 	d.show();
@@ -95,11 +104,12 @@ void MainWindow::on_exitButton_clicked(){
 
 void MainWindow::on_editButton_clicked(){
 	NewRecipeDialog d(this->recipeDB, this->currentRecipe, this);
+	string originalName = this->currentRecipe.getName();
 	d.show();
 	d.exec();
 	if (d.isAccepted()){
 		Recipe r = d.getRecipe();
-		if (!this->recipeDB->storeRecipe(r)){
+		if (!this->recipeDB->updateRecipe(r, originalName)){
 			QMessageBox::critical(this, QString("Unable to Save Recipe"), QString("The program was not able to successfully save the recipe. Make sure to give the recipe a name, instructions, and some ingredients!"));
 		} else {
 			this->loadFromRecipe(r);

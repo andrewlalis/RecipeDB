@@ -96,21 +96,54 @@
             <item>
              <widget class="QWidget" name="recipeNamePanel" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_9">
+               <property name="spacing">
+                <number>0</number>
+               </property>
                <item>
                 <widget class="QLineEdit" name="recipeNameEdit">
                  <property name="font">
                   <font>
-                   <pointsize>16</pointsize>
+                   <pointsize>14</pointsize>
                    <weight>3</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="frame">
+                  <bool>false</bool>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
                  <property name="placeholderText">
                   <string>Recipe Name</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="authorNameEdit">
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                   <weight>3</weight>
+                   <italic>false</italic>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(245, 245, 255);</string>
+                 </property>
+                 <property name="frame">
+                  <bool>false</bool>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Author</string>
                  </property>
                 </widget>
                </item>
@@ -142,7 +175,7 @@
                       <second>0</second>
                       <year>1999</year>
                       <month>12</month>
-                      <day>24</day>
+                      <day>22</day>
                      </datetime>
                     </property>
                     <property name="currentSection">
@@ -253,6 +286,9 @@
             <item alignment="Qt::AlignTop">
              <widget class="QWidget" name="newTagBoxPanel" native="true">
               <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <property name="spacing">
+                <number>2</number>
+               </property>
                <property name="leftMargin">
                 <number>0</number>
                </property>
@@ -286,6 +322,9 @@
                  <property name="toolTip">
                   <string>Create a new tag</string>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
                  <property name="icon">
                   <iconset resource="../images.qrc">
                    <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
@@ -296,6 +335,9 @@
                 <widget class="QPushButton" name="removeTagButton">
                  <property name="toolTip">
                   <string>Permanently delete this tag</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="icon">
                   <iconset resource="../images.qrc">
@@ -309,6 +351,9 @@
             <item>
              <widget class="QWidget" name="tagsListControlPanel" native="true">
               <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <property name="spacing">
+                <number>0</number>
+               </property>
                <property name="leftMargin">
                 <number>0</number>
                </property>
@@ -323,6 +368,27 @@
                </property>
                <item>
                 <widget class="QPushButton" name="addTagButton">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Add the above tag to the recipe</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton#addTagButton {
+	background-color: rgb(235, 235, 255);
+	border: 0px;
+}
+QPushButton#addTagButton:hover{
+	background-color: rgb(245, 245, 255);
+}
+QPushButton#addTagButton:pressed{
+	background-color: rgb(255, 255, 255);
+}</string>
+                 </property>
                  <property name="text">
                   <string>Add</string>
                  </property>
@@ -330,8 +396,29 @@
                </item>
                <item>
                 <widget class="QPushButton" name="deleteTagButton">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Remove this tag from the recipe</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton#deleteTagButton {
+	background-color: rgb(225, 225, 255);
+	border: 0px;
+}
+QPushButton#deleteTagButton:hover{
+	background-color: rgb(235, 235, 255);
+}
+QPushButton#deleteTagButton:pressed{
+	background-color: rgb(245, 245, 255);
+}</string>
+                 </property>
                  <property name="text">
-                  <string>Delete</string>
+                  <string>Remove</string>
                  </property>
                 </widget>
                </item>
@@ -351,6 +438,9 @@
               </property>
               <property name="selectionMode">
                <enum>QAbstractItemView::MultiSelection</enum>
+              </property>
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
               </property>
              </widget>
             </item>
@@ -432,7 +522,7 @@
                   <item>
                    <widget class="QLabel" name="addIngredientLabel">
                     <property name="text">
-                     <string>Add Ingredient</string>
+                     <string>Ingredients</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
@@ -495,6 +585,9 @@
                      </item>
                      <item>
                       <widget class="QPushButton" name="deleteIngredientButton">
+                       <property name="toolTip">
+                        <string>Delete this ingredient</string>
+                       </property>
                        <property name="text">
                         <string/>
                        </property>
@@ -579,6 +672,9 @@
                      </item>
                      <item alignment="Qt::AlignRight">
                       <widget class="QPushButton" name="newUnitButton">
+                       <property name="toolTip">
+                        <string>Create a new unit of measure</string>
+                       </property>
                        <property name="icon">
                         <iconset resource="../images.qrc">
                          <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
@@ -587,6 +683,9 @@
                      </item>
                      <item>
                       <widget class="QPushButton" name="deleteUnitButton">
+                       <property name="toolTip">
+                        <string>Delete this unit of measure</string>
+                       </property>
                        <property name="text">
                         <string/>
                        </property>
@@ -624,6 +723,9 @@
                   <item>
                    <widget class="QWidget" name="ingredientsListControlPanel" native="true">
                     <layout class="QHBoxLayout" name="horizontalLayout_9">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
                      <property name="leftMargin">
                       <number>0</number>
                      </property>
@@ -638,6 +740,27 @@
                      </property>
                      <item>
                       <widget class="QPushButton" name="addIngredientButton">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>Add the above ingredient to the recipe</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton#addIngredientButton {
+	background-color: rgb(235, 235, 255);
+	border: 0px;
+}
+QPushButton#addIngredientButton:hover{
+	background-color: rgb(245, 245, 255);
+}
+QPushButton#addIngredientButton:pressed{
+	background-color: rgb(255, 255, 255);
+}</string>
+                       </property>
                        <property name="text">
                         <string>Add</string>
                        </property>
@@ -645,8 +768,29 @@
                      </item>
                      <item>
                       <widget class="QPushButton" name="removeIngredientButton">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>Remove this ingredient from the recipe</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton#removeIngredientButton {
+	background-color: rgb(225, 225, 255);
+	border: 0px;
+}
+QPushButton#removeIngredientButton:hover{
+	background-color: rgb(235, 235, 255);
+}
+QPushButton#removeIngredientButton:pressed{
+	background-color: rgb(245, 245, 255);
+}</string>
+                       </property>
                        <property name="text">
-                        <string>Delete</string>
+                        <string>Remove</string>
                        </property>
                       </widget>
                      </item>
@@ -666,6 +810,9 @@
                  </property>
                  <property name="selectionMode">
                   <enum>QAbstractItemView::MultiSelection</enum>
+                 </property>
+                 <property name="verticalScrollMode">
+                  <enum>QAbstractItemView::ScrollPerPixel</enum>
                  </property>
                  <property name="batchSize">
                   <number>100</number>
@@ -746,16 +893,6 @@
          <string notr="true">background-color: rgb(250, 250, 255);</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
-         <item>
-          <widget class="QLabel" name="instructionsLabel">
-           <property name="text">
-            <string>Instructions</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
          <item alignment="Qt::AlignLeft|Qt::AlignTop">
           <widget class="QWidget" name="textControlPanel" native="true">
            <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -769,7 +906,7 @@
                </font>
               </property>
               <property name="text">
-               <string>I</string>
+               <string>Italic</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -789,7 +926,7 @@
                </font>
               </property>
               <property name="text">
-               <string>B</string>
+               <string>Bold</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -827,7 +964,7 @@
          <enum>Qt::LeftToRight</enum>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>

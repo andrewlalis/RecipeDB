@@ -72,7 +72,7 @@ void OpenRecipeDialog::on_deleteRecipeButton_clicked(){
 	}
 	string recipePlural = (rows.size() == 1) ? "recipe" : "recipes";
 	QString title = QString::fromStdString("Delete " + recipePlural);
-	QString content = QString::fromStdString("Are you sure you wish to delete the selected "+recipePlural+"?");
+	QString content = QString::fromStdString("Are you sure you wish to delete the selected "+recipePlural+"?\nAll deleted recipes are permanently deleted.");
 	QMessageBox::StandardButton reply = QMessageBox::question(this, title, content);
 	if (reply == QMessageBox::Yes){
 		for (int row : rows){
@@ -126,4 +126,16 @@ void OpenRecipeDialog::on_foodGroupsListWidget_itemSelectionChanged(){
 		groups.push_back(item->text().toStdString());
 	}
 	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithFoodGroups(groups));
+}
+
+void OpenRecipeDialog::on_clearSearchButton_clicked(){
+	ui->nameEdit->clear();
+	ui->foodGroupsListWidget->selectionModel()->clearSelection();
+	ui->tagsListView->selectionModel()->clearSelection();
+	ui->ingredientsListView->selectionModel()->clearSelection();
+	this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
+}
+
+void OpenRecipeDialog::on_exitButton_clicked(){
+	this->close();
 }

@@ -8,6 +8,10 @@ ResultTable::ResultTable(string query){
 	this->originalQuery = query;
 }
 
+ResultTable::ResultTable(int resultCode){
+	this->queryCode = resultCode;
+}
+
 void ResultTable::extractData(sqlite3_stmt *stmt){
 	this->values.clear();
 	int res = sqlite3_step(stmt);
@@ -30,6 +34,7 @@ void ResultTable::processRow(sqlite3_stmt *stmt){
 }
 
 void ResultTable::printData(){
+	printf("--> Result Code: [%d] <--\n", this->getReturnCode());
 	if (this->isEmpty()){
 		printf("Result table is empty.\n");
 		return;

@@ -12,7 +12,7 @@ bool RecipeDatabase::storeRecipe(Recipe recipe){
 		return false;
 	}
 	//Store a recipe, if it doesn't already exist. This first tries to create the recipe entry, then all subsequent supporting table entries.
-	this->executeSQL("BEGIN;");
+	this->beginTransaction();
 	ResultTable t = this->selectFrom("recipe", "*", "WHERE name="+surroundString(recipe.getName(), "'"));
 	if (!t.isEmpty()){
 		fprintf(stderr, "Error storing recipe: Recipe with name %s already exists.\n", recipe.getName().c_str());
@@ -20,6 +20,7 @@ bool RecipeDatabase::storeRecipe(Recipe recipe){
 		bool success = this->insertInto("recipe",
 						 vector<string>({
 											"name",
+											"authorName",
 											"createdDate",
 											"cookTime",
 											"prepTime",
@@ -27,6 +28,7 @@ bool RecipeDatabase::storeRecipe(Recipe recipe){
 										}),
 						 vector<string>({
 											recipe.getName(),
+											recipe.getAuthor(),
 											recipe.getCreatedDate().toString().toStdString(),
 											recipe.getCookTime().toString().toStdString(),
 											recipe.getPrepTime().toString().toStdString(),
@@ -46,12 +48,12 @@ bool RecipeDatabase::storeRecipe(Recipe recipe){
 					this->storeInstruction(recipe.getInstruction(), recipeId) &&
 					this->storeImage(recipe.getImage(), recipeId) &&
 					this->storeTags(recipe.getTags(), recipeId)){
-				this->executeSQL("COMMIT;");
+				this->commitTransaction();
 				return true;
 			}
 		}
 	}
-	this->executeSQL("ROLLBACK;");
+	this->rollbackTransaction();
 	return false;
 }
 
@@ -158,7 +160,7 @@ Recipe RecipeDatabase::retrieveRandomRecipe(){
 	}
 	return this->readFromResultTable(t);
 }
-//TODO: Change this to be more efficient! One query per recipe is not good!
+
 vector<Recipe> RecipeDatabase::retrieveAllRecipes(){
 	ResultTable t = this->executeSQL("SELECT * FROM recipe ORDER BY name;");
 	return this->readRecipesFromTable(t);
@@ -204,7 +206,7 @@ vector<Recipe> RecipeDatabase::retrieveRecipesWithTags(vector<RecipeTag> tags){
 }
 
 vector<Recipe> RecipeDatabase::retrieveRecipesWithSubstring(string s){
-	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE name LIKE '%"+s+"%' COLLATE NOCASE;");
+	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE name LIKE '%"+s+"%' COLLATE NOCASE ORDER BY name;");
 	return this->readRecipesFromTable(t);
 }
 
@@ -251,6 +253,18 @@ vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId)
 		ings.push_back(r);
 	}
 	return ings;
+}
+
+int RecipeDatabase::retrieveIngredientId(string ingredientName){
+	return std::stoi(this->selectFrom("ingredient", "ingredientId", "WHERE name = '"+ingredientName+"'").at(0, 0));
+}
+
+bool RecipeDatabase::deleteRecipeTags(int recipeId){
+	return this->deleteFrom("recipeTag", "WHERE recipeId = "+std::to_string(recipeId));
+}
+
+bool RecipeDatabase::deleteRecipeIngredients(int recipeId){
+	return this->deleteFrom("recipeIngredient", "WHERE recipeId = "+std::to_string(recipeId));
 }
 
 vector<Ingredient> RecipeDatabase::retrieveAllIngredients(){
@@ -314,7 +328,7 @@ bool RecipeDatabase::deleteRecipe(int recipeId){
 		printf("Cannot delete. No recipe with ID %d exists.\n", recipeId);
 		return false;
 	}
-	this->executeSQL("BEGIN;");
+	this->beginTransaction();
 	bool tagsDeleted = this->deleteFrom("recipeTag", "WHERE recipeId="+idString);
 	bool recipeIngredientDeleted = this->deleteFrom("recipeIngredient", "WHERE recipeId="+idString);
 	bool recipeDeleted = this->deleteFrom("recipe", "WHERE recipeId="+idString);
@@ -323,10 +337,10 @@ bool RecipeDatabase::deleteRecipe(int recipeId){
 	Q_UNUSED(instructionDeleted);
 	Q_UNUSED(imageDeleted);
 	if (tagsDeleted && recipeIngredientDeleted && recipeDeleted){
-		this->executeSQL("COMMIT;");
+		this->commitTransaction();
 		return true;
 	} else {
-		this->executeSQL("ROLLBACK;");
+		this->rollbackTransaction();
 		return false;
 	}
 }
@@ -356,15 +370,123 @@ bool RecipeDatabase::deleteTag(RecipeTag tag){
 	return this->deleteFrom("recipeTag", "WHERE tagName='"+tag.getValue()+"'");
 }
 
-bool RecipeDatabase::updateRecipe(Recipe recipe){
+bool RecipeDatabase::updateRecipe(Recipe recipe, string originalName) {
+	string idS = this->selectFrom("recipe", "recipeId", "WHERE name="+surroundString(originalName, "'")).at(0, 0);
+	int id = std::stoi(idS);
+	this->beginTransaction();
+	ResultTable t = this->executeSQL("UPDATE recipe "
+									 "SET name = '"+recipe.getName()+"', "
+									 "authorName = '"+recipe.getAuthor()+"', "
+									 "createdDate = '"+recipe.getCreatedDate().toString().toStdString()+"', "
+									 "prepTime = '"+recipe.getPrepTime().toString().toStdString()+"', "
+									 "cookTime = '"+recipe.getCookTime().toString().toStdString()+"', "
+									 "servingCount = "+std::to_string(recipe.getServings())+" "
+									 "WHERE recipeId = "+idS+";");
+	bool recipeSuccess = t.getReturnCode() == SQLITE_DONE;
+	if (!recipeSuccess){
+		this->rollbackTransaction();
+		return false;
+	}
+	bool tagsSuccess = this->deleteRecipeTags(id);
+	for (RecipeTag tag : recipe.getTags()){
+		tagsSuccess = tagsSuccess && this->insertInto(
+					"recipeTag",
+					  vector<string>({
+										 "recipeId",
+										 "tagName"
+									 }),
+					  vector<string>({
+										 idS,
+										 tag.getValue()
+									 }));
+	}
+	if (!tagsSuccess){
+		this->rollbackTransaction();
+		return false;
+	}
+	bool ingredientsSuccess = this->deleteRecipeIngredients(id);
+	for (RecipeIngredient ri : recipe.getIngredients()){
+		ingredientsSuccess = ingredientsSuccess && this->insertInto(
+					"recipeIngredient",
+					vector<string>({
+									   "recipeId",
+									   "ingredientId",
+									   "unitName",
+									   "quantity",
+									   "comment"
+								   }),
+					vector<string>({
+									   idS,
+									   std::to_string(this->retrieveIngredientId(ri.getName())),
+									   ri.getUnit().getName(),
+									   std::to_string(ri.getQuantity()),
+									   ri.getComment()
+								   }));
+	}
+	if (!ingredientsSuccess){
+		this->rollbackTransaction();
+		return false;
+	}
+	bool instructionSuccess = FileUtils::saveInstruction(id, recipe.getInstruction());
+	bool imageSuccess = FileUtils::saveImage(id, recipe.getImage());
+	if (!(instructionSuccess && imageSuccess)){
+		this->rollbackTransaction();
+		return false;
+	} else {
+		this->commitTransaction();
+		return true;
+	}
+}
 
+bool RecipeDatabase::addBasicUnits(){
+	this->beginTransaction();
+	//Volume
+	this->storeUnitOfMeasure(UnitOfMeasure("Teaspoon", "Teaspoons", "tsp", UnitOfMeasure::VOLUME, 5.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Tablespoon", "Tablespoons", "tbsp", UnitOfMeasure::VOLUME, 15.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Fluid Ounce", "Fluid Ounces", "fl oz", UnitOfMeasure::VOLUME, 30.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Cup", "Cups", "c", UnitOfMeasure::VOLUME, 250.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Milliliter", "Milliliters", "mL", UnitOfMeasure::VOLUME, 1.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Liter", "Liters", "L", UnitOfMeasure::VOLUME, 1000.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Gallon", "Gallons", "gal", UnitOfMeasure::VOLUME, 3800.0));
+	//Mass/Weight
+	this->storeUnitOfMeasure(UnitOfMeasure("Ounce", "Ounces", "oz", UnitOfMeasure::MASS, 28.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Pound", "Pounds", "lb", UnitOfMeasure::MASS, 454.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Gram", "Grams", "g", UnitOfMeasure::MASS, 1.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Milligram", "Milligrams", "mg", UnitOfMeasure::MASS, 0.001));
+	this->storeUnitOfMeasure(UnitOfMeasure("Kilogram", "Kilograms", "kg", UnitOfMeasure::MASS, 1000.0));
+	//Length
+	this->storeUnitOfMeasure(UnitOfMeasure("Inch", "Inches", "in", UnitOfMeasure::LENGTH, 2.54));
+	this->storeUnitOfMeasure(UnitOfMeasure("Centimeter", "Centimeters", "cm", UnitOfMeasure::LENGTH, 1.0));
+	//MISC
+	this->storeUnitOfMeasure(UnitOfMeasure("Piece", "Pieces", "pc", UnitOfMeasure::MISC, 1.0));
+	this->storeUnitOfMeasure(UnitOfMeasure("Item", "Items", "", UnitOfMeasure::MISC, 1.0));
+	this->commitTransaction();
+	return true;
+}
+
+bool RecipeDatabase::addBasicIngredients(){
+	this->beginTransaction();
+	this->storeIngredient(Ingredient("Flour", "grains"));
+	this->storeIngredient(Ingredient("Eggs", "eggs"));
+	this->storeIngredient(Ingredient("Milk", "dairy"));
+	this->storeIngredient(Ingredient("Cheese", "dairy"));
+	this->storeIngredient(Ingredient("Salt", "spices"));
+	this->storeIngredient(Ingredient("Sugar", "sugars"));
+	this->storeIngredient(Ingredient("Vegetable Oil", "oils"));
+	this->storeIngredient(Ingredient("Olive Oil", "oils"));
+	this->storeIngredient(Ingredient("Water", "water"));
+	this->storeIngredient(Ingredient("Bell Pepper", "vegetables"));
+	this->storeIngredient(Ingredient("Onion", "vegetables"));
+	this->storeIngredient(Ingredient("Garlic", "spices"));
+	this->commitTransaction();
+	return true;
 }
 
 void RecipeDatabase::ensureTablesExist(){
 	//Make sure that foreign keys are enabled.
 	this->executeSQL("PRAGMA foreign_keys = ON;");
 
-	this->executeSQL("BEGIN;");
+	this->beginTransaction();
 	//Ingredients table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS ingredient("
 					 "ingredientId INTEGER PRIMARY KEY,"
@@ -381,6 +503,7 @@ void RecipeDatabase::ensureTablesExist(){
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipe("
 					 "recipeId INTEGER PRIMARY KEY,"
 					 "name varchar UNIQUE,"
+					 "authorName varchar,"
 					 "createdDate date,"
 					 "prepTime time,"
 					 "cookTime time,"
@@ -400,18 +523,19 @@ void RecipeDatabase::ensureTablesExist(){
 					 "FOREIGN KEY (ingredientId) REFERENCES ingredient(ingredientId),"
 					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId),"
 					 "FOREIGN KEY (unitName) REFERENCES unitOfMeasure(name));");
-	this->executeSQL("COMMIT;");
+	this->commitTransaction();
 }
 
 Recipe RecipeDatabase::readFromResultTable(ResultTable t, int tRow){
 	Recipe r;
 	TableRow row = t.rows().at(tRow);
-	int id = std::stoi(row.at(0));
-	r.setName(row.at(1));
-	r.setCreatedDate(QDate::fromString(QString::fromStdString(row.at(2))));
-	r.setPrepTime(QTime::fromString(QString::fromStdString(row.at(3))));
-	r.setCookTime(QTime::fromString(QString::fromStdString(row.at(4))));
-	r.setServings(std::stof(row.at(5)));
+	int id = std::stoi(row.at(0));											//id
+	r.setName(row.at(1));													//Name
+	r.setAuthor(row.at(2));													//author
+	r.setCreatedDate(QDate::fromString(QString::fromStdString(row.at(3))));	//createdDate
+	r.setPrepTime(QTime::fromString(QString::fromStdString(row.at(4))));	//prepTime
+	r.setCookTime(QTime::fromString(QString::fromStdString(row.at(5))));	//cookTime
+	r.setServings(std::stof(row.at(6)));									//servings
 	r.setInstruction(FileUtils::loadInstruction(id));
 	r.setImage(FileUtils::loadImage(id));
 	r.setIngredients(this->retrieveRecipeIngredients(id));

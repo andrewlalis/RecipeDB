@@ -35,6 +35,10 @@ public:
 
 	void closeConnection();
 
+	void beginTransaction();
+	void commitTransaction();
+	void rollbackTransaction();
+
 protected:
 	string surroundString(string s, string surround);
 

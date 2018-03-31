@@ -26,9 +26,6 @@ class RecipeDatabase : public Database
 		bool storeRecipeIngredient(RecipeIngredient ri, int recipeId);
 		int storeIngredient(Ingredient ingredient);
 		bool storeUnitOfMeasure(UnitOfMeasure u);
-		bool storeInstruction(Instruction instruction, int recipeId);
-		bool storeImage(QImage image, int recipeId);
-		bool storeTags(vector<RecipeTag> tags, int recipeId);
 
 		//Retrieval.
 		Recipe retrieveRecipe(string name);
@@ -39,10 +36,8 @@ class RecipeDatabase : public Database
 		vector<Recipe> retrieveRecipesWithSubstring(string s);
 		vector<Recipe> retrieveRecipesWithFoodGroups(vector<string> groups);
 		vector<string> retrieveAllFoodGroups();
-		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
 		vector<Ingredient> retrieveAllIngredients();
 		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();
-		vector<RecipeTag> retrieveTags(int recipeId);
 		vector<RecipeTag> retrieveAllTags();
 
 		//Deletion.
@@ -53,7 +48,11 @@ class RecipeDatabase : public Database
 		bool deleteTag(RecipeTag tag);
 
 		//Updating.
-		bool updateRecipe(Recipe recipe);
+		bool updateRecipe(Recipe recipe, string originalName);
+
+		//Adding basic information at start.
+		bool addBasicUnits();
+		bool addBasicIngredients();
 	private:
 
 		//Utility methods.
@@ -61,6 +60,20 @@ class RecipeDatabase : public Database
 		//Read a recipe from a row of a result table.
 		Recipe readFromResultTable(ResultTable t, int row=0);
 		vector<Recipe> readRecipesFromTable(ResultTable t);
+
+		//Storage
+		bool storeInstruction(Instruction instruction, int recipeId);
+		bool storeImage(QImage image, int recipeId);
+		bool storeTags(vector<RecipeTag> tags, int recipeId);
+
+		//Retrieval
+		vector<RecipeTag> retrieveTags(int recipeId);
+		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
+		int retrieveIngredientId(string ingredientName);
+
+		//Deletion
+		bool deleteRecipeTags(int recipeId);
+		bool deleteRecipeIngredients(int recipeId);
 };
 
 #endif // RECIPEDATABASE_H

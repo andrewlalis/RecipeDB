@@ -8,23 +8,27 @@
 
 void test(RecipeDatabase *recipeDB);
 
+Recipe checkForFirstRun(RecipeDatabase *recipeDB){
+	Recipe r = recipeDB->retrieveRandomRecipe();
+	if (r.isEmpty()){//There are no recipes in the database.
+		//Add some basic units to the units, and some basic ingredients.
+		recipeDB->addBasicUnits();
+		recipeDB->addBasicIngredients();
+	}
+	return r;
+}
+
 int main(int argc, char *argv[])
 {
 	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
-    QApplication a(argc, argv);
+
+	QApplication a(argc, argv);
 	MainWindow w(&recipeDB);
-    w.show();
-
-	//TESTING CODE
-	test(&recipeDB);
-
-	//END TESTING CODE.
-
-	w.loadFromRecipe(recipeDB.retrieveRandomRecipe());
+	w.loadFromRecipe(checkForFirstRun(&recipeDB));
+	w.show();
 
 	a.exec();
 	recipeDB.closeConnection();
-	printf("Total queries: %lu\n", recipeDB.getQueryCount());
 
 	return 0;
 }
@@ -35,6 +39,7 @@ void test(RecipeDatabase *recipeDB){
 	ri.push_back(RecipeIngredient("baking powder", "additives", 1.0f, UnitOfMeasure("teaspoon", "teaspoons", "tsp", UnitOfMeasure::VOLUME, 1.0), ""));
 
 	Recipe rec("Example",
+			   "Andrew Lalis",
 			   ri,
 			   Instruction("Placeholder Text"),
 			   QImage(),
@@ -47,19 +52,5 @@ void test(RecipeDatabase *recipeDB){
 
 	bool success = recipeDB->storeRecipe(rec);
 	printf("Storage successful: %d\n", success);
-
-//	vector<string> foodGroups = recipeDB->retrieveAllFoodGroups();
-//	printf("Food Groups:\n");
-//	for (string s : foodGroups){
-//		printf("\t%s\n", s.c_str());
-//	}
-
-	//Get food groups from recipe.
-//	Recipe r = recipeDB->retrieveRecipe("Pannenkoeken");
-//	vector<string> foodGroupsR = r.getFoodGroups();
-//	printf("Pannenkoeken Food Groups:\n");
-//	for (string s : foodGroupsR){
-//		printf("\t%s\n", s.c_str());
-//	}
 
 }
