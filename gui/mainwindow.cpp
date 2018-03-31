@@ -19,19 +19,24 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::loadFromRecipe(Recipe recipe){
-    setRecipeName(recipe.getName());
-    setInstruction(recipe.getInstruction());
-    setIngredients(recipe.getIngredients());
-	if (recipe.getImage().isNull()){
-		setImage(QImage(QString(":/images/images/no_image.png")));
+	if (recipe.isEmpty()){
+		setRecipeName("No recipes found.");
+		setAuthorName("Click 'New' to get started.");
 	} else {
-		setImage(recipe.getImage());
+		setRecipeName(recipe.getName());
+		setInstruction(recipe.getInstruction());
+		setIngredients(recipe.getIngredients());
+		if (recipe.getImage().isNull()){
+			setImage(QImage(QString(":/images/images/no_image.png")));
+		} else {
+			setImage(recipe.getImage());
+		}
+		setPrepTime(recipe.getPrepTime());
+		setCookTime(recipe.getCookTime());
+		setServings(recipe.getServings());
+		setTags(recipe.getTags());
+		this->currentRecipe = recipe;
 	}
-	setPrepTime(recipe.getPrepTime());
-	setCookTime(recipe.getCookTime());
-	setServings(recipe.getServings());
-	setTags(recipe.getTags());
-	this->currentRecipe = recipe;
 }
 
 void MainWindow::setRecipeName(string name){
@@ -64,6 +69,10 @@ void MainWindow::setServings(float servings){
 
 void MainWindow::setTags(vector<RecipeTag> tags){
 	this->tagsListModel.setTags(tags);
+}
+
+void MainWindow::setAuthorName(string name){
+	ui->authorLabel->setText(QString::fromStdString(name));
 }
 
 void MainWindow::on_newButton_clicked(){

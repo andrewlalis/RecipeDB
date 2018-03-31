@@ -8,19 +8,24 @@
 
 void test(RecipeDatabase *recipeDB);
 
+Recipe checkForFirstRun(RecipeDatabase *recipeDB){
+	Recipe r = recipeDB->retrieveRandomRecipe();
+	if (r.isEmpty()){//There are no recipes in the database.
+		//Add some basic units to the units, and some basic ingredients.
+		recipeDB->addBasicUnits();
+		recipeDB->addBasicIngredients();
+	}
+	return r;
+}
+
 int main(int argc, char *argv[])
 {
 	RecipeDatabase recipeDB(QString(FileUtils::appDataPath+"recipes.db").toStdString());
-    QApplication a(argc, argv);
+
+	QApplication a(argc, argv);
 	MainWindow w(&recipeDB);
-    w.show();
-
-	//TESTING CODE
-	//test(&recipeDB);
-
-	//END TESTING CODE.
-
-	w.loadFromRecipe(recipeDB.retrieveRandomRecipe());
+	w.loadFromRecipe(checkForFirstRun(&recipeDB));
+	w.show();
 
 	a.exec();
 	recipeDB.closeConnection();
@@ -34,6 +39,7 @@ void test(RecipeDatabase *recipeDB){
 	ri.push_back(RecipeIngredient("baking powder", "additives", 1.0f, UnitOfMeasure("teaspoon", "teaspoons", "tsp", UnitOfMeasure::VOLUME, 1.0), ""));
 
 	Recipe rec("Example",
+			   "Andrew Lalis",
 			   ri,
 			   Instruction("Placeholder Text"),
 			   QImage(),

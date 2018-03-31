@@ -23,6 +23,7 @@ NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecip
 
 NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, Recipe recipe, QWidget *parent) : NewRecipeDialog(db, parent){
 	ui->recipeNameEdit->setText(QString::fromStdString(recipe.getName()));
+	ui->authorNameEdit->setText(QString::fromStdString(recipe.getAuthor()));
 	ui->prepTimeEdit->setTime(recipe.getPrepTime());
 	ui->cookTimeEdit->setTime(recipe.getCookTime());
 	ui->servingsSpinBox->setValue((double)recipe.getServings());
@@ -38,6 +39,7 @@ NewRecipeDialog::~NewRecipeDialog(){
 
 Recipe NewRecipeDialog::getRecipe(){
 	Recipe r(ui->recipeNameEdit->text().toStdString(),
+			 ui->authorNameEdit->text().toStdString(),
 			 this->ingredientListModel.getIngredients(),
 			 ui->instructionsTextEdit->toHtml().toStdString(),
 			 ui->imageDisplayLabel->pixmap()->toImage(),//Image

@@ -54,6 +54,7 @@ public:
 	void setCookTime(QTime cookTime);
 	void setServings(float servings);
 	void setTags(vector<RecipeTag> tags);
+	void setAuthorName(string name);
 };
 
 #endif // MAINWINDOW_H

@@ -49,6 +49,10 @@ class RecipeDatabase : public Database
 
 		//Updating.
 		bool updateRecipe(Recipe recipe, string originalName);
+
+		//Adding basic information at start.
+		bool addBasicUnits();
+		bool addBasicIngredients();
 	private:
 
 		//Utility methods.

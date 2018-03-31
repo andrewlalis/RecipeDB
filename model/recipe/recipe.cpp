@@ -1,7 +1,8 @@
 #include "model/recipe/recipe.h"
 
-Recipe::Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings){
+Recipe::Recipe(string name, string author, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings){
     setName(name);
+	setAuthor(author);
     setIngredients(ingredients);
     setInstruction(instruction);
     setImage(image);
@@ -12,12 +13,16 @@ Recipe::Recipe(string name, vector<RecipeIngredient> ingredients, Instruction in
     setServings(servings);
 }
 
-Recipe::Recipe() : Recipe::Recipe("", vector<RecipeIngredient>(), Instruction(), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(), QTime(), 1.0f){
+Recipe::Recipe() : Recipe::Recipe("", "", vector<RecipeIngredient>(), Instruction(), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(), QTime(), 1.0f){
     //Set default values when none are specified.
 }
 
 string Recipe::getName() const{
-    return this->name;
+	return this->name;
+}
+
+string Recipe::getAuthor() const{
+	return this->authorName;
 }
 
 vector<RecipeIngredient> Recipe::getIngredients() const{
@@ -71,7 +76,11 @@ bool Recipe::isEmpty() const{
 }
 
 void Recipe::setName(string newName){
-    this->name = newName;
+	this->name = newName;
+}
+
+void Recipe::setAuthor(string newName){
+	this->authorName = newName;
 }
 
 void Recipe::setIngredients(vector<RecipeIngredient> ingredients){
@@ -111,8 +120,9 @@ void Recipe::setServings(float newServingsCount){
 }
 
 void Recipe::print(){
-	printf("Recipe: %s, Created on: %s, Prep time: %s, Cook time: %s, Serves: %f\n",
+	printf("Recipe: %s, Created on: %s, by %s, Prep time: %s, Cook time: %s, Serves: %f\n",
 		   this->name.c_str(),
+		   this->authorName.c_str(),
 		   this->createdDate.toString().toStdString().c_str(),
 		   this->prepTime.toString().toStdString().c_str(),
 		   this->cookTime.toString().toStdString().c_str(),

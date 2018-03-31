@@ -32,12 +32,13 @@ class Recipe
 {
 public:
     //Full constructor
-    Recipe(string name, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings);
+	Recipe(string name, string author, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings);
     //Constructor with default values.
     Recipe();
 
     //Getters
     string getName() const;
+	string getAuthor() const;
     vector<RecipeIngredient> getIngredients() const;
 	vector<string> getFoodGroups() const;
     Instruction getInstruction() const;
@@ -52,6 +53,7 @@ public:
 
     //Setters
     void setName(string newName);
+	void setAuthor(string newName);
     void setIngredients(vector<RecipeIngredient> ingredients);
     void setTags(vector<RecipeTag> tags);
     void addIngredient(RecipeIngredient newIngredient);
@@ -66,6 +68,7 @@ public:
 private:
     //Main information.
     string name;                                //The name of the recipe.
+	string authorName;							//The name of the author of this recipe.
     vector<RecipeIngredient> ingredients;       //The list of ingredients in the recipe.
     Instruction instruction;                    //The instruction HTML document.
     QImage image;                               //An image displayed alongside the recipe.
