@@ -5,6 +5,7 @@ TagListModel::TagListModel(){
 }
 
 int TagListModel::rowCount(const QModelIndex &parent) const{
+	Q_UNUSED(parent);
 	return this->tags.size();
 }
 

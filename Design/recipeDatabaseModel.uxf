@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>160</y>
+      <w>230</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>recipe
+--
+recipeId INTEGER PRIMARY KEY
+name varchar UNIQUE
+authorName varchar
+createdDate date
+prepTime time
+cookTime time
+servingCount real</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>310</y>
+      <w>260</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ingredient
+--
+ingredientId INTEGER PRIMARY KEY
+foodGroup varchar
+name varchar UNIQUE</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>400</y>
+      <w>270</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>unitOfMeasure
+--
+name varchar UNIQUE PRIMARY KEY
+plural varchar
+abbreviation varchar
+type int
+metricCoefficient real</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>160</y>
+      <w>280</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>recipeTag
+--
+recipeId int FOREIGN recipe(recipeId)
+tagName varchar</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>240</y>
+      <w>360</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>recipeIngredient
+--
+recipeId FOREIGN recipe(recipeId)
+ingredientId FOREIGN ingredient(ingredientId)
+unitName varchar FOREIGN unitOfMeasure(name)
+quantity real
+comment varchar</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>180</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>180</y>
+      <w>110</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0;90.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>310</x>
+      <y>280</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;80.0;60.0;80.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>320</x>
+      <y>300</y>
+      <w>130</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;130.0;90.0;130.0;90.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>40</x>
+      <y>120</y>
+      <w>770</w>
+      <h>410</h>
+    </coordinates>
+    <panel_attributes>RecipeDatabase</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

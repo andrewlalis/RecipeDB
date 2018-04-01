@@ -24,6 +24,7 @@ void MainWindow::loadFromRecipe(Recipe recipe){
 		setAuthorName("Click 'New' to get started.");
 	} else {
 		setRecipeName(recipe.getName());
+		setAuthorName(recipe.getAuthor());
 		setInstruction(recipe.getInstruction());
 		setIngredients(recipe.getIngredients());
 		if (recipe.getImage().isNull()){
@@ -72,7 +73,11 @@ void MainWindow::setTags(vector<RecipeTag> tags){
 }
 
 void MainWindow::setAuthorName(string name){
-	ui->authorLabel->setText(QString::fromStdString(name));
+	if (name.empty()){
+		ui->authorLabel->setText("");
+	} else {
+		ui->authorLabel->setText(QString::fromStdString("By "+name));
+	}
 }
 
 void MainWindow::on_newButton_clicked(){

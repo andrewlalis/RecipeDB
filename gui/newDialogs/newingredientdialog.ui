@@ -14,7 +14,7 @@
    <string>New Ingredient</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../images.qrc">
+   <iconset resource="../../res.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <property name="modal">
@@ -81,7 +81,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../images.qrc">
+               <iconset resource="../../res.qrc">
                 <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
               </property>
              </widget>
@@ -92,7 +92,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../images.qrc">
+               <iconset resource="../../res.qrc">
                 <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
               </property>
              </widget>
@@ -119,7 +119,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../images.qrc"/>
+  <include location="../../res.qrc"/>
  </resources>
  <connections>
   <connection>

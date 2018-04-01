@@ -14,11 +14,11 @@
    <string>Open Recipe</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images.qrc">
+   <iconset resource="../res.qrc">
     <normaloff>:/images/images/icon.png</normaloff>:/images/images/icon.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 25 &quot;Noto Sans CJK KR Light&quot;;</string>
+   <string notr="true"/>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -63,11 +63,11 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="Tags">
          <attribute name="icon">
-          <iconset resource="../images.qrc">
+          <iconset resource="../res.qrc">
            <normaloff>:/images/images/tag.png</normaloff>:/images/images/tag.png</iconset>
          </attribute>
          <attribute name="title">
@@ -121,7 +121,7 @@
         </widget>
         <widget class="QWidget" name="ingredientsTab">
          <attribute name="icon">
-          <iconset resource="../images.qrc">
+          <iconset resource="../res.qrc">
            <normaloff>:/images/images/ingredients.png</normaloff>:/images/images/ingredients.png</iconset>
          </attribute>
          <attribute name="title">
@@ -175,7 +175,7 @@
         </widget>
         <widget class="QWidget" name="foodGroups">
          <attribute name="icon">
-          <iconset resource="../images.qrc">
+          <iconset resource="../res.qrc">
            <normaloff>:/images/images/foodPyramid.png</normaloff>:/images/images/foodPyramid.png</iconset>
          </attribute>
          <attribute name="title">
@@ -238,7 +238,7 @@
            <property name="font">
             <font>
              <pointsize>12</pointsize>
-             <weight>3</weight>
+             <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
             </font>
@@ -315,7 +315,7 @@ QPushButton#deleteRecipeButton:pressed{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../images.qrc">
+         <iconset resource="../res.qrc">
           <normaloff>:/images/images/trash.png</normaloff>:/images/images/trash.png</iconset>
         </property>
        </widget>
@@ -371,7 +371,7 @@ QPushButton#exitButton:pressed{
         <property name="font">
          <font>
           <pointsize>14</pointsize>
-          <weight>3</weight>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -411,7 +411,7 @@ QPushButton#exitButton:pressed{
   </layout>
  </widget>
  <resources>
-  <include location="../images.qrc"/>
+  <include location="../res.qrc"/>
  </resources>
  <connections/>
 </ui>
