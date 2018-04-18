@@ -10,15 +10,9 @@ For the user interface, a [Qt](https://www.qt.io/) Application is built, both fo
 
 ### To-Do List
 
-* Finish User Interface
-* Finish and ensure safety of SQL statements and tables in the database; ensure persistence.
-* Implement Searching/Filtering
-* Create an *Edit* mode in which the user can change a recipe's data.
-* Create file protocol to save recipe data which is linked in the database.
-	* Create a file-naming protocol.
-* No save button, should save everything automatically.
 * Share Options:
 	* Social Media
 	* Email
 	* Generate PDF, Word Document
+* More intuitive ingredient addition. It shouldn't be so tedious to add ingredients.
 * Automatic Unit conversion for ingredients, using pre-determined conversion rates.
