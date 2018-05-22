@@ -15,7 +15,6 @@ NewRecipeDialog::NewRecipeDialog(QWidget *parent) :
 NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecipeDialog(parent){
 	this->recipeDB = db;
 
-
 	this->populateIngredientsBox();
 	this->populateUnitsBox();
 	this->populateTagsBox();
@@ -55,24 +54,6 @@ bool NewRecipeDialog::isAccepted() const{
 	return this->accepted;
 }
 
-void NewRecipeDialog::populateIngredientsBox(){
-	this->ingredients = this->recipeDB->retrieveAllIngredients();
-	ui->ingredientNameBox->clear();
-	for (unsigned int i = 0; i < this->ingredients.size(); i++){
-		QString s = QString::fromStdString(this->ingredients[i].getName());
-		ui->ingredientNameBox->insertItem(i, s);
-	}
-}
-
-void NewRecipeDialog::populateUnitsBox(){
-	this->units = this->recipeDB->retrieveAllUnitsOfMeasure();
-	ui->unitComboBox->clear();
-	for (unsigned int i = 0; i < this->units.size(); i++){
-		QString s = QString::fromStdString(this->units[i].getName());
-		ui->unitComboBox->insertItem(i, s);
-	}
-}
-
 void NewRecipeDialog::populateTagsBox(){
 	this->tags = this->recipeDB->retrieveAllTags();
 	ui->tagsComboBox->clear();
@@ -83,12 +64,9 @@ void NewRecipeDialog::populateTagsBox(){
 }
 
 void NewRecipeDialog::on_addIngredientButton_clicked(){
-	//Construct a recipe ingredient from the supplied data.
-	Ingredient i = this->ingredients[ui->ingredientNameBox->currentIndex()];
-	UnitOfMeasure u = this->units[ui->unitComboBox->currentIndex()];
-	RecipeIngredient ri(i, ui->quantitySpinBox->value(), u, ui->commentsLineEdit->text().toStdString());
-	this->ingredientListModel.addIngredient(ri);
-	ui->commentsLineEdit->clear();
+	Ingredient ing(ui->ingredientLineEdit->text().toStdString());
+	this->ingredientListModel.addIngredient(ing);
+	ui->ingredientLineEdit->clear();
 }
 
 void NewRecipeDialog::on_italicsButton_clicked(){
@@ -113,7 +91,6 @@ void NewRecipeDialog::on_buttonBox_rejected(){
 }
 
 void NewRecipeDialog::on_addTagButton_clicked(){
-	//Add a tag to the list of those prepared to be added.
 	this->tagsListModel.addTag(this->tags[ui->tagsComboBox->currentIndex()]);
 }
 
@@ -137,37 +114,6 @@ void NewRecipeDialog::on_removeIngredientButton_clicked(){
 	for (QModelIndexList::iterator it = indexList.begin(); it != indexList.end(); ++it){
 		QModelIndex i = *it;
 		this->ingredientListModel.deleteIngredient(i.row());
-	}
-}
-
-void NewRecipeDialog::on_deleteIngredientButton_clicked(){
-	int index = ui->ingredientNameBox->currentIndex();
-	Ingredient ing = this->ingredients.at(index);
-	QMessageBox::StandardButton reply = QMessageBox::question(this,
-															  QString::fromStdString("Delete Ingredient"),
-															  QString::fromStdString("Are you sure you want to delete the ingredient " + ing.getName() + "?"));
-	if (reply == QMessageBox::Yes){
-		bool success = this->recipeDB->deleteIngredient(ing.getName());
-		if (!success){
-			QMessageBox::critical(this, QString::fromStdString("Error"), QString::fromStdString("Unable to delete ingredient: " + ing.getName() + ", some recipes use it!"));
-		} else {
-			this->populateIngredientsBox();
-		}
-	}
-}
-
-void NewRecipeDialog::on_newIngredientButton_clicked(){
-	NewIngredientDialog d(this->recipeDB, this);
-	d.show();
-	if (d.exec() == QDialog::Accepted){
-		Ingredient i = d.getIngredient();
-		if (!i.getName().empty() && !i.getFoodGroup().empty() && this->recipeDB->storeIngredient(i)){
-			this->populateIngredientsBox();
-			ui->ingredientNameBox->setCurrentText(QString::fromStdString(i.getName()));
-		} else {
-			QMessageBox::critical(this, "Error", "Unable to add ingredient.");
-		}
-
 	}
 }
 
@@ -203,34 +149,5 @@ void NewRecipeDialog::on_removeTagButton_clicked(){
 	if (reply == QMessageBox::Yes){
 		this->recipeDB->deleteTag(tag);
 		this->populateTagsBox();
-	}
-}
-
-void NewRecipeDialog::on_newUnitButton_clicked(){
-	NewUnitDialog d(this);
-	d.show();
-	if (d.exec() == QDialog::Accepted){
-		UnitOfMeasure u = d.getUnit();
-		if (u.getName().empty() || u.getNamePlural().empty() || u.getAbbreviation().empty() || !this->recipeDB->storeUnitOfMeasure(u)){
-			QMessageBox::critical(this, "Error", "Unable to store new unit. Make sure all the information is filled in!");
-		} else {
-			this->populateUnitsBox();
-			ui->unitComboBox->setCurrentText(QString::fromStdString(u.getName()));
-		}
-	}
-}
-
-void NewRecipeDialog::on_deleteUnitButton_clicked(){
-	int index = ui->unitComboBox->currentIndex();
-	UnitOfMeasure unit = this->units[index];
-	QMessageBox::StandardButton reply = QMessageBox::question(this,
-															  QString::fromStdString("Delete Unit Of Measure"),
-															  QString::fromStdString("Are you sure you want to delete the unit " + unit.getName() + "?"));
-	if (reply == QMessageBox::Yes){
-		if (!this->recipeDB->deleteUnitOfMeasure(unit.getName())){
-			QMessageBox::critical(this, "Error", "Unable to delete unit. There may be recipes which still use it!");
-		} else {
-			this->populateUnitsBox();
-		}
 	}
 }

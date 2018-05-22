@@ -7,6 +7,12 @@
 
 #include "model/recipe/ingredients/ingredient.h"
 
+/**
+ * @brief The IngredientListModel class
+ *
+ * The ingredient list model extends the QAbstractListModel and is used for lists of ingredients,
+ * whether they appear in the NewRecipe dialog or in the main recipe view.
+ */
 class IngredientListModel : public QAbstractListModel
 {
 public:
@@ -24,8 +30,6 @@ public:
 
 private:
 	vector<Ingredient> ingredients;
-
-	//Helper for printing.
 
 };
 
