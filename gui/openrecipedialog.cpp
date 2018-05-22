@@ -8,13 +8,8 @@ OpenRecipeDialog::OpenRecipeDialog(QWidget *parent) :
 	ui->setupUi(this);
 
 	ui->recipeTableView->setModel(&this->recipeTableModel);
-	ui->ingredientsListView->setModel(&this->ingredientsModel);
 	ui->tagsListView->setModel(&this->tagsModel);
 
-	QObject::connect(ui->ingredientsListView->selectionModel(),
-			SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-			this,
-			SLOT(onIngredientsListViewSelectionChanged(QItemSelection)));
 	QObject::connect(ui->tagsListView->selectionModel(),
 			SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
 			this,
@@ -23,9 +18,7 @@ OpenRecipeDialog::OpenRecipeDialog(QWidget *parent) :
 
 OpenRecipeDialog::OpenRecipeDialog(RecipeDatabase *recipeDB, QWidget *parent) : OpenRecipeDialog(parent){
 	this->recipeDB = recipeDB;
-	this->populateIngredientsList();
 	this->populateTagsList();
-	this->populateFoodGroupsList();
 	this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
 }
 
@@ -45,19 +38,8 @@ void OpenRecipeDialog::populateRecipesTable(vector<Recipe> recipes){
 	ui->recipeTableView->show();
 }
 
-void OpenRecipeDialog::populateIngredientsList(){
-	this->ingredientsModel.setIngredients(this->recipeDB->retrieveAllIngredients());
-}
-
 void OpenRecipeDialog::populateTagsList(){
 	this->tagsModel.setTags(this->recipeDB->retrieveAllTags());
-}
-
-void OpenRecipeDialog::populateFoodGroupsList(){
-	for (string s : this->recipeDB->retrieveAllFoodGroups()){
-		ui->foodGroupsListWidget->addItem(QString::fromStdString(s));
-	}
-	//ui->foodGroupsListWidget->show();
 }
 
 void OpenRecipeDialog::on_deleteRecipeButton_clicked(){

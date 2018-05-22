@@ -30,13 +30,9 @@ class OpenRecipeDialog : public QDialog
 
 		void on_recipeTableView_doubleClicked(const QModelIndex &index);
 
-		void onIngredientsListViewSelectionChanged(const QItemSelection &selection);
-
 		void onTagsListViewSelectionChanged(const QItemSelection &selection);
 
 		void on_nameEdit_textChanged(const QString &arg1);
-
-		void on_foodGroupsListWidget_itemSelectionChanged();
 
 		void on_clearSearchButton_clicked();
 
@@ -48,13 +44,10 @@ class OpenRecipeDialog : public QDialog
 		RecipeTableModel recipeTableModel;
 		Recipe selectedRecipe;
 
-		IngredientListModel ingredientsModel;
 		TagListModel tagsModel;
 
 		void populateRecipesTable(vector<Recipe> recipes);
-		void populateIngredientsList();
 		void populateTagsList();
-		void populateFoodGroupsList();
 };
 
 #endif // OPENRECIPEDIALOG_H
