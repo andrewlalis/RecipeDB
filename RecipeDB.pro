@@ -25,15 +25,12 @@ SOURCES += model/recipe/instruction.cpp \
     utils/fileutils.cpp \
     gui/newrecipedialog.cpp \
     model/recipe/tags/taglistmodel.cpp \
-    gui/newDialogs/newingredientdialog.cpp \
     gui/newDialogs/newtagdialog.cpp \
-    gui/newDialogs/newunitdialog.cpp \
     utils/aspectratiopixmaplabel.cpp \
     utils/stringutils.cpp \
     gui/openrecipedialog.cpp \
     model/recipe/recipetablemodel.cpp \
-    gui/mainwindow.cpp \
-    gui/newDialogs/newfoodgroupdialog.cpp
+    gui/mainwindow.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
@@ -48,24 +45,20 @@ HEADERS  += model/recipe/instruction.h \
     utils/fileutils.h \
     gui/newrecipedialog.h \
     model/recipe/tags/taglistmodel.h \
-    gui/newDialogs/newingredientdialog.h \
     gui/newDialogs/newtagdialog.h \
     utils/aspectratiopixmaplabel.h \
     utils/stringutils.h \
     gui/openrecipedialog.h \
     model/recipe/recipetablemodel.h \
-    gui/mainwindow.h \
-    gui/newDialogs/newfoodgroupdialog.h
+    gui/mainwindow.h
 
 LIBS += -ldl \
 
 FORMS    += gui/mainwindow.ui \
     gui/newrecipedialog.ui \
-    gui/newDialogs/newingredientdialog.ui \
     gui/newDialogs/newtagdialog.ui \
     gui/openrecipedialog.ui \
-    gui/mainwindow.ui \
-    gui/newDialogs/newfoodgroupdialog.ui
+    gui/mainwindow.ui
 
 DISTFILES += \
     .gitignore
