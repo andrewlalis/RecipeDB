@@ -6,28 +6,25 @@
 using namespace std;
 
 /**
- * @brief The Ingredient class represents an ingredient, which is classified by a food group, and has a name and an ID.
- * An ingredient cannot be included on its own in a recipe, and must be paired with a Unit in a RecipeIngredient Object.
+ * @brief The Ingredient class represents an ingredient, which is a string representing one component of a recipe.
+ * The user is free to compose a recipe string however they like. However, the program will restrict obviously
+ * invalid input, and try to be smart about determining if an ingredient is valid.
  */
 
 class Ingredient
 {
 public:
     Ingredient();
-    Ingredient(string name, string foodGroup);
+	Ingredient(string content);
 
     //Getters
-    string getName() const;
-    string getFoodGroup() const;
+	string getContent() const;
 
     //Setters
-    void setName(string newName);
-    void setFoodGroup(string newFoodGroup);
+	void setContent(string newContent);
 
-	string toString();
 protected:
-    string name;
-    string foodGroup;
+	string content;
 };
 
 #endif // INGREDIENT_H

@@ -175,7 +175,7 @@
                       <second>0</second>
                       <year>1999</year>
                       <month>12</month>
-                      <day>21</day>
+                      <day>20</day>
                      </datetime>
                     </property>
                     <property name="currentSection">
@@ -530,176 +530,7 @@ QPushButton#deleteTagButton:pressed{
                    </widget>
                   </item>
                   <item>
-                   <widget class="QWidget" name="ingredientNamePanel" native="true">
-                    <layout class="QHBoxLayout" name="horizontalLayout_4">
-                     <property name="spacing">
-                      <number>2</number>
-                     </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QComboBox" name="ingredientNameBox">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">background-color: rgb(113, 119, 255);</string>
-                       </property>
-                       <property name="editable">
-                        <bool>false</bool>
-                       </property>
-                       <property name="currentText">
-                        <string/>
-                       </property>
-                       <property name="insertPolicy">
-                        <enum>QComboBox::InsertAlphabetically</enum>
-                       </property>
-                       <property name="frame">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="newIngredientButton">
-                       <property name="toolTip">
-                        <string>Create a new ingredient</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../res.qrc">
-                         <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="deleteIngredientButton">
-                       <property name="toolTip">
-                        <string>Delete this ingredient</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../res.qrc">
-                         <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QWidget" name="quantityPanel" native="true">
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>36</height>
-                     </size>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_3">
-                     <property name="spacing">
-                      <number>2</number>
-                     </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QLabel" name="amountLabel">
-                       <property name="font">
-                        <font>
-                         <weight>50</weight>
-                         <italic>false</italic>
-                         <bold>false</bold>
-                        </font>
-                       </property>
-                       <property name="text">
-                        <string>Amount</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QDoubleSpinBox" name="quantitySpinBox">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="maximum">
-                        <double>10000.000000000000000</double>
-                       </property>
-                       <property name="value">
-                        <double>1.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QComboBox" name="unitComboBox">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">background-color: rgb(113, 119, 255);</string>
-                       </property>
-                       <property name="insertPolicy">
-                        <enum>QComboBox::InsertAlphabetically</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item alignment="Qt::AlignRight">
-                      <widget class="QPushButton" name="newUnitButton">
-                       <property name="toolTip">
-                        <string>Create a new unit of measure</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../res.qrc">
-                         <normaloff>:/images/images/plus_icon.png</normaloff>:/images/images/plus_icon.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="deleteUnitButton">
-                       <property name="toolTip">
-                        <string>Delete this unit of measure</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../res.qrc">
-                         <normaloff>:/images/images/minus_icon.png</normaloff>:/images/images/minus_icon.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="commentsLineEdit">
+                   <widget class="QLineEdit" name="ingredientLineEdit">
                     <property name="minimumSize">
                      <size>
                       <width>0</width>
@@ -710,10 +541,10 @@ QPushButton#deleteTagButton:pressed{
                      <bool>false</bool>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                     </property>
                     <property name="placeholderText">
-                     <string>Comments</string>
+                     <string>Write ingredient here...</string>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
