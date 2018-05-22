@@ -323,7 +323,7 @@ void RecipeDatabase::ensureTablesExist(){
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipeIngredient("
 					 "recipeId int,"
 					 "content,"
-					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId);");
+					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId));");
 	this->commitTransaction();
 }
 

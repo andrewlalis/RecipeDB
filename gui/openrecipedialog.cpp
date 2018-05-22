@@ -74,17 +74,6 @@ void OpenRecipeDialog::on_recipeTableView_doubleClicked(const QModelIndex &index
 	this->close();
 }
 
-void OpenRecipeDialog::onIngredientsListViewSelectionChanged(const QItemSelection &selection){
-	Q_UNUSED(selection);
-	vector<Ingredient> ingredients;
-	QModelIndexList indexes = ui->ingredientsListView->selectionModel()->selectedRows();
-	for (QModelIndex index : indexes){
-		Ingredient i = this->ingredientsModel.getIngredients().at(index.row());
-		ingredients.push_back(i);
-	}
-	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithIngredients(ingredients));
-}
-
 void OpenRecipeDialog::onTagsListViewSelectionChanged(const QItemSelection &selection){
 	Q_UNUSED(selection);
 	vector<RecipeTag> tags;
@@ -101,20 +90,9 @@ void OpenRecipeDialog::on_nameEdit_textChanged(const QString &arg1){
 	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithSubstring(ui->nameEdit->text().toStdString()));
 }
 
-void OpenRecipeDialog::on_foodGroupsListWidget_itemSelectionChanged(){
-	vector<string> groups;
-	for (QModelIndex index : ui->foodGroupsListWidget->selectionModel()->selectedRows()){
-		QListWidgetItem *item = ui->foodGroupsListWidget->item(index.row());
-		groups.push_back(item->text().toStdString());
-	}
-	this->populateRecipesTable(this->recipeDB->retrieveRecipesWithFoodGroups(groups));
-}
-
 void OpenRecipeDialog::on_clearSearchButton_clicked(){
 	ui->nameEdit->clear();
-	ui->foodGroupsListWidget->selectionModel()->clearSelection();
 	ui->tagsListView->selectionModel()->clearSelection();
-	ui->ingredientsListView->selectionModel()->clearSelection();
 	this->populateRecipesTable(this->recipeDB->retrieveAllRecipes());
 }
 

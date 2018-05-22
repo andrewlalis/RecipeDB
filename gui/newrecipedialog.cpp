@@ -15,8 +15,6 @@ NewRecipeDialog::NewRecipeDialog(QWidget *parent) :
 NewRecipeDialog::NewRecipeDialog(RecipeDatabase *db, QWidget *parent) : NewRecipeDialog(parent){
 	this->recipeDB = db;
 
-	this->populateIngredientsBox();
-	this->populateUnitsBox();
 	this->populateTagsBox();
 }
 

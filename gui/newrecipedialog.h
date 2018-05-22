@@ -11,9 +11,7 @@
 #include "model/recipe/ingredients/ingredientlistmodel.h"
 #include "model/recipe/tags/taglistmodel.h"
 
-#include "gui/newDialogs/newingredientdialog.h"
 #include "gui/newDialogs/newtagdialog.h"
-#include "gui/newDialogs/newunitdialog.h"
 
 namespace Ui {
 class NewRecipeDialog;
