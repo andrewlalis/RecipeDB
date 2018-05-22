@@ -38,10 +38,8 @@ SOURCES += model/recipe/instruction.cpp \
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
     model/database/database.h \
-    model/recipe/ingredients/unitofmeasure.h \
     model/recipe/ingredients/ingredient.h \
     model/recipe/ingredients/ingredientlistmodel.h \
-    model/recipe/ingredients/recipeingredient.h \
     model/recipe/tags/recipetag.h \
     SQLite/sqlite3.h \
     SQLite/sqlite3ext.h \
@@ -58,8 +56,7 @@ HEADERS  += model/recipe/instruction.h \
     gui/openrecipedialog.h \
     model/recipe/recipetablemodel.h \
     gui/mainwindow.h \
-    gui/newDialogs/newfoodgroupdialog.h \
-    model/recipe/ingredients/recipeingredientlistmodel.h
+    gui/newDialogs/newfoodgroupdialog.h
 
 LIBS += -ldl \
 

@@ -8,7 +8,7 @@
 #include <QImage>
 #include <algorithm>
 
-#include "model/recipe/ingredients/recipeingredient.h"
+#include "model/recipe/ingredients/ingredient.h"
 #include "model/recipe/instruction.h"
 #include "model/recipe/tags/recipetag.h"
 
