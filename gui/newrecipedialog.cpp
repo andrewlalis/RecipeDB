@@ -149,3 +149,7 @@ void NewRecipeDialog::on_removeTagButton_clicked(){
 		this->populateTagsBox();
 	}
 }
+
+void NewRecipeDialog::on_ingredientLineEdit_returnPressed(){
+	this->on_addIngredientButton_clicked();
+}

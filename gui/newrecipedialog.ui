@@ -640,9 +640,12 @@ QPushButton#removeIngredientButton:pressed{
                   <enum>QFrame::NoFrame</enum>
                  </property>
                  <property name="selectionMode">
-                  <enum>QAbstractItemView::MultiSelection</enum>
+                  <enum>QAbstractItemView::SingleSelection</enum>
                  </property>
                  <property name="verticalScrollMode">
+                  <enum>QAbstractItemView::ScrollPerPixel</enum>
+                 </property>
+                 <property name="horizontalScrollMode">
                   <enum>QAbstractItemView::ScrollPerPixel</enum>
                  </property>
                  <property name="batchSize">

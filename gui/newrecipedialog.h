@@ -55,6 +55,8 @@ class NewRecipeDialog : public QDialog
 
 		void on_removeTagButton_clicked();
 
+		void on_ingredientLineEdit_returnPressed();
+
 	private:
 		Ui::NewRecipeDialog *ui;
 		RecipeDatabase *recipeDB;
