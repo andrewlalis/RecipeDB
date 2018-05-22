@@ -13,7 +13,7 @@ QVariant IngredientListModel::data(const QModelIndex &index, int role) const{
     int row = index.row();
 	Ingredient i = this->ingredients[row];
 
-	string displayStr = i.toString();
+	string displayStr = i.getContent();
 
     switch(role){
     case Qt::DisplayRole:
@@ -30,14 +30,15 @@ void IngredientListModel::setIngredients(vector<Ingredient> ingredients){
 	emit dataChanged(index, bottomIndex);
 }
 
-bool IngredientListModel::addIngredient(Ingredient ri){
+bool IngredientListModel::addIngredient(Ingredient i){
 	//Add only if it doesn't exist already.
-	for (unsigned int i = 0; i < this->ingredients.size(); i++){
-		if (!this->ingredients[i].getName().compare(ri.getName())){
+	for (Ingredient ing : this->ingredients){
+		if (!ing.getContent().compare(i.getContent())){
 			return false;
 		}
 	}
-	this->ingredients.push_back(ri);
+	//The ingredient doesn't exist already, so we'll add it.
+	this->ingredients.push_back(i);
 	QModelIndex index = createIndex(this->ingredients.size()-1, 0);
 	QModelIndex bottomIndex = createIndex(this->ingredients.size()-1, 0);
 	emit dataChanged(index, bottomIndex);

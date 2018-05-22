@@ -24,8 +24,12 @@ public:
 
 	//Executes an SQL string statement in a safe way and returns the result.
 	ResultTable executeSQL(string statement);
+	//Inserts into a table.
 	bool insertInto(string tableName, vector<string> columnNames, vector<string> values);
+	bool insertInto(string tableName, string columnName, string value);
+	//Selects from a table.
 	ResultTable selectFrom(string tableName, string columnNames, string conditions);
+	//Deletes from a table.
 	bool deleteFrom(string tableName, string conditions);
 
 	bool tableExists(string tableName);

@@ -15,7 +15,10 @@ ResultTable Database::executeSQL(string statement){
 	this->sql = statement;
 	this->returnCode = sqlite3_prepare_v2(this->db, statement.c_str(), -1, &stmt, NULL);
 	if (this->returnCode != SQLITE_OK){
-		fprintf(stderr, "Unable to successfully prepare SQL statement. Error code: %d\n\tError Message: %s\n", this->returnCode, sqlite3_errmsg(this->db));
+		fprintf(stderr, "Unable to successfully prepare SQL statement. Error code: %d\n\tError Message: %s\nSQL Statement: %s\n",
+				this->returnCode,
+				sqlite3_errmsg(this->db),
+				statement.c_str());
 		return ResultTable(this->returnCode);
 	}
 	ResultTable t(statement);
@@ -35,6 +38,15 @@ bool Database::insertInto(string tableName, vector<string> columnNames, vector<s
 	string cols = combineVector(columnNames, ", ");
 	string vals = combineVector(values, ", ");
 	query += cols + ") VALUES (" + vals + ");";
+	ResultTable t = this->executeSQL(query);
+	return (t.getReturnCode() == SQLITE_DONE);
+}
+
+bool Database::insertInto(string tableName, string columnName, string value){
+	if (columnName.empty() || value.empty() || tableName.empty()){
+		return false;
+	}
+	string query = "INSERT INTO " + tableName + " (" + columnName + ") VALUES (" + value + ");";
 	ResultTable t = this->executeSQL(query);
 	return (t.getReturnCode() == SQLITE_DONE);
 }

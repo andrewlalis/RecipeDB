@@ -48,7 +48,7 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item alignment="Qt::AlignLeft">
+      <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="minimumSize">
          <size>
@@ -63,7 +63,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="Tags">
          <attribute name="icon">
@@ -111,105 +111,6 @@
             </property>
             <property name="isWrapping" stdset="0">
              <bool>false</bool>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="ingredientsTab">
-         <attribute name="icon">
-          <iconset resource="../res.qrc">
-           <normaloff>:/images/images/ingredients.png</normaloff>:/images/images/ingredients.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string/>
-         </attribute>
-         <attribute name="toolTip">
-          <string>Ingredients</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QListView" name="ingredientsListView">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::ExtendedSelection</enum>
-            </property>
-            <property name="verticalScrollMode">
-             <enum>QAbstractItemView::ScrollPerPixel</enum>
-            </property>
-            <property name="isWrapping" stdset="0">
-             <bool>false</bool>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="foodGroups">
-         <attribute name="icon">
-          <iconset resource="../res.qrc">
-           <normaloff>:/images/images/foodPyramid.png</normaloff>:/images/images/foodPyramid.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string/>
-         </attribute>
-         <attribute name="toolTip">
-          <string>Food Groups</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QListWidget" name="foodGroupsListWidget">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::ExtendedSelection</enum>
-            </property>
-            <property name="verticalScrollMode">
-             <enum>QAbstractItemView::ScrollPerPixel</enum>
             </property>
             <property name="wordWrap">
              <bool>true</bool>

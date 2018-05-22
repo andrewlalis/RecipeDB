@@ -1,6 +1,6 @@
 #include "model/recipe/recipe.h"
 
-Recipe::Recipe(string name, string author, vector<RecipeIngredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings){
+Recipe::Recipe(string name, string author, vector<Ingredient> ingredients, Instruction instruction, QImage image, vector<RecipeTag> tags, QDate createdDate, QTime prepTime, QTime cookTime, float servings){
     setName(name);
 	setAuthor(author);
     setIngredients(ingredients);
@@ -13,7 +13,7 @@ Recipe::Recipe(string name, string author, vector<RecipeIngredient> ingredients,
     setServings(servings);
 }
 
-Recipe::Recipe() : Recipe::Recipe("", "", vector<RecipeIngredient>(), Instruction(), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(), QTime(), 1.0f){
+Recipe::Recipe() : Recipe::Recipe("", "", vector<Ingredient>(), Instruction(), QImage(), vector<RecipeTag>(), QDate::currentDate(), QTime(), QTime(), 1.0f){
     //Set default values when none are specified.
 }
 
@@ -25,18 +25,8 @@ string Recipe::getAuthor() const{
 	return this->authorName;
 }
 
-vector<RecipeIngredient> Recipe::getIngredients() const{
+vector<Ingredient> Recipe::getIngredients() const{
 	return this->ingredients;
-}
-
-vector<string> Recipe::getFoodGroups() const{
-	vector<string> foodGroups;
-	for (RecipeIngredient ri : this->ingredients){
-		if (find(foodGroups.begin(), foodGroups.end(), ri.getFoodGroup()) == foodGroups.end()){
-			foodGroups.push_back(ri.getFoodGroup());
-		}
-	}
-	return foodGroups;
 }
 
 Instruction Recipe::getInstruction() const{
@@ -83,7 +73,7 @@ void Recipe::setAuthor(string newName){
 	this->authorName = newName;
 }
 
-void Recipe::setIngredients(vector<RecipeIngredient> ingredients){
+void Recipe::setIngredients(vector<Ingredient> ingredients){
     this->ingredients = ingredients;
 }
 
@@ -91,7 +81,7 @@ void Recipe::setTags(vector<RecipeTag> tags){
     this->tags = tags;
 }
 
-void Recipe::addIngredient(RecipeIngredient newIngredient){
+void Recipe::addIngredient(Ingredient newIngredient){
     this->ingredients.push_back(newIngredient);
 }
 
@@ -129,17 +119,11 @@ void Recipe::print(){
 		   this->servings);
 	printf("\tInstruction: %s\n", this->instruction.getHTML().c_str());
 	printf("\tIngredients:\n");
-	for (vector<RecipeIngredient>::iterator it = this->ingredients.begin(); it != this->ingredients.end(); ++it){
-		RecipeIngredient ri = *it;
-		printf("\t\t%s, Food Group: %s, Quantity: %f, Unit: %s\n",
-			   ri.getName().c_str(),
-			   ri.getFoodGroup().c_str(),
-			   ri.getQuantity(),
-			   ri.getUnit().getName().c_str());
+	for (Ingredient i : this->ingredients){
+		printf("\t\t%s\n", i.getContent().c_str());
 	}
 	printf("\tTags:\n");
-	for (vector<RecipeTag>::iterator it = this->tags.begin(); it != this->tags.end(); ++it){
-		RecipeTag t = *it;
+	for (RecipeTag t : this->tags){
 		printf("\t\t%s\n", t.getValue().c_str());
 	}
 }
