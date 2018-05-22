@@ -57,64 +57,16 @@ bool RecipeDatabase::storeRecipe(Recipe recipe){
 	return false;
 }
 
-bool RecipeDatabase::storeRecipeIngredient(RecipeIngredient ri, int recipeId){
-	int ingId = this->storeIngredient(ri);
-	if (ingId < 0) return false;
-
-	if (!this->storeUnitOfMeasure(ri.getUnit())) return false;
-
+bool RecipeDatabase::storeRecipeIngredient(Ingredient i, int recipeId){
 	return this->insertInto("recipeIngredient",
 					 vector<string>({
-										"ingredientId",
-										"recipeId",
-										"quantity",
-										"unitName",
-										"comment"
+										"content",
+										"recipeId"
 									}),
 					 vector<string>({
-										std::to_string(ingId),
-										std::to_string(recipeId),
-										std::to_string(ri.getQuantity()),
-										ri.getUnit().getName(),
-										ri.getComment()
+										i.getContent(),
+										std::to_string(recipeId)
 									}));
-}
-
-int RecipeDatabase::storeIngredient(Ingredient ingredient){
-	ResultTable t = this->selectFrom("ingredient", "*", "WHERE name="+surroundString(ingredient.getName(), "'"));
-	if (t.isEmpty()){
-		bool success = this->insertInto("ingredient", vector<string>({"foodGroup", "name"}), vector<string>({ingredient.getFoodGroup(), ingredient.getName()}));
-		if (success){
-			return this->getLastInsertedRowId();
-		} else {
-			return -1;
-		}
-	} else {
-		return std::stoi(t.at(0, 0));
-	}
-}
-
-bool RecipeDatabase::storeUnitOfMeasure(UnitOfMeasure u){
-	ResultTable t = this->selectFrom("unitOfMeasure", "name", "WHERE name="+surroundString(u.getName(), "'"));
-	if (!t.isEmpty()){
-		return true;
-	}
-	bool success = this->insertInto("unitOfMeasure",
-									vector<string>({
-													   "name",
-													   "plural",
-													   "abbreviation",
-													   "type",
-													   "metricCoefficient"
-												   }),
-									vector<string>({
-													   u.getName(),
-													   u.getNamePlural(),
-													   u.getAbbreviation(),
-													   std::to_string(u.getType()),
-													   std::to_string(u.getMetricCoefficient())
-												   }));
-	return success;
 }
 
 bool RecipeDatabase::storeInstruction(Instruction instruction, int recipeId){
@@ -166,31 +118,6 @@ vector<Recipe> RecipeDatabase::retrieveAllRecipes(){
 	return this->readRecipesFromTable(t);
 }
 
-vector<Recipe> RecipeDatabase::retrieveRecipesWithIngredients(vector<Ingredient> ingredients){
-	vector<Recipe> recipes;
-	if (ingredients.empty()){
-		return recipes;
-	}
-	string filterList = surroundString(ingredients.at(0).getName(), "'");
-	for (unsigned int i = 1; i < ingredients.size(); i++){
-		filterList += ", " + surroundString(ingredients[i].getName(), "'");
-	}
-	filterList = '(' + filterList + ')';
-	ResultTable t = this->executeSQL("SELECT * "
-									 "FROM recipe "
-									 "WHERE recipeId IN ("
-									 "	SELECT recipeIngredient.recipeId "
-									 "	FROM recipeIngredient "
-									 "	INNER JOIN ("
-									 "		SELECT ingredientId "
-									 "		FROM ingredient "
-									 "		WHERE name IN "+filterList+""
-									 "	) filteredIngredients "
-									 "	ON recipeIngredient.ingredientId = filteredIngredients.ingredientId"
-									 ") ORDER BY name;");
-	return this->readRecipesFromTable(t);
-}
-
 vector<Recipe> RecipeDatabase::retrieveRecipesWithTags(vector<RecipeTag> tags){
 	vector<Recipe> recipes;
 	if (tags.empty()){
@@ -210,53 +137,15 @@ vector<Recipe> RecipeDatabase::retrieveRecipesWithSubstring(string s){
 	return this->readRecipesFromTable(t);
 }
 
-vector<Recipe> RecipeDatabase::retrieveRecipesWithFoodGroups(vector<string> groups){
-	vector<Recipe> recipes;
-	if (groups.empty()){
-		return recipes;
-	}
-	string filterList = surroundString(groups.at(0), "'");
-	for (unsigned int i = 1; i < groups.size(); i++){
-		filterList += ", " + surroundString(groups.at(i), "'");
-	}
-	filterList = '(' + filterList + ')';
-	ResultTable t = this->executeSQL("SELECT * FROM recipe WHERE recipeId IN (SELECT recipeId FROM recipeIngredient WHERE ingredientId IN (SELECT ingredientId FROM ingredient WHERE foodGroup IN "+filterList+" ) ) ORDER BY name;");
-	return this->readRecipesFromTable(t);
-}
-
-vector<string> RecipeDatabase::retrieveAllFoodGroups(){
-	ResultTable t = this->executeSQL("SELECT DISTINCT foodGroup FROM ingredient ORDER BY foodGroup;");
-	vector<string> foodGroups;
+vector<Ingredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId){
+	ResultTable t = this->executeSQL("SELECT content "
+									 "FROM recipeIngredient "
+									 "WHERE recipeId = "+std::to_string(recipeId)+";");
+	vector<Ingredient> ingredients;
 	for (TableRow row : t.rows()){
-		foodGroups.push_back(row.at(0));
+		ingredients.push_back(Ingredient(row.at(0)));
 	}
-	return foodGroups;
-}
-
-vector<RecipeIngredient> RecipeDatabase::retrieveRecipeIngredients(int recipeId){
-	ResultTable t = this->executeSQL("SELECT ingredient.name, ingredient.foodGroup, "//0, 1
-									 "recipeIngredient.quantity, recipeIngredient.unitName, recipeIngredient.comment,"//2, 3, 4
-									 "unitOfMeasure.name, unitOfMeasure.plural, unitOfMeasure.abbreviation, unitOfMeasure.type, unitOfMeasure.metricCoefficient "//5, 6, 7, 8, 9
-									 "FROM ingredient "
-									 "INNER JOIN recipeIngredient "
-									 "ON ingredient.ingredientId = recipeIngredient.ingredientId "
-									 "INNER JOIN unitOfMeasure "
-									 "ON recipeIngredient.unitName = unitOfMeasure.name "
-									 "WHERE recipeIngredient.recipeId = "+std::to_string(recipeId)+";");
-	vector<RecipeIngredient> ings;
-	for (TableRow row : t.rows()){
-		RecipeIngredient r(row.at(0),
-						   row.at(1),
-						   std::stof(row.at(2)),
-						   UnitOfMeasure(row.at(5), row.at(6), row.at(7), std::stoi(row.at(8)), std::stod(row.at(9))),
-						   row.at(4));
-		ings.push_back(r);
-	}
-	return ings;
-}
-
-int RecipeDatabase::retrieveIngredientId(string ingredientName){
-	return std::stoi(this->selectFrom("ingredient", "ingredientId", "WHERE name = '"+ingredientName+"'").at(0, 0));
+	return ingredients;
 }
 
 bool RecipeDatabase::deleteRecipeTags(int recipeId){
@@ -268,25 +157,12 @@ bool RecipeDatabase::deleteRecipeIngredients(int recipeId){
 }
 
 vector<Ingredient> RecipeDatabase::retrieveAllIngredients(){
-	ResultTable t = this->selectFrom("ingredient", "name, foodGroup", "ORDER BY name");
+	ResultTable t = this->selectFrom("recipeIngredient", "content", "ORDER BY content");
 	vector<Ingredient> ings;
 	for (TableRow row : t.rows()){
-		Ingredient i(row.at(0), row.at(1));
-		ings.push_back(i);
+		ings.push_back(Ingredient(row.at(0)));
 	}
 	return ings;
-}
-
-vector<UnitOfMeasure> RecipeDatabase::retrieveAllUnitsOfMeasure(){
-	ResultTable t = this->selectFrom("unitOfMeasure", "name, plural, abbreviation, type, metricCoefficient", "ORDER BY name");
-	vector<UnitOfMeasure> units;
-	if (!t.isEmpty()){
-		for (TableRow row : t.rows()){
-			UnitOfMeasure u(row.at(0), row.at(1), row.at(2), std::stoi(row.at(3)), std::stod(row.at(4)));
-			units.push_back(u);
-		}
-	}
-	return units;
 }
 
 vector<RecipeTag> RecipeDatabase::retrieveTags(int recipeId){
@@ -358,14 +234,6 @@ bool RecipeDatabase::deleteIngredient(string name){
 	return this->deleteFrom("ingredient", "WHERE name='"+name+"'");
 }
 
-bool RecipeDatabase::deleteUnitOfMeasure(string name){
-	ResultTable t = this->selectFrom("recipeIngredient", "recipeId", "WHERE unitName='"+name+"'");
-	if (!t.isEmpty()){
-		return false;
-	}
-	return this->deleteFrom("unitOfMeasure", "WHERE name='"+name+"'");
-}
-
 bool RecipeDatabase::deleteTag(RecipeTag tag){
 	return this->deleteFrom("recipeTag", "WHERE tagName='"+tag.getValue()+"'");
 }
@@ -405,22 +273,16 @@ bool RecipeDatabase::updateRecipe(Recipe recipe, string originalName) {
 		return false;
 	}
 	bool ingredientsSuccess = this->deleteRecipeIngredients(id);
-	for (RecipeIngredient ri : recipe.getIngredients()){
+	for (Ingredient i : recipe.getIngredients()){
 		ingredientsSuccess = ingredientsSuccess && this->insertInto(
 					"recipeIngredient",
 					vector<string>({
 									   "recipeId",
-									   "ingredientId",
-									   "unitName",
-									   "quantity",
-									   "comment"
+									   "content"
 								   }),
 					vector<string>({
 									   idS,
-									   std::to_string(this->retrieveIngredientId(ri.getName())),
-									   ri.getUnit().getName(),
-									   std::to_string(ri.getQuantity()),
-									   ri.getComment()
+									   i.getContent()
 								   }));
 	}
 	if (!ingredientsSuccess){
@@ -436,50 +298,6 @@ bool RecipeDatabase::updateRecipe(Recipe recipe, string originalName) {
 		this->commitTransaction();
 		return true;
 	}
-}
-
-bool RecipeDatabase::addBasicUnits(){
-	this->beginTransaction();
-	//Volume
-	this->storeUnitOfMeasure(UnitOfMeasure("Teaspoon", "Teaspoons", "tsp", UnitOfMeasure::VOLUME, 5.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Tablespoon", "Tablespoons", "tbsp", UnitOfMeasure::VOLUME, 15.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Fluid Ounce", "Fluid Ounces", "fl oz", UnitOfMeasure::VOLUME, 30.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Cup", "Cups", "c", UnitOfMeasure::VOLUME, 250.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Milliliter", "Milliliters", "mL", UnitOfMeasure::VOLUME, 1.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Liter", "Liters", "L", UnitOfMeasure::VOLUME, 1000.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Gallon", "Gallons", "gal", UnitOfMeasure::VOLUME, 3800.0));
-	//Mass/Weight
-	this->storeUnitOfMeasure(UnitOfMeasure("Ounce", "Ounces", "oz", UnitOfMeasure::MASS, 28.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Pound", "Pounds", "lb", UnitOfMeasure::MASS, 454.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Gram", "Grams", "g", UnitOfMeasure::MASS, 1.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Milligram", "Milligrams", "mg", UnitOfMeasure::MASS, 0.001));
-	this->storeUnitOfMeasure(UnitOfMeasure("Kilogram", "Kilograms", "kg", UnitOfMeasure::MASS, 1000.0));
-	//Length
-	this->storeUnitOfMeasure(UnitOfMeasure("Inch", "Inches", "in", UnitOfMeasure::LENGTH, 2.54));
-	this->storeUnitOfMeasure(UnitOfMeasure("Centimeter", "Centimeters", "cm", UnitOfMeasure::LENGTH, 1.0));
-	//MISC
-	this->storeUnitOfMeasure(UnitOfMeasure("Piece", "Pieces", "pc", UnitOfMeasure::MISC, 1.0));
-	this->storeUnitOfMeasure(UnitOfMeasure("Item", "Items", "", UnitOfMeasure::MISC, 1.0));
-	this->commitTransaction();
-	return true;
-}
-
-bool RecipeDatabase::addBasicIngredients(){
-	this->beginTransaction();
-	this->storeIngredient(Ingredient("Flour", "grains"));
-	this->storeIngredient(Ingredient("Eggs", "eggs"));
-	this->storeIngredient(Ingredient("Milk", "dairy"));
-	this->storeIngredient(Ingredient("Cheese", "dairy"));
-	this->storeIngredient(Ingredient("Salt", "spices"));
-	this->storeIngredient(Ingredient("Sugar", "sugars"));
-	this->storeIngredient(Ingredient("Vegetable Oil", "oils"));
-	this->storeIngredient(Ingredient("Olive Oil", "oils"));
-	this->storeIngredient(Ingredient("Water", "water"));
-	this->storeIngredient(Ingredient("Bell Pepper", "vegetables"));
-	this->storeIngredient(Ingredient("Onion", "vegetables"));
-	this->storeIngredient(Ingredient("Garlic", "spices"));
-	this->commitTransaction();
-	return true;
 }
 
 void RecipeDatabase::ensureTablesExist(){

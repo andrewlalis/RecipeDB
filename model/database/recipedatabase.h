@@ -23,21 +23,15 @@ class RecipeDatabase : public Database
 
 		//SQL Helper methods.
 		//Storage.
-		bool storeRecipeIngredient(RecipeIngredient ri, int recipeId);
-		int storeIngredient(Ingredient ingredient);
-		bool storeUnitOfMeasure(UnitOfMeasure u);
+		bool storeRecipeIngredient(Ingredient i, int recipeId);
 
 		//Retrieval.
 		Recipe retrieveRecipe(string name);
 		Recipe retrieveRandomRecipe();
 		vector<Recipe> retrieveAllRecipes();
-		vector<Recipe> retrieveRecipesWithIngredients(vector<Ingredient> ingredients);
 		vector<Recipe> retrieveRecipesWithTags(vector<RecipeTag> tags);
 		vector<Recipe> retrieveRecipesWithSubstring(string s);
-		vector<Recipe> retrieveRecipesWithFoodGroups(vector<string> groups);
-		vector<string> retrieveAllFoodGroups();
 		vector<Ingredient> retrieveAllIngredients();
-		vector<UnitOfMeasure> retrieveAllUnitsOfMeasure();
 		vector<RecipeTag> retrieveAllTags();
 
 		//Deletion.
@@ -50,9 +44,6 @@ class RecipeDatabase : public Database
 		//Updating.
 		bool updateRecipe(Recipe recipe, string originalName);
 
-		//Adding basic information at start.
-		bool addBasicUnits();
-		bool addBasicIngredients();
 	private:
 
 		//Utility methods.
@@ -68,8 +59,7 @@ class RecipeDatabase : public Database
 
 		//Retrieval
 		vector<RecipeTag> retrieveTags(int recipeId);
-		vector<RecipeIngredient> retrieveRecipeIngredients(int recipeId);
-		int retrieveIngredientId(string ingredientName);
+		vector<Ingredient> retrieveRecipeIngredients(int recipeId);
 
 		//Deletion
 		bool deleteRecipeTags(int recipeId);

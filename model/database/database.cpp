@@ -39,6 +39,15 @@ bool Database::insertInto(string tableName, vector<string> columnNames, vector<s
 	return (t.getReturnCode() == SQLITE_DONE);
 }
 
+bool Database::insertInto(string tableName, string columnName, string value){
+	if (columnName.empty() || value.empty() || tableName.empty()){
+		return false;
+	}
+	string query = "INSERT INTO " + tableName + " (" + columnName + ") VALUES (" + value + ");";
+	ResultTable t = this->executeSQL(query);
+	return (t.getReturnCode() == SQLITE_DONE);
+}
+
 ResultTable Database::selectFrom(string tableName, string columnNames, string conditions){
 	if (columnNames.size() == 0 || tableName.empty()){
 		return ResultTable();
