@@ -50,7 +50,6 @@ HEADERS  += model/recipe/instruction.h \
     model/recipe/tags/taglistmodel.h \
     gui/newDialogs/newingredientdialog.h \
     gui/newDialogs/newtagdialog.h \
-    gui/newDialogs/newunitdialog.h \
     utils/aspectratiopixmaplabel.h \
     utils/stringutils.h \
     gui/openrecipedialog.h \
@@ -64,7 +63,6 @@ FORMS    += gui/mainwindow.ui \
     gui/newrecipedialog.ui \
     gui/newDialogs/newingredientdialog.ui \
     gui/newDialogs/newtagdialog.ui \
-    gui/newDialogs/newunitdialog.ui \
     gui/openrecipedialog.ui \
     gui/mainwindow.ui \
     gui/newDialogs/newfoodgroupdialog.ui

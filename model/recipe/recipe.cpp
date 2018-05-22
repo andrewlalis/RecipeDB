@@ -29,16 +29,6 @@ vector<Ingredient> Recipe::getIngredients() const{
 	return this->ingredients;
 }
 
-vector<string> Recipe::getFoodGroups() const{
-	vector<string> foodGroups;
-	for (Ingredient i : this->ingredients){
-		if (find(foodGroups.begin(), foodGroups.end(), i.getFoodGroup()) == foodGroups.end()){
-			foodGroups.push_back(i.getFoodGroup());
-		}
-	}
-	return foodGroups;
-}
-
 Instruction Recipe::getInstruction() const{
     return this->instruction;
 }
