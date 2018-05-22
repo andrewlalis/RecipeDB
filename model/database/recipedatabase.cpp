@@ -487,18 +487,6 @@ void RecipeDatabase::ensureTablesExist(){
 	this->executeSQL("PRAGMA foreign_keys = ON;");
 
 	this->beginTransaction();
-	//Ingredients table.
-	this->executeSQL("CREATE TABLE IF NOT EXISTS ingredient("
-					 "ingredientId INTEGER PRIMARY KEY,"
-					 "foodGroup varchar,"
-					 "name varchar UNIQUE);");
-	//Unit of Measure table.
-	this->executeSQL("CREATE TABLE IF NOT EXISTS unitOfMeasure("
-					 "name varchar UNIQUE PRIMARY KEY,"
-					 "plural varchar,"
-					 "abbreviation varchar,"
-					 "type int,"
-					 "metricCoefficient real);");
 	//Recipe table. Each recipe can have at most one instruction, and one image.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipe("
 					 "recipeId INTEGER PRIMARY KEY,"
@@ -515,14 +503,9 @@ void RecipeDatabase::ensureTablesExist(){
 					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId));");
 	//RecipeIngredient table.
 	this->executeSQL("CREATE TABLE IF NOT EXISTS recipeIngredient("
-					 "ingredientId int,"
 					 "recipeId int,"
-					 "quantity real,"
-					 "unitName varchar,"
-					 "comment varchar,"
-					 "FOREIGN KEY (ingredientId) REFERENCES ingredient(ingredientId),"
-					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId),"
-					 "FOREIGN KEY (unitName) REFERENCES unitOfMeasure(name));");
+					 "content,"
+					 "FOREIGN KEY (recipeId) REFERENCES recipe(recipeId);");
 	this->commitTransaction();
 }
 
