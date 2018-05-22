@@ -48,7 +48,7 @@ void MainWindow::setInstruction(Instruction instruction){
     ui->instructionsTextEdit->setHtml(QString::fromStdString(instruction.getHTML()));
 }
 
-void MainWindow::setIngredients(vector<RecipeIngredient> ingredients){
+void MainWindow::setIngredients(vector<Ingredient> ingredients){
 	this->ingredientModel.setIngredients(ingredients);
 }
 

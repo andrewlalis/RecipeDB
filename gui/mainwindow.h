@@ -6,7 +6,7 @@
 #include <QAbstractListModel>
 
 #include "model/recipe/recipe.h"
-#include "model/recipe/ingredients/recipeingredientlistmodel.h"
+#include "model/recipe/ingredients/ingredientlistmodel.h"
 #include "gui/newrecipedialog.h"
 #include "gui/openrecipedialog.h"
 #include "utils/stringutils.h"
@@ -41,14 +41,14 @@ public:
 	private:
     Ui::MainWindow *ui;
 	RecipeDatabase *recipeDB;
-	RecipeIngredientListModel ingredientModel;
+	IngredientListModel ingredientModel;
 	TagListModel tagsListModel;
 	Recipe currentRecipe;
 
     //Hidden manipulation methods.
     void setRecipeName(string name);
     void setInstruction(Instruction instruction);
-    void setIngredients(vector<RecipeIngredient> ingredients);
+	void setIngredients(vector<Ingredient> ingredients);
 	void setImage(QImage img);
 	void setPrepTime(QTime prepTime);
 	void setCookTime(QTime cookTime);
