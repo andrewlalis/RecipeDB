@@ -3,8 +3,9 @@
 
 #include <QAbstractListModel>
 #include <QModelIndex>
+#include <vector>
 
-#include "model/recipe/ingredients/recipeingredient.h"
+#include "model/recipe/ingredients/ingredient.h"
 
 class IngredientListModel : public QAbstractListModel
 {
@@ -17,7 +18,7 @@ public:
 
     //Custom methods to handle ingredient data.
 	void setIngredients(vector<Ingredient> ingredients);
-	bool addIngredient(Ingredient ri);
+	bool addIngredient(Ingredient i);
 	void deleteIngredient(int index);
 	vector<Ingredient> getIngredients();
 
