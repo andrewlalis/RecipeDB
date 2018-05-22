@@ -16,10 +16,8 @@ SOURCES += model/recipe/instruction.cpp \
     model/recipe/recipe.cpp \
     main.cpp \
     model/database/database.cpp \
-    model/recipe/ingredients/unitofmeasure.cpp \
     model/recipe/ingredients/ingredient.cpp \
     model/recipe/ingredients/ingredientlistmodel.cpp \
-    model/recipe/ingredients/recipeingredient.cpp \
     model/recipe/tags/recipetag.cpp \
     SQLite/sqlite3.c \
     model/database/resulttable.cpp \
@@ -35,8 +33,7 @@ SOURCES += model/recipe/instruction.cpp \
     gui/openrecipedialog.cpp \
     model/recipe/recipetablemodel.cpp \
     gui/mainwindow.cpp \
-    gui/newDialogs/newfoodgroupdialog.cpp \
-    model/recipe/ingredients/recipeingredientlistmodel.cpp
+    gui/newDialogs/newfoodgroupdialog.cpp
 
 HEADERS  += model/recipe/instruction.h \
     model/recipe/recipe.h \
